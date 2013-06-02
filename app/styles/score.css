@@ -1,0 +1,217 @@
+/*body {
+	margin: 0;
+	padding: 0;
+}
+*/
+.square {
+	display: block;
+	width: 100px;
+	height: 100px;
+	background-color: #ccc;
+}
+
+
+.small-note{
+	width: 2px;
+	height: 1px;
+}
+
+.medium-note {
+	width: 10px;
+	height: 5px;
+}
+
+.large-note {
+	width: 75px;
+	height: 50px;
+	border-radius: 50px 30px 50px 30px;
+}
+
+.stem-down {
+	position: relative;
+	display: block;
+	height: 150px;
+	width: 2px;
+	background-color: #000;
+}
+
+.stem-up {
+	position: relative;
+	display: block;
+	height: 150px;
+	width: 2px;
+	background-color: #000;
+	left: 75px;
+}
+
+.stem-down > .note-head {
+	position: absolute;
+	background-color: #000;
+	display: block;
+	bottom: 120px;
+	left: -2px;
+}
+
+.stem-up > .note-head {
+	position: absolute;
+	background-color: #000;
+	display: block;
+	top: 130px;
+	right:-2px;
+}
+
+.etnth-line {
+	background-color: #000;
+	height: 200px;
+	width: 50px;
+}
+
+/* This is a crop as in Fail Whale */
+.etnth-up {
+	position: relative;
+	border: 3px solid #000;
+	/*background-color: #000;*/
+	height: 150px;
+	width: 28px;
+	-webkit-border-top-left-radius: 50px 200px;
+	-moz-border-radius-topleft: 50px 200px;
+	border-top-left-radius: 50px 200px;
+	-webkit-border-bottom-left-radius: 50px 200px;
+	-moz-border-radius-bottomleft: 50px 200px;
+	border-bottom-left-radius: 50px 200px;
+}
+
+.etnth-crop {
+	position: relative;
+	overflow: hidden;
+	top: -150px;
+	left: 60px;
+	height: 120px;
+	width: 15px;
+}
+
+.etnth-down {
+
+}
+
+.rope2crop {
+	position: relative;
+	overflow: hidden;
+	top: -150px;
+	left: 60px;
+	height: 120px;
+	width: 15px;
+}
+
+.rope2 {
+	position: relative;
+	border: 3px solid #000;
+	/*background-color: #000;*/
+	height: 150px;
+	width: 28px;
+	-webkit-border-top-left-radius: 50px 200px;
+	-moz-border-radius-topleft: 50px 200px;
+	border-top-left-radius: 50px 200px;
+	-webkit-border-bottom-left-radius: 50px 200px;
+	-moz-border-radius-bottomleft: 50px 200px;
+	border-bottom-left-radius: 50px 200px;
+}
+
+.rope6crop {
+	/*z-index: 12 !important;*/
+	position: relative;
+	overflow: hidden;
+	top: 66px;
+	left: 139px;
+	height: 198px;
+	width: 92px;
+}
+
+.rope6 {
+	position: relative;
+	border: 1px solid #000;
+	height: 250px;
+	width: 143px;
+	right: 0;
+	top: -1px;
+	-webkit-border-bottom-right-radius: 160px 290px;
+	-moz-border-radius-bottomright: 160px 290px;
+	border-bottom-right-radius: 160px 290px;
+}
+
+.center {
+	position: relative;
+	left: 200px;
+}
+
+.center-left {
+	position: relative;
+	left: 700px;
+	top: -330px;
+}
+
+/* Measures */
+div.measure {
+	width: 20%;
+}
+
+/*#scoreContainer {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	height: 700px;
+	border: 1px solid #000;
+	padding: 2% 1% 2% 1%;
+}*/
+
+#measureContainer {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.measure {
+	border: 1px solid #000;
+	width: 24%;
+	height: 50px;
+	/*display: inline;*/
+	float: left;
+	margin: 20px 0px 20px 0px;
+	/*padding: 20px 0px 20px 0px;*/
+}
+
+.line {
+	/*margin: 10px 0px 10px 0px;*/
+	/*margin-top: 50%;*/
+	display: block;
+	width: 100%;
+	height: 1px;
+	background-color: #000;	
+	position: absolute;
+}
+
+.line-spacing {
+	position: relative;
+	display: block;
+	top: 0px;
+	height: 33%;
+	/*padding-bottom: 50%;*/
+}
+
+.note {
+	display: block;
+	width: 50px;
+	height: 100px;
+}
+
+canvas.full-screen {
+	width: 100%;
+	height: 100%;
+}
+
+
+
+
+
+

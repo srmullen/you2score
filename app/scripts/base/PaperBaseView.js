@@ -1,0 +1,34 @@
+/**
+ * Module to handle rendering to a canvas.
+ * The 'el' must be a canvas element.
+ */
+define(["backbone", "paper"], function (Backbone, Paper) {
+	"use strict"
+
+	var PaperBaseView = Backbone.View.extend({
+
+		render: function () {
+			this.preRender();
+
+			this.drawElement();
+
+			this.postRender();
+
+			return this;
+		},
+
+		// The render method will likely need to be 
+		// re-implemented for each type of element drawn.
+		drawElement: function () {
+
+		},
+
+		preRender: function () {},
+		postRender: function () {},
+
+		// Added for interoperabillity with HandlebarsBaseView.addChildView().
+		// Might be useful in the future, but not now.
+		placeAt: function () {return this;}
+	});
+	return PaperBaseView;
+});
