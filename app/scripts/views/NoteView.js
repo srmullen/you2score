@@ -4,19 +4,40 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 
 		initialize: function () {
 			console.log("Initializing Paper");
-			paper.setup(this.el);
+			
+			var noteHead, stem, flag;
 
-			var path = new paper.Path();
+			// paper.setup(this.el);
+			
+			// Whole Note
+			// var noteGroup = new Group();
 
-			path.strokeColor = "black";
+			var outterRect = new paper.Rectangle({
+				point: [160, 160],
+				size: [100, 60]
+			});
+			var innerRect = new paper.Rectangle({
+				point: [175, 163],
+				size: [70, 55]
+			});
 
-			var start = new paper.Point(100, 100);
+			// var wholeNote = new paper.Group([outterRect, innerRect]);
+			var head = new paper.Path.Ellipse(outterRect);
+			var hole = new paper.Path.Ellipse(innerRect);
 
-			path.moveTo(start);
+			head.fillColor = 'black';
+			hole.fillColor = 'white';
+			var group = new paper.Group([head, hole]);
+			group.scale(0.25);
 
-			path.lineTo(start.add([200, -50]));
+			// paper.view.draw();
 
-			paper.view.draw();
+		},
+
+		updatePosition: function (event) {
+			// console.log(event.point);
+
+			this.circle.position = event.point;
 		}
 	});
 	return NoteView;

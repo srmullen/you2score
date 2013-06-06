@@ -1,8 +1,8 @@
-define(["chai", "scripts/helpers/noteHelper"], function (chai, noteHelper) {
+define(["chai", "scripts/helpers/NoteHelper"], function (chai, NoteHelper) {
 
 	var expect = chai.expect;
 
-	describe("Helper: noteHelper", function () {
+	describe("Helper: NoteHelper", function () {
 		var v1, v2;
 
 		xdescribe:("equalPitch", function () {
@@ -12,24 +12,44 @@ define(["chai", "scripts/helpers/noteHelper"], function (chai, noteHelper) {
 		/* Frequency isn't important right now */
 		xdescribe("pitchToFreq", function () {
 			it("should convert pitch to frequency", function () {
-				v1 = noteHelper.pitchToFreq({name: "C", ocatave: 2});
+				v1 = NoteHelper.pitchToFreq({name: "C", ocatave: 2});
 				expect(v1).to.equal(65.406);
 
-				v1 = noteHelper.pitchToFreq({name: "G", accidental: "#", octave: 6});
-				v2 = noteHelper.pitchToFreq(name: "A", accidental: "b", ocatave: 6});
+				v1 = NoteHelper.pitchToFreq({name: "G", accidental: "#", octave: 6});
+				v2 = NoteHelper.pitchToFreq({name: "A", accidental: "b", ocatave: 6});
 				expect(v1).to.equal(v2);
 			});
 		});
 
 		describe("pitchToMidi", function () {
 			it("should convert pitch to midi", function () {
-				v1 = noteHelper.pitchToMidi("G3");
+				v1 = NoteHelper.pitchToMidi("F#6");
+				expect(v1).to.equal(90);
+
+				v1 = NoteHelper.pitchToMidi("A0");
+				expect(v1).to.equal(21);
+
+
+				v1 = NoteHelper.pitchToMidi("B#3");
+				expect(v1).to.equal(60);
+
+				v1 = NoteHelper.pitchToMidi("G3");
+				v2 = NoteHelper.pitchToMidi("Abb3");
+				expect(v1).to.equal(v2);
 			});
 		});
 		
 		describe("midiToPitch", function () {
 			it("should convert midi to pitch", function () {
+				v1 = NoteHelper.midiToPitch(90);
+				expect(v1).to.equal("F#6");
 
+				v1 = NoteHelper.midiToPitch(60);
+				expect(v1).to.equal("B#3");
+
+				v1 = NoteHelper.midiToPitch("E##5");
+				v2 = NoteHelper.midiToPitch("Gb5");
+				expect(v1).to.equal(v2);
 			});
 		});
 		

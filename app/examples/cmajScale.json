@@ -1,0 +1,33 @@
+{
+	score: {
+		title: "C Major Scale",
+		staves: [
+			{
+				instrument: null,
+				measures: [
+					{
+						clef: {upper: 4, lower: Infinity},
+						notes: [
+							{pitch: "C4"},
+							{pitch: "D4"},
+							{pitch: "E4"},
+							{pitch: "F4"},
+							{pitch: "G4"},
+							{pitch: "A4"},
+							{pitch: "B4"},
+							{pitch: "C5"},
+							{pitch: "B4"},
+							{pitch: "A4"},
+							{pitch: "G4"},
+							{pitch: "F4"},
+							{pitch: "E4"},
+							{pitch: "D4"},
+							{pitch: "C4"}
+						]
+					}
+				]
+			}
+		]
+
+	}
+}

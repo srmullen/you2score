@@ -11,7 +11,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	var MeasureModel = BaseModel.extend({
 
 		defaults: {
-			key: "C",
+			key: undefined, // Was C, but that's different than no key.
 			clef: "treble",
 			meter: {upper: 4, lower: 4},
 			notes: new NoteCollection()

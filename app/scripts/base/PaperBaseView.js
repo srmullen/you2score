@@ -2,9 +2,10 @@
  * Module to handle rendering to a canvas.
  * The 'el' must be a canvas element.
  */
-define(["backbone", "paper"], function (Backbone, Paper) {
+define(["backbone", "paper"], function (Backbone) {
 	"use strict"
 
+	// PaperBaseView should install event handlers on 
 	var PaperBaseView = Backbone.View.extend({
 
 		render: function () {
@@ -28,7 +29,10 @@ define(["backbone", "paper"], function (Backbone, Paper) {
 
 		// Added for interoperabillity with HandlebarsBaseView.addChildView().
 		// Might be useful in the future, but not now.
-		placeAt: function () {return this;}
+		placeAt: function () {return this;},
+
+		// Needs implementation upon further study of paper.js
+		nuke: function () {}
 	});
 	return PaperBaseView;
 });
