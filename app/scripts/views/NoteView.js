@@ -3,14 +3,13 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 	var NoteView = PaperBaseView.extend({
 
 		initialize: function () {
-			console.log("Initializing Paper");
-			
-			var noteHead, stem, flag;
+			console.log("Initializing NoteView");
+		
+		},
 
-			// paper.setup(this.el);
-			
-			// Whole Note
-			// var noteGroup = new Group();
+		drawElement: function () {
+
+			var noteHead, stem, flag;
 
 			var outterRect = new paper.Rectangle({
 				point: [160, 160],
@@ -29,9 +28,6 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			hole.fillColor = 'white';
 			var group = new paper.Group([head, hole]);
 			group.scale(0.25);
-
-			// paper.view.draw();
-
 		},
 
 		updatePosition: function (event) {

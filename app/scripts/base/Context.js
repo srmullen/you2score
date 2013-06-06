@@ -13,11 +13,15 @@ define(["paper"], function () {
 
 		this.addChildView = function (View) {
 
-			this.childViews.push(new View({el: this.canvas}));
+			var view = new View({el: this.canvas});
+
+			view.render();
+
+			this.childViews.push(view);
 
 			paper.view.draw();
 			
-			return this;
+			return view;
 		};
 
 	}
