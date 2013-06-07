@@ -8,6 +8,8 @@ define(["backbone", "paper"], function (Backbone) {
 	// PaperBaseView should install event handlers on 
 	var PaperBaseView = Backbone.View.extend({
 
+		// group: new paper.Group(),
+
 		render: function () {
 			this.preRender();
 

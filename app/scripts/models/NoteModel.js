@@ -23,31 +23,32 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 
 			initialize: function (attributes) {
 				console.log("Initializeing NoteModel");
-				if (attributes) {
-					if (attributes.pitch) {
-						var p = attributes.pitch, f, m;
-						f = noteHelper.pitchToFreq(p);
-						m = noteHelper.pitchToMidi(p);
-						this.set({freq: f}); // use Backbone set, so not to reinvoke conversion logic
-						this.set({midiNote: m});
-					}
+				/* Ignore for now, will use later */
+				// if (attributes) {
+				// 	if (attributes.pitch) {
+				// 		var p = attributes.pitch, f, m;
+				// 		f = noteHelper.pitchToFreq(p);
+				// 		m = noteHelper.pitchToMidi(p);
+				// 		this.set({freq: f}); // use Backbone set, so not to reinvoke conversion logic
+				// 		this.set({midiNote: m});
+				// 	}
 
-					if (attributes.midiNote) {
-						var m = attributes.midiNote, p, f;
-						p = noteHelper.midiToPitch(m);
-						f = noteHelper.midiToFreq(m);
-						this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
-						this.set({freq: f});
-					}
+				// 	if (attributes.midiNote) {
+				// 		var m = attributes.midiNote, p, f;
+				// 		p = noteHelper.midiToPitch(m);
+				// 		f = noteHelper.midiToFreq(m);
+				// 		this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
+				// 		this.set({freq: f});
+				// 	}
 
-					if (attributes.freq) {
-						var f = attributes.freq, p, m;
-						p = noteHelper.freqToPitch(f);
-						m = noteHelper.freqToMidi(f);
-						this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
-						this.set({midi: m});
-					}
-				}
+				// 	if (attributes.freq) {
+				// 		var f = attributes.freq, p, m;
+				// 		p = noteHelper.freqToPitch(f);
+				// 		m = noteHelper.freqToMidi(f);
+				// 		this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
+				// 		this.set({midi: m});
+				// 	}
+				// }
 
 			},
 

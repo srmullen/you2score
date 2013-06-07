@@ -11,9 +11,9 @@ define(["paper"], function () {
 
 		paper.setup(canvas);
 
-		this.addChildView = function (View) {
+		this.addChildView = function (View, model) {
 
-			var view = new View({el: this.canvas});
+			var view = new View({el: this.canvas, model: model});
 
 			view.render();
 

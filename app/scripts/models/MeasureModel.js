@@ -7,6 +7,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	 *	clef {string} - which clef is the measure written in
 	 *	meter {Object} - example {upper: 3, lower: 4} it might be a good idea to use where in 
 	 *		the futher there could be Backbone objects.
+	 *	notes {NoteCollection} - Collection of notes in the measure
 	 */
 	var MeasureModel = BaseModel.extend({
 
@@ -21,11 +22,13 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 			console.log("Initializing MeasureModel");
 		},
 
-
 		// Can only add one note at a time.
 		// Multiple notes should only need to be added when MeasureModel is initialized.
-		addNote: function (nt) {
-
+		/**
+		 * @param note {NoteModel} - the NoteModel to be added to the NoteCollection
+		 */
+		addNote: function (note) {
+			this.get('notes').add(note);
 		}
 	});
 	return MeasureModel;

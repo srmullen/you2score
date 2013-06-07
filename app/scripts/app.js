@@ -6,31 +6,32 @@ define(["base/HandlebarsBaseView",
   "models/NoteModel", 
   "views/NoteView",
   "views/MeasureView",
+  "models/MeasureModel",
   "junk/Scribbles"], 
-function (HandlebarsBaseView, Context, PaperScoreView, ScoreModel, NoteModel, NoteView, MeasureView, Scribbles) {
+function (HandlebarsBaseView, Context, PaperScoreView, ScoreModel, NoteModel, NoteView, MeasureView, MeasureModel, Scribbles) {
     'use strict';
 
   	var App = HandlebarsBaseView.extend({
 
   		construct: function () {
   				console.log("app construct");
-  				// this.scoreModel = new ScoreModel();
-  				// this.scoreModel.addStaves();
-
-          // Test out NoteModel functionality
-          // var noteModel = new NoteModel({pitch: "C#3"});
+  				
+          
 
           // A paper view must have a canvas as an 'el'
           // var noteView = new NoteView({el: "#scoreContainer"});
 
           var context = new Context(document.getElementById("scoreContainer"));
 
-          context.addChildView(NoteView);
+          // create a NoteModel and NoteView
+          // Typing in the lines note will render the note on that line;
+          var noteModel = new NoteModel({pitch: {name: "E"}});
+          var measureModel = new MeasureModel();
+          measureModel.addNote(noteModel);
+          
+          // Add the MeasureView to the Context
+          var measure = context.addChildView(MeasureView, measureModel);
 
-          context.addChildView(MeasureView);
-
-          //Scribbling
-          // var scribbles = new Scribbles({el: "#scoreContainer"});
   		}
   	});
   	return App;
