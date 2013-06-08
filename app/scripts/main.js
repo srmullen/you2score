@@ -9,7 +9,8 @@ require.config({
         paper: '../bower_components/paper/dist/paper',
 
         // Application Specific
-        base: 'base'
+        base: 'base',
+        svg: '../images/svg'
     },
     shim: {
         bootstrap: {

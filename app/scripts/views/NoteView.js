@@ -14,9 +14,6 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 		*/
 		drawElement: function (baseNote) {
 
-			var positionY,
-				step = 40; // half of the arbitrary 80px between each line.
-
 			var outterRect = new paper.Rectangle({
 				size: [100, 60]
 			});
@@ -31,17 +28,27 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			head.fillColor = 'black';
 			hole.fillColor = 'white'; // would really like to cut out the middle rather than make it white
 			this.group.addChildren([head, hole]);
-			
-			// this.group.scale(0.25); // this doesn't need to be scaled here now that is part of the measure group.
-			
+						
 			// calculate the notes position
-			var octave = this.model.get('pitch').octave;
-			var degree = this.model.get('pitch').degree;
-			positionY = ((baseNote.octave - octave) * 8 * step); // this only considers octave,
-																 // also need to add in degree
+			var yPos = this.getYPosition(baseNote, 40);
 
 			// should actually be baseNote's position.add([position, 0])
-			this.group.position = baseNote.point.add([0, positionY]);
+			this.group.position = baseNote.point.add([0, yPos]);
+		},
+
+		/**
+		 *	@param step - the pixel distance between notes on the staff.
+		 *	@return - the vertical position of the note.
+		 */
+		getYPosition: function (baseNote, step) {
+			var octave = this.model.get('pitch').octave;
+			var degree = this.model.get('pitch').degree;
+			diffY = (baseNote.degree + (baseNote.octave * 7)) - (degree + (octave * 7));
+			return diffY * step;
+		},
+
+		getXPosition: function () {
+
 		},
 
 		updatePosition: function (event) {

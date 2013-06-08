@@ -15,19 +15,17 @@ define([], function () {
 
 		// This doesn't work because it doesn't take into account the jump from B0 to C1
 		pitchToMidi: function (p) {
-			var octave = parseInt(p.slice(-1)),
-				note = p.slice(0, p.length - 1),
-				pitchVal;
 
-			pitchVal = this.midiObj[note[0]];
-			
-			if (note[1] === "b") {
-				pitchVal -= note.length - 1;
-			} else if (note[1] === "#") {
-				pitchVal += note.length - 1;
+			var pitchVal = this.midiObj[p.name];
+			p.accidental = p.accidental || ""; // if accidental is not passed just make it empty string
+
+			if (p.accidental[0] === "b") {
+				pitchVal -= p.accidental.length;
+			} else if (p.accidental[0] === "#") {
+				pitchVal += p.accidental.length;
 			}
 
-			return (12 * octave) + pitchVal + 21;
+			return (12 * p.octave) + pitchVal + 11;
 		},
 
 		midiToPitch: function (m, key) {
@@ -67,13 +65,13 @@ define([], function () {
 							  ["G#", "Ab"]],
 
 		midiObj: {
-			"A": 0,
-			"B": 2,
-			"C": 3,
-			"D": 5,
-			"E": 7,
-			"F": 8,
-			"G": 10
+			"C": 1,
+			"D": 3,
+			"E": 5,
+			"F": 6,
+			"G": 8,
+			"A": 10,
+			"B": 12
 		}
 
 	}

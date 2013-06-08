@@ -2,9 +2,7 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 
 	/**
 	 * Attributes:
-	 *	pitch {Object} - The note name, accidental and octave {name: "A", accidental: "#", octave: "3"}
-	 *	degree {number} - 0-7 = C-B
-	 *	octave {number} - The octave of the pitch
+	 *	pitch {Object} - The note name, accidental and octave {name: "A", degree: 5, accidental: "#", octave: "3"}
 	 *	midiNote {number} - The midi representation of the pitch.
 	 *	freq {number} - pitch represented in cycles per second
 	 *	duration {number} - defaults to 1 (whole note) quarter note would be 1/4 or .25.
@@ -26,31 +24,31 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 			initialize: function (attributes) {
 				console.log("Initializeing NoteModel");
 				/* Ignore for now, will use later */
-				// if (attributes) {
-				// 	if (attributes.pitch) {
-				// 		var p = attributes.pitch, f, m;
-				// 		f = noteHelper.pitchToFreq(p);
-				// 		m = noteHelper.pitchToMidi(p);
-				// 		this.set({freq: f}); // use Backbone set, so not to reinvoke conversion logic
-				// 		this.set({midiNote: m});
-				// 	}
+				if (attributes) {
+					if (attributes.pitch) {
+						var p = attributes.pitch, f, m;
+						f = noteHelper.pitchToFreq(p);
+						m = noteHelper.pitchToMidi(p);
+						this.set({freq: f}); // use Backbone set, so not to reinvoke conversion logic
+						this.set({midiNote: m});
+					}
 
-				// 	if (attributes.midiNote) {
-				// 		var m = attributes.midiNote, p, f;
-				// 		p = noteHelper.midiToPitch(m);
-				// 		f = noteHelper.midiToFreq(m);
-				// 		this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
-				// 		this.set({freq: f});
-				// 	}
+					// if (attributes.midiNote) {
+					// 	var m = attributes.midiNote, p, f;
+					// 	p = noteHelper.midiToPitch(m);
+					// 	f = noteHelper.midiToFreq(m);
+					// 	this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
+					// 	this.set({freq: f});
+					// }
 
-				// 	if (attributes.freq) {
-				// 		var f = attributes.freq, p, m;
-				// 		p = noteHelper.freqToPitch(f);
-				// 		m = noteHelper.freqToMidi(f);
-				// 		this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
-				// 		this.set({midi: m});
-				// 	}
-				// }
+					// if (attributes.freq) {
+					// 	var f = attributes.freq, p, m;
+					// 	p = noteHelper.freqToPitch(f);
+					// 	m = noteHelper.freqToMidi(f);
+					// 	this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
+					// 	this.set({midi: m});
+					// }
+				}
 
 			},
 
@@ -97,7 +95,7 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 			isEqualPitch: function (note) {}
 		});
 
-		/* Private Methods */
+		/* Private Methods / fields */
 
 	})();
 	return NoteModel;
