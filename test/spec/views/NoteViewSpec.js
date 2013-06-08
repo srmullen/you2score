@@ -4,5 +4,8 @@ define(["chai", "scripts/views/NoteView", "scripts/models/NoteModel"], function 
 
 	describe("NoteView", function () {
 
+		describe("Method: calculatePosition", function () {
+			
+		});
 	});
 });

@@ -25,7 +25,7 @@ function (HandlebarsBaseView, Context, PaperScoreView, ScoreModel, NoteModel, No
 
           // create a NoteModel and NoteView
           // Typing in the lines note will render the note on that line;
-          var noteModel = new NoteModel({pitch: {name: "E"}});
+          var noteModel = new NoteModel({pitch: {name: "E", degree: 3, octave: 5}});
           var measureModel = new MeasureModel();
           measureModel.addNote(noteModel);
           

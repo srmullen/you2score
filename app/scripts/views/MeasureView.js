@@ -16,6 +16,7 @@ define(["base/PaperBaseView", "models/MeasureModel", "views/NoteView"], function
 			// var line1, line2, line3, line4, line5;
 			// var lineGroup = new paper.Group();
 			var line;
+			var baseNote = {pitch: "C", deg: 0, octave: 5} // this should be meta data gathered from the clef
 
 			// Create a group of lines and an object or accessing them by name.
 			var lineNames = ["F", "D", "B",  "G", "E"];
@@ -32,7 +33,15 @@ define(["base/PaperBaseView", "models/MeasureModel", "views/NoteView"], function
 			this.model.get('notes').each(function (note) { 
 				var noteView = new NoteView({model: note}); // maybe a PaperView doesn't need and el?
 															// probably won't hurt to give it the canvas though
-				noteView.drawElement(that.lineObj[note.get('pitch').name].firstSegment.point);
+				
+				// // Dont actually need the pitch of the models note
+				// // Need the pitch of the basenote given the clef
+				// noteView.drawElement(that.lineObj[note.get('pitch').name].firstSegment.point.sub);
+
+				// Hack in the position of C5
+				baseNote.point = that.lineObj["D"].firstSegment.point.add([0, 40]);
+				noteView.drawElement(baseNote);
+
 				that.group.addChild(noteView.group);
 			});
 

@@ -8,9 +8,14 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.pitch = this.model.get('pitch');
 		},
 
-		drawElement: function (position) {
+		/**
+		* @params baseNote / baseOctave - the degree and octave from which
+		* to calculate this notes position
+		*/
+		drawElement: function (baseNote) {
 
-			var noteHead, stem, flag;
+			var positionY,
+				step = 40; // half of the arbitrary 80px between each line.
 
 			var outterRect = new paper.Rectangle({
 				size: [100, 60]
@@ -29,8 +34,14 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			
 			// this.group.scale(0.25); // this doesn't need to be scaled here now that is part of the measure group.
 			
-			// group.position = new paper.Point().add(position);
-			this.group.position = position;
+			// calculate the notes position
+			var octave = this.model.get('pitch').octave;
+			var degree = this.model.get('pitch').degree;
+			positionY = ((baseNote.octave - octave) * 8 * step); // this only considers octave,
+																 // also need to add in degree
+
+			// should actually be baseNote's position.add([position, 0])
+			this.group.position = baseNote.point.add([0, positionY]);
 		},
 
 		updatePosition: function (event) {

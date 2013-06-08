@@ -3,6 +3,8 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 	/**
 	 * Attributes:
 	 *	pitch {Object} - The note name, accidental and octave {name: "A", accidental: "#", octave: "3"}
+	 *	degree {number} - 0-7 = C-B
+	 *	octave {number} - The octave of the pitch
 	 *	midiNote {number} - The midi representation of the pitch.
 	 *	freq {number} - pitch represented in cycles per second
 	 *	duration {number} - defaults to 1 (whole note) quarter note would be 1/4 or .25.
