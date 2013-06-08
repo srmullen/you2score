@@ -25,9 +25,9 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			var head = new paper.Path.Ellipse(outterRect);
 			var hole = new paper.Path.Ellipse(innerRect);
 
-			head.fillColor = 'black';
-			hole.fillColor = 'white'; // would really like to cut out the middle rather than make it white
-			this.group.addChildren([head, hole]);
+			var wholeNote = new paper.CompoundPath([head, hole]);
+			wholeNote.fillColor = 'black';
+			this.group.addChild(wholeNote);
 						
 			// calculate the notes position
 			var yPos = this.getYPosition(baseNote, 40);

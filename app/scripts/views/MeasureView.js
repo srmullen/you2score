@@ -6,27 +6,42 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 	var MeasureView = PaperBaseView.extend({
 
+		// All number used for drawing should be created during initialization.
+		// May want to make them static properties eventually
 		initialize: function (options) {
+			this.barLength = 2000;
+			this.lineSpacing = 80;
+			this.lines = this.createLines(this.barLength, this.lineSpacing);
 			this.group = new paper.Group();
 			this.clefBase = this.getClefBase(this.model.get("clef"));
-			this.barLength = 2000;
+		},
+
+		createLines: function (barLength, lineSpacing) {
+			var line,
+				lineArray = [];
+			for (var i = 0; i < 5; i++) {
+				line = new paper.Path.Line(new paper.Point(0, i * lineSpacing), new paper.Point(barLength, i * lineSpacing));
+				lineArray.push(line);
+			}
+
+			return lineArray;
 		},
 
 		drawElement: function () {
 			
-			this.drawMeasure();
+			this.drawMeasure(this.lines);
 
 			this.drawBar("both");
 
 			this.drawClef();
 
-			// this.drawNotes(); // just concentrate on the clef for now;
+			this.drawNotes(); // just concentrate on the clef for now;
 
 			// scaling a group also scales its children.
 			// elements not added to the group will not be scaled.
 			this.group.scale(0.25); 
 			this.group.strokeColor = 'black';
-			this.group.position = new paper.Point(400, 130);
+			this.group.position = new paper.Point(400, 130); // This should probably be up to parent view
 
 			// All methods beginning with draw should return themselves to facilitate chaining
 			return this; 
@@ -47,9 +62,6 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 				var noteView = new NoteView({model: note}); // maybe a PaperView doesn't need and el?
 															// probably won't hurt to give it the canvas though
 			
-				// Hack in the position of C5
-				// that.clefBase.point = that.lineObj["D"].firstSegment.point.add([0, 40]);
-				that.clefBase.point = that.lines[1].firstSegment.point.add([0, 40]);
 				noteView.drawElement(that.clefBase);
 
 				that.group.addChild(noteView.group);
@@ -58,17 +70,19 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return this;
 		},
 
-		drawMeasure: function () {
+		drawMeasure: function (lineArray) {
 			// Create a group of lines and an object or accessing them by name.
 			// var lineNames = ["F", "D", "B", "G", "E"];
-			var line;
-			this.lines = [];
-			for (var i = 0; i < 5; i++) {
-				line = new paper.Path.Line(new paper.Point(0, 200 + i * 80), new paper.Point(this.barLength, 200 + i * 80));
-				// this.lines[lineNames[i]] = line; // save the line in an object with pitch name keys
-				this.lines.push(line);
-				this.group.addChild(line);
-			}
+			// var line;
+			// this.lines = [];
+			// for (var i = 0; i < 5; i++) {
+			// 	line = new paper.Path.Line(new paper.Point(0, i * lineSpacing), new paper.Point(barLength, i * lineSpacing));
+			// 	// this.lines[lineNames[i]] = line; // save the line in an object with pitch name keys
+			// 	this.lines.push(line);
+			// 	this.group.addChild(line);
+			// }
+
+			this.group.addChildren(this.lines);
 
 			return this;
 		},
@@ -77,7 +91,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			$('#svgContainer').append(treble); // put the svg in the dom
 			var svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
 			svgItem.scale(0.45);
-			svgItem.position = new paper.Point(200, 400);
+
+			// the position should probably be a percentage of the barLength
+			svgItem.position = this.lines[2].firstSegment.point.add([120, 0]);
 			this.group.addChild(svgItem);
 
 			// Flag indicating that a clef has been drawn on this measure
@@ -121,7 +137,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 		getClefBase: function (clef) {
 			return {
-				"treble": {pitch: "C", degree: 0, octave: 5}
+				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, 40])}
 			}[clef];
 		}
 	});
