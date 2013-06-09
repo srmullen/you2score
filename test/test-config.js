@@ -39,7 +39,8 @@ require(["require", "mocha"], function (require) {
 		"spec/collections/NoteCollectionSpec",
 		"spec/models/NoteModelSpec",
 		"spec/factories/NoteModelFactorySpec",
-		"spec/helpers/NoteHelperSpec"
+		"spec/helpers/NoteHelperSpec",
+		"spec/views/MeasureViewSpec"
 	], function () {
 		mocha.run();
 	});

@@ -88,16 +88,6 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		},
 
 		drawMeasure: function (lineArray) {
-			// Create a group of lines and an object or accessing them by name.
-			// var lineNames = ["F", "D", "B", "G", "E"];
-			// var line;
-			// this.lines = [];
-			// for (var i = 0; i < 5; i++) {
-			// 	line = new paper.Path.Line(new paper.Point(0, i * lineSpacing), new paper.Point(barLength, i * lineSpacing));
-			// 	// this.lines[lineNames[i]] = line; // save the line in an object with pitch name keys
-			// 	this.lines.push(line);
-			// 	this.group.addChild(line);
-			// }
 
 			this.group.addChildren(this.lines);
 
