@@ -12,7 +12,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 		* @params baseNote / baseOctave - the degree and octave from which
 		* to calculate this notes position
 		*/
-		drawElement: function (baseNote) {
+		drawElement: function (baseNote, xPos, yPos) {
 
 			var outterRect = new paper.Rectangle({
 				size: [100, 60]
@@ -30,7 +30,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.group.addChild(wholeNote);
 						
 			// calculate the notes position
-			var yPos = this.getYPosition(baseNote, 40);
+			// var yPos = this.getYPosition(baseNote, 40);
 
 			// should actually be baseNote's position.add([position, 0])
 			this.group.position = baseNote.point.add([0, yPos]);

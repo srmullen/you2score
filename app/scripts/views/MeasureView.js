@@ -47,6 +47,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return this; 
 		},
 
+		/*
+		 * Adds a note to the NoteCollection of the MeasureModel.
+		 */
 		addNote: function (note) {
 			this.model.addNote(note);
 		},
@@ -61,13 +64,27 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			this.model.get('notes').each(function (note) { 
 				var noteView = new NoteView({model: note}); // maybe a PaperView doesn't need and el?
 															// probably won't hurt to give it the canvas though
-			
-				noteView.drawElement(that.clefBase);
+				
+				xPos = that.calculateNoteXpos(note);
+				yPos = that.calculateNoteYpos(note, that.lineSpacing/2);
+				
+				noteView.drawElement(that.clefBase, xPos, yPos);
 
 				that.group.addChild(noteView.group);
 			});
 
 			return this;
+		},
+
+		calculateNoteYpos: function (note, step) {
+			var octave = note.get('pitch').octave;
+			var degree = note.get('pitch').degree;
+			diffY = (this.clefBase.degree + (this.clefBase.octave * 7)) - (degree + (octave * 7));
+			return diffY * step;
+		},
+
+		calculateNoteXpos: function (note) {
+			return 0; // cause not implemented yet
 		},
 
 		drawMeasure: function (lineArray) {
@@ -140,6 +157,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, 40])}
 			}[clef];
 		}
+
 	});
 	return MeasureView;
 });
