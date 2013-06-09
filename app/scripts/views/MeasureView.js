@@ -1,6 +1,6 @@
 define(["base/PaperBaseView", 
-	"models/MeasureModel", 
-	"views/NoteView",
+	"../models/MeasureModel", 
+	"./NoteView",
 	"text!svg/treble.svg"], 
 function (PaperBaseView, MeasureModel, NoteView, treble) {
 
@@ -33,9 +33,12 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 			this.drawBar("both");
 
-			this.drawClef();
+			// this.drawClef();
 
-			this.drawNotes(); // just concentrate on the clef for now;
+			var notesGroup = this.drawNotes();
+
+			// var notesGroup = this.notesReduce();
+			this.group.addChild(notesGroup);
 
 			// scaling a group also scales its children.
 			// elements not added to the group will not be scaled.
@@ -56,24 +59,26 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 		/**
 		 *	Iterates over the NoteCollection and draws the notes.
+		 *	@return group of notes
 		 */
 		drawNotes: function () {
-			// Get the notes from the model and draw them
-			var that = this;
-			// Iterate over notes in the NoteCollection and create a View for them
-			this.model.get('notes').each(function (note) { 
-				var noteView = new NoteView({model: note}); // maybe a PaperView doesn't need and el?
-															// probably won't hurt to give it the canvas though
-				
-				xPos = that.calculateNoteXpos(note);
-				yPos = that.calculateNoteYpos(note, that.lineSpacing/2);
-				
-				noteView.drawElement(that.clefBase, xPos, yPos);
+			var centerLine = this.lines[2].firstSegment
 
-				that.group.addChild(noteView.group);
-			});
+			return this.model.get("notes").reduce(function (group, note) {
+				var noteView = new NoteView({model: note})
 
-			return this;
+				var xPos = this.calculateNoteXpos(note);
+				var yPos = this.calculateNoteYpos(note, this.lineSpacing/2);
+
+				noteView.drawHead(this.clefBase, xPos, yPos)
+						.drawStem(centerLine)
+						.drawFlag();
+
+				group.addChild(noteView.group);
+
+				return group;
+			}, new paper.Group(), this);
+
 		},
 
 		calculateNoteYpos: function (note, step) {

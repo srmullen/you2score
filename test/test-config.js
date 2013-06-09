@@ -3,14 +3,19 @@ require.config({
 		mocha: "lib/mocha/mocha",
 		chai: "lib/chai",
 		expect: "lib/expect",
+		sinonChai: "../app/bower_components/sinon-chai/lib/sinon-chai",
 
 		jquery: '../app/bower_components/jquery/jquery',
         bootstrap: '../app/scripts/vendor/bootstrap',
         backbone: '../app/bower_components/backbone/backbone',
         underscore: '../app/bower_components/underscore/underscore',
+        handlebars: '../bower_components/handlebars/handlebars',
+        text: '../app/scripts/vendor/text',
+        paper: '../app/bower_components/paper/dist/paper',
 
 		base: "../app/scripts/base",
-		scripts: "../app/scripts"
+		scripts: "../app/scripts",
+		svg: "../app/images/svg"
 	},
 	shim: {
         bootstrap: {
@@ -39,8 +44,8 @@ require(["require", "mocha"], function (require) {
 		"spec/collections/NoteCollectionSpec",
 		"spec/models/NoteModelSpec",
 		"spec/factories/NoteModelFactorySpec",
-		"spec/helpers/NoteHelperSpec",
-		"spec/views/MeasureViewSpec"
+		"spec/helpers/NoteHelperSpec"/*,
+		"spec/views/MeasureViewSpec"*/ // needs and http server to run
 	], function () {
 		mocha.run();
 	});

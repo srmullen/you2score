@@ -20,9 +20,9 @@ function (chai, MeasureModel, NoteCollection, NoteModel) {
 			// 	measureModel = new MeasureModel();
 			// });
 
-			it("should have C as a default key", function () {
+			it("should not have a default key", function () {
 				measureModel = new MeasureModel();
-				expect(measureModel.get("key")).to.equal("C");
+				expect(measureModel.get("key")).not.to.be.ok;
 			});
 
 			it("should take key as an attribute", function () {

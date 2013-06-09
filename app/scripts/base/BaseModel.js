@@ -10,7 +10,7 @@ define(["backbone"], function (Backbone) {
 		nuke: function () {
 		
 			for (var key in this.attributes) {
-				var val = this.get(key);
+				var val = this.get(key) || "";
 				if (val.nuke) {
 					val.nuke();
 				}

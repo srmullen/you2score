@@ -3,7 +3,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	/**
 	 * Atributes:
 	 *	key {string} - the key of the measure
-	 *	accidentals {Object?} - note to accidental mapping
+	 *	accidentals {Object?} - note to accidental mapping (I can't remember what I wanted this for)
 	 *	clef {string} - which clef is the measure written in
 	 *	meter {Object} - example {upper: 3, lower: 4} it might be a good idea to use where in 
 	 *		the futher there could be Backbone objects.
@@ -12,7 +12,6 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	var MeasureModel = BaseModel.extend({
 
 		defaults: {
-			key: undefined, // Was C, but that's different than no key.
 			clef: "treble",
 			meter: {upper: 4, lower: 4},
 			notes: new NoteCollection()

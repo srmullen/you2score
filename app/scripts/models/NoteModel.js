@@ -1,12 +1,14 @@
-define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHelper) {
+define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHelper) {
 
 	/**
 	 * Attributes:
-	 *	pitch {Object} - The note name, accidental and octave {name: "A", degree: 5, accidental: "#", octave: "3"}
+	 *	pitch {Object} - The note name, degree (c = 0 d = 1 ...) accidental and octave {name: "A", degree: 5, accidental: "#", octave: "3"}
 	 *	midiNote {number} - The midi representation of the pitch.
 	 *	freq {number} - pitch represented in cycles per second
-	 *	duration {number} - defaults to 1 (whole note) quarter note would be 1/4 or .25.
-	 *	dotted {boolean} - visual cue, doesn't matter to the sound.
+	 *	type {number} - defaults to 1 (whole note) quarter note would be 1/4 or .25.
+	 *	dotted {boolean} - makes the duration 50% longer.
+	 *	triplet {boolean} - makes the duration 1/3rd shorter
+	 *	duration {number} - value calculated based on 
 	 *	dynamic {string} - forte and whatnot
 	 *	volume {number} - dynamic needs to be backed up by an actual number for playing it.
 	 *	stacato {boolean} - default false
@@ -16,7 +18,7 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 		return BaseModel.extend({
 
 			defaults: {
-				duration: 1,
+				type: 1,
 				stacato: false,
 				legato: false
 			},
@@ -50,6 +52,11 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 					// }
 				}
 
+				// calculate the duration
+				this.set({duration: this.calculateDuration()});
+
+				this.on("change:dotted", this.updateDuration);
+				this.on("change:triplet", this.updateDuration);
 			},
 
 			 
@@ -83,6 +90,23 @@ define(["base/BaseModel", "../helpers/noteHelper"], function (BaseModel, noteHel
 					f = noteHelper.midiToFreq(f);
 				this.set({pitch: p});
 				this.set({freq: f});
+			},
+
+			calculateDuration: function () {
+				var dur = this.get("type");
+				
+				if (this.get("dotted")) {
+					dur *= 1.5;
+				}
+
+				if (this.get("triplet")) {
+					dur *= 2/3;
+				}
+				return dur;
+			},
+
+			updateDuration: function () {
+				this.set({duration: this.calculateDuration()});
 			},
 
 			/**
