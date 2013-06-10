@@ -77,22 +77,6 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			return this;
 		},
 
-		// getYposition is now being calculated in the measure view
-		/**
-		 *	@param step - the pixel distance between notes on the staff.
-		 *	@return - the vertical position of the note.
-		 */
-		// getYPosition: function (baseNote, step) {
-		// 	var octave = this.model.get('pitch').octave;
-		// 	var degree = this.model.get('pitch').degree;
-		// 	diffY = (baseNote.degree + (baseNote.octave * 7)) - (degree + (octave * 7));
-		// 	return diffY * step;
-		// },
-
-		getXPosition: function () {
-
-		},
-
 		updatePosition: function (event) {
 			// console.log(event.point);
 

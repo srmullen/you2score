@@ -10,6 +10,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		// May want to make them static properties eventually
 		initialize: function (options) {
 			this.barLength = 2000;
+			this.measurePadding = this.barLength / 8; // 10 is arbitrary
 			this.lineSpacing = 80;
 			this.lines = this.createLines(this.barLength, this.lineSpacing);
 			this.group = new paper.Group();
@@ -88,8 +89,23 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return diffY * step;
 		},
 
+		// Could also do this right when a note is placed in a collection
 		calculateNoteXpos: function (note) {
-			return 0; // cause not implemented yet
+			// Get the position of the note in the NoteCollection
+			var noteIndex = this.model.get("notes").indexOf(note),
+				xPos = 0;
+
+			// the sum of the durations of the notes previous to noteIndex indicate where
+			// the note should be placed
+			for (var i = 0; i < noteIndex; i++) {
+				xPos += this.model.get("notes").at(i).get("duration");
+			}
+
+			// xPos *= (this.barLength - this.measurePadding);
+			xPos *= this.barLength;
+			xPos += (this.measurePadding / 2); // divide by 2 to account for padding on each side
+
+			return xPos; // cause not implemented yet
 		},
 
 		drawMeasure: function (lineArray) {
