@@ -36,7 +36,7 @@ function (HandlebarsBaseView, Context, PaperScoreView, ScoreModel, NoteModel, No
           var noteModel2 = new NoteModel({pitch: {name: "C", degree: 0, octave: 5}, type: 1/4});
           measureModel.addNote(noteModel2);
 
-          var noteModel3 = new NoteModel({pitch: {name: "B", degree: 6, octave: 4}, type: 1/4});
+          var noteModel3 = new NoteModel({pitch: {name: "G", degree: 4, octave: 4}, type: 1/4});
           measureModel.addNote(noteModel3);
 
           var noteModel4 = new NoteModel({pitch: {name: "C", degree: 0, octave: 5}, type: 1/4});

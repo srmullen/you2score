@@ -6,6 +6,8 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			console.log("Initializing NoteView");
 			this.group = new paper.Group();
 			this.pitch = this.model.get('pitch');
+
+			this.headSize = [this.$el.width() / 45, this.$el.height() / 25]; // FIXME: divisions are hacks
 		},
 
 		// FIXME: baseNote feels kinda wrong. seems like it should just need the
@@ -14,7 +16,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			var type = this.model.get("type");
 
 			var outerRect = new paper.Rectangle({
-				size: [100, 60]
+				size: this.headSize
 			});
 			var head = new paper.Path.Ellipse(outerRect);
 			this.noteHandles = head;
@@ -23,7 +25,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			if (type >= 1/2) {
 				var innerRect = new paper.Rectangle({
 					point: outerRect.point.add(15, 3),
-					size: [70, 55]
+					size: [70, 55] // FIXME: arbitrary numbers
 				});
 				var hole = new paper.Path.Ellipse(innerRect);
 				head = new paper.CompoundPath([head, hole]);
@@ -36,17 +38,16 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			return this;
 		},
 
-		drawStem: function (centerLine) {
+		drawStem: function (centerLine, octaveHeight) {
 			var type = this.model.get("type");
-			var head = this.group.lastChild;
+			var head = this.group.lastChild; // FIXME: this works because draw head is called right before in MeasureView
 			// draw the stem
 			if (type < 1) {
 				if (this.noteHandles.segments[2].point.y > centerLine.point.y) {
 					// draw stem up
 					var rightPoint = this.noteHandles.segments[2].point;
-					if (Math.abs(rightPoint.y - centerLine.point.y) < 280) {
-						// FIXME: 280 is a hack, should be 7 times the distance of a note step
-						var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, 280])); // draw octave length stem
+					if (Math.abs(rightPoint.y - centerLine.point.y) < octaveHeight) {
+						var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
 					} else {
 						// draw stem to center line
 						var stem = new paper.Path.Line(this.noteHandles.segments[2].point, centerLine.point.add(this.noteHandles.segments[2].point.x, 0));
@@ -55,9 +56,9 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 				} else {
 					// draw stem down
 					var leftPoint = this.noteHandles.segments[0].point;
-					if (Math.abs(leftPoint.y - centerLine.point.y) < 280) {
+					if (Math.abs(leftPoint.y - centerLine.point.y) < octaveHeight) {
 						// draw octave length stem
-						var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, 280])); // draw octave length stem
+						var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, octaveHeight])); // draw octave length stem
 					} else {
 						// draw stem to center line
 						var stem = new paper.Path.Line(leftPoint, centerLine.point.add(this.noteHandles.segments[0].point.x, 0));

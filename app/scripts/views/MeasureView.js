@@ -9,9 +9,10 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		// All number used for drawing should be created during initialization.
 		// May want to make them static properties eventually
 		initialize: function (options) {
-			this.barLength = 2000;
-			this.measurePadding = this.barLength / 8; // 10 is arbitrary
-			this.lineSpacing = 80;
+			// this.barLength = 2000;
+			this.barLength = this.$el.width();
+			this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
+			this.lineSpacing = this.barLength / 100; // 100 is arbitrary, i'm not sure the math here is correct
 			this.lines = this.createLines(this.barLength, this.lineSpacing);
 			this.group = new paper.Group();
 			this.clefBase = this.getClefBase(this.model.get("clef"));
@@ -41,11 +42,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			// var notesGroup = this.notesReduce();
 			this.group.addChild(notesGroup);
 
-			// scaling a group also scales its children.
-			// elements not added to the group will not be scaled.
-			this.group.scale(0.25); 
+			// this.group.scale(0.25); // don't want to be scaling by default, things should be the right size
 			this.group.strokeColor = 'black';
-			this.group.position = new paper.Point(400, 130); // This should probably be up to parent view
+			// this.group.position = new paper.Point(400, 130); // This should probably be up to parent view
 
 			// All methods beginning with draw should return themselves to facilitate chaining
 			return this; 
@@ -66,13 +65,13 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			var centerLine = this.lines[2].firstSegment
 
 			return this.model.get("notes").reduce(function (group, note) {
-				var noteView = new NoteView({model: note})
+				var noteView = new NoteView({el: this.el, model: note})
 
 				var xPos = this.calculateNoteXpos(note);
 				var yPos = this.calculateNoteYpos(note, this.lineSpacing/2);
 
 				noteView.drawHead(this.clefBase, xPos, yPos)
-						.drawStem(centerLine)
+						.drawStem(centerLine, this.lineSpacing/2 * 7)
 						.drawFlag();
 
 				group.addChild(noteView.group);
@@ -165,7 +164,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 		getClefBase: function (clef) {
 			return {
-				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, 40])}
+				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, this.lineSpacing/2])}
 			}[clef];
 		}
 
