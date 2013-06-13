@@ -10,14 +10,16 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		// May want to make them static properties eventually
 		initialize: function (options) {
 			// this.barLength = 2000;
-			this.barLength = this.$el.width();
+			// this.barLength = this.$el.width(); // Moved to SheetView
+			
+			this.lineSpacing = this.barLength / 100; // Moved to SheetView
 			this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
-			this.lineSpacing = this.barLength / 100; // 100 is arbitrary, i'm not sure the math here is correct
-			this.lines = this.createLines(this.barLength, this.lineSpacing);
+			// this.lines = this.createLines(this.barLength, this.lineSpacing);
 			this.group = new paper.Group();
 			this.clefBase = this.getClefBase(this.model.get("clef"));
 		},
 
+		// this functionality has been moved to SheetView as createStaves()
 		createLines: function (barLength, lineSpacing) {
 			var line,
 				lineArray = [];

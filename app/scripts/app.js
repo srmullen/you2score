@@ -7,8 +7,18 @@ define(["base/HandlebarsBaseView",
   "views/NoteView",
   "views/MeasureView",
   "models/MeasureModel",
-  "junk/Scribbles"], 
-function (HandlebarsBaseView, Context, PaperScoreView, ScoreModel, NoteModel, NoteView, MeasureView, MeasureModel, Scribbles) {
+  "views/SheetView",
+  "models/SheetModel"], 
+function (HandlebarsBaseView, 
+          Context, 
+          PaperScoreView, 
+          ScoreModel, 
+          NoteModel, 
+          NoteView, 
+          MeasureView, 
+          MeasureModel, 
+          SheetView,
+          SheetModel) {
     'use strict';
 
   	var App = HandlebarsBaseView.extend({
@@ -28,22 +38,26 @@ function (HandlebarsBaseView, Context, PaperScoreView, ScoreModel, NoteModel, No
           
           
           
-          var measureModel = new MeasureModel();
+          // var measureModel = new MeasureModel();
           
-          var noteModel = new NoteModel({pitch: {name: "E", degree: 2, octave: 5}, type: 1/4});
-          measureModel.addNote(noteModel);
+          // var noteModel = new NoteModel({pitch: {name: "E", degree: 2, octave: 5}, type: 1/4});
+          // measureModel.addNote(noteModel);
           
-          var noteModel2 = new NoteModel({pitch: {name: "C", degree: 0, octave: 5}, type: 1/4});
-          measureModel.addNote(noteModel2);
+          // var noteModel2 = new NoteModel({pitch: {name: "C", degree: 0, octave: 5}, type: 1/4});
+          // measureModel.addNote(noteModel2);
 
-          var noteModel3 = new NoteModel({pitch: {name: "G", degree: 4, octave: 4}, type: 1/4});
-          measureModel.addNote(noteModel3);
+          // var noteModel3 = new NoteModel({pitch: {name: "G", degree: 4, octave: 4}, type: 1/4});
+          // measureModel.addNote(noteModel3);
 
-          var noteModel4 = new NoteModel({pitch: {name: "C", degree: 0, octave: 5}, type: 1/4});
-          measureModel.addNote(noteModel4);
+          // var noteModel4 = new NoteModel({pitch: {name: "C", degree: 0, octave: 5}, type: 1/4});
+          // measureModel.addNote(noteModel4);
           
-          // Add the MeasureView to the Context
-          var measure = context.addChildView(MeasureView, measureModel);
+          // // Add the MeasureView to the Context
+          // var measure = context.addChildView(MeasureView, measureModel);
+
+          var sheetModel = new SheetModel();
+
+          var sheet = context.addChildView(SheetView, sheetModel);
 
   		}
   	});

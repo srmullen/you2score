@@ -15,28 +15,39 @@ define(["base/PaperBaseView", "../views/MeasureView"], function (PaperBaseView, 
 	var SheetView = PaperBaseView.extend({
 
 		initialize: function () {
-			this.group = new paper.Group(); // Group for the lines on the page
-
-			// set the properties of the measure views here, rather than in its initialize
-			this.lineWidth = this.$el.width();
-			this.lineSpacing = this.lineWidth / 100; // this should probably be static and not based on width of the screen
-			
+			this.staveWidth = this.$el.width();
+			this.lineSpacing = this.staveWidth / 100; // 100 is arbitrary, i'm not sure the math here is correct
+			this.group = new paper.Group();
 		},
 
-		/*
-		 * Draws a page full of blank staves.
-		 */
-		drawSheet: function () {
-			var measureView;
-			// draw 12 'staves', use MeasureView for now
-			// Later abstract away the Measure, they're just lines with no meaning at this point
-			for (var i = 0; i < 12; i++) {
-				measureView = new MeasureView();
+		drawElement: function () {
+			this.drawSheet();
+		},
 
-				this.group.addChild(measureView);
+		drawSheet: function () {
+			// FIXME: 100 is arbitrary, should be based on page height and number of staves
+			// var staveSpacing = this.lineSpacing * 4 + 100;
+			var staveSpacing = 100; 
+			for (var i = 0, n = this.model.get("staves"); i < n; i++) {
+				var stave = this.createStave(this.staveWidth, this.lineSpacing);
+				// stave.position = stave.children[4].position.point.add([0, staveSpacing]);
+				stave.position.y = 100 * i + 50;
+				this.group.addChild(stave);
 			}
 
-			return this;
+			this.group.strokeColor = 'black';
+		},
+
+		createStave: function (width, spacing) {
+			var line,
+				lineArray = [];
+			for (var i = 0; i < 5; i++) {
+				line = new paper.Path.Line(new paper.Point(0, i * spacing), new paper.Point(width, i * spacing));
+				lineArray.push(line);
+			}
+			
+			return new paper.Group(lineArray);
 		}
 	});
+	return SheetView;
 });

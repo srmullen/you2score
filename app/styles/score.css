@@ -210,7 +210,12 @@ canvas.full-screen {
 	height: 100%;
 }
 
-
+.sheet {
+	position: relative;
+	padding: 10px;
+	width: 902px;
+	height: 1167px; /* setting the height like this streches the notes */
+}
 
 
 

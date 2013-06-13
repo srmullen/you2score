@@ -7,7 +7,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.group = new paper.Group();
 			this.pitch = this.model.get('pitch');
 
-			this.headSize = [this.$el.width() / 45, this.$el.height() / 25]; // FIXME: divisions are hacks
+			this.headSize = [this.$el.width() / 45, this.$el.height() / 125]; // FIXME: divisions are hacks
 		},
 
 		// FIXME: baseNote feels kinda wrong. seems like it should just need the

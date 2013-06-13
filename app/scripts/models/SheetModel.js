@@ -1,12 +1,17 @@
 define(["base/BaseModel"], function (BaseModel) {
 
 	/*
-	 * 
+	 * staves {number} - The number of staves on the sheet
 	 */
 	var SheetModel = BaseModel.extend({
 
-		initialize: function () {
+		defaults: {
+			staves: 8
+		},
 
+		initialize: function () {
+			
 		}
 	});
+	return SheetModel;
 });
