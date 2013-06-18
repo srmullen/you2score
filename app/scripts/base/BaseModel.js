@@ -23,6 +23,7 @@ define(["backbone"], function (Backbone) {
 		},
 
 		// Creates a serialized version of itself which can be saved to the server
+		// it should serialize any models or collections belonging too it as well
 		serialize: function () {
 
 		}
