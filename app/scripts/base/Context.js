@@ -23,7 +23,6 @@ define(["paper"], function () {
 			
 			return view;
 		};
-
 	}
 	return Context;
 })

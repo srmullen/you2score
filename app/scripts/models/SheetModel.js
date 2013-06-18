@@ -1,4 +1,5 @@
-define(["base/BaseModel"], function (BaseModel) {
+define(["base/BaseModel", "../collections/NoteCollection", "../collections/MeasureCollection"], 
+function (BaseModel, NoteCollection, MeasureCollection) {
 
 	/*
 	 * staves {number} - The number of staves on the sheet
@@ -6,7 +7,9 @@ define(["base/BaseModel"], function (BaseModel) {
 	var SheetModel = BaseModel.extend({
 
 		defaults: {
-			staves: 8
+			staves: 10,
+			notes: new NoteCollection(),
+			measures: new MeasureCollection()
 		},
 
 		initialize: function () {

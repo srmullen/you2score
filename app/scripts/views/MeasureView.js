@@ -44,9 +44,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			// var notesGroup = this.notesReduce();
 			this.group.addChild(notesGroup);
 
-			// this.group.scale(0.25); // don't want to be scaling by default, things should be the right size
 			this.group.strokeColor = 'black';
-			// this.group.position = new paper.Point(400, 130); // This should probably be up to parent view
 
 			// All methods beginning with draw should return themselves to facilitate chaining
 			return this; 
@@ -164,6 +162,8 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return this;
 		},
 
+
+		// Moved to NoteView
 		getClefBase: function (clef) {
 			return {
 				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, this.lineSpacing/2])}

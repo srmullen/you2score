@@ -22,6 +22,11 @@ define(["backbone"], function (Backbone) {
 			this.clear();
 		},
 
+		// Creates a serialized version of itself which can be saved to the server
+		serialize: function () {
+
+		}
+
 		// no-op method, should be overridden in child class or maybe externalized
 		// generate a playable midi file of this and all child models
 		generateMidiFile: function () {},

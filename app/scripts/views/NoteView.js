@@ -7,6 +7,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.group = new paper.Group();
 			this.pitch = this.model.get('pitch');
 
+			this.clef = this.options.cleff || "treble";
 			this.headSize = [this.$el.width() / 45, this.$el.height() / 125]; // FIXME: divisions are hacks
 		},
 
@@ -82,6 +83,12 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			// console.log(event.point);
 
 			this.circle.position = event.point;
+		},
+
+		getClefBase: function (clef) {
+			return {
+				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, this.lineSpacing/2])}
+			}[clef];
 		}
 	});
 	return NoteView;

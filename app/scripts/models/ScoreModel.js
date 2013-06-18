@@ -30,12 +30,15 @@ function (BaseModel, StaffCollection, StaffModel) {
 		},
 
 		/**
-		 * Adds staves to the StaffCollection, if nothing is passed it adds the default StaffModel.
-		 * @param stf {StaffModel[], StaffModel, undefined}
+		 * Adds staves to the StaffCollection.
+		 * @param stf {StaffModel[], StaffModel}
 		 */
-		addStaves: function (stf) {
-			var staff = stf || new StaffModel();
+		addStaves: function (staff) {
 			this.get("staves").add(staff);
+		},
+
+		removeStaff: function (model) {
+			this.get("staves").remove(model);
 		}
 	});
 	return ScoreModel;

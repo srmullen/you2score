@@ -1,4 +1,9 @@
-define(["base/PaperBaseView", "../views/MeasureView"], function (PaperBaseView, MeasureView) {
+define(["base/PaperBaseView", 
+	"../models/SheetModel", 
+	"../views/MeasureView", 
+	"../models/NoteModel", 
+	"../views/NoteView"], 
+function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 
 	/*
 	 * A SheetView represents a blank page of Staff Paper.
@@ -15,9 +20,15 @@ define(["base/PaperBaseView", "../views/MeasureView"], function (PaperBaseView, 
 	var SheetView = PaperBaseView.extend({
 
 		initialize: function () {
+			this.model = this.options.model || new SheetModel();
 			this.staveWidth = this.$el.width();
 			this.lineSpacing = this.staveWidth / 100; // 100 is arbitrary, i'm not sure the math here is correct
 			this.group = new paper.Group();
+
+			var that = this;
+			paper.tool.onKeyDown = function (event) {
+				that.addNote(event);
+			}
 		},
 
 		drawElement: function () {
@@ -36,6 +47,8 @@ define(["base/PaperBaseView", "../views/MeasureView"], function (PaperBaseView, 
 			}
 
 			this.group.strokeColor = 'black';
+
+			return this;
 		},
 
 		createStave: function (width, spacing) {
@@ -45,8 +58,30 @@ define(["base/PaperBaseView", "../views/MeasureView"], function (PaperBaseView, 
 				line = new paper.Path.Line(new paper.Point(0, i * spacing), new paper.Point(width, i * spacing));
 				lineArray.push(line);
 			}
-			
-			return new paper.Group(lineArray);
+
+			var rectangle = new paper.Rectangle(lineArray[0].firstSegment.point, lineArray[4].lastSegment.point);			
+			rectangle = new paper.Path.Rectangle(rectangle);
+			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+			rectangle.opacity = 0.0; // make the rectangle invisible
+			var stave = new paper.Group(lineArray);
+			stave.insertChild(0, rectangle);
+
+			// event handlers can be attached to specific items
+			// this only works if the right places on the line are clicked
+			var that = this;
+			stave.onClick = function (event) {
+				// var target = event.item;
+				// this.strokeColor = 'blue';
+			}
+
+			return stave;
+		},
+
+		addNote: function (pitch) {
+			var noteModel = new NoteModel(pitch);
+			this.model.get("notes").add(noteModel);
+
+			// var
 		}
 	});
 	return SheetView;
