@@ -1,5 +1,5 @@
-define(["base/BaseModel", "../collections/MeasureCollection", "../collections/NoteCollection"], 
-function (BaseModel, MeasureCollection, NoteCollection) {
+define(["base/BaseModel", "../collections/MeasureCollection", "./MeasureModel", "../collections/NoteCollection"], 
+function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 
 	/**
 	 * Attributes:
@@ -25,7 +25,12 @@ function (BaseModel, MeasureCollection, NoteCollection) {
 
 		// Copies the notes in the note collection into the correct Measure
 		notesIntoMeasures: function () {
+			// no need to do anymore work if there are no notes to merge
+			if (this.get("notes").isEmpty()) return;
 
+			if (this.get("measures").isEmpty()) {
+				this.addMeasure(new MeasureModel());
+			}
 		},
 
 		addNote: function (note) {

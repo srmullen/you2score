@@ -11,10 +11,11 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	 */
 	var MeasureModel = BaseModel.extend({
 
-		defaults: {
-			clef: "treble",
-			meter: {upper: 4, lower: 4},
-		},
+		// clef might be better as an attribute of StaffModel, and can be overwritten for
+		// individual measure when it needs to be
+		// defaults: {
+		// 	clef: "treble",
+		// },
 		
 		initialize: function () {
 			console.log("Initializing MeasureModel");
@@ -30,7 +31,17 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		 * @param note {NoteModel} - the NoteModel to be added to the NoteCollection
 		 */
 		addNote: function (note) {
-			this.get('notes').add(note);
+			if (canAdd(note)) {
+				this.get('notes').add(note);
+			}
+		},
+
+		/**
+		 * @param note {NoteModel} the note in question
+		 * @return {boolean} true if the note can be added to the Measure, false otherwise
+		 */
+		canAdd: function (note) {
+			if (this.get("meter") === undefined) return true;
 		}
 	});
 	return MeasureModel;

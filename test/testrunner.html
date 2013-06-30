@@ -8,6 +8,10 @@
 <body>
     <div id="mocha"></div>
 
+    <!-- Sinon is easier if not loaded by amd, maybe figure it out later -->
+    <script src="../app/bower_components/sinon/lib/sinon.js"></script>
+    <script src="../app/bower_components/sinon/lib/sinon/spy.js"></script>
+
     <script data-main="./test-config" src="../app/bower_components/requirejs/require.js"></script>
 
 

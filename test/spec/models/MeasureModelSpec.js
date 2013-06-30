@@ -36,7 +36,7 @@ function (chai, MeasureModel, NoteCollection, NoteModel) {
 		});
 
 		describe("Attribute: clef", function () {
-			it("should have 'treble' as default", function () {
+			xit("should have 'treble' as default", function () {
 				measureModel = new MeasureModel();
 				expect(measureModel.get("clef")).to.equal("treble");
 			});
@@ -52,7 +52,7 @@ function (chai, MeasureModel, NoteCollection, NoteModel) {
 		});
 
 		describe("Attribute: meter", function () {
-			it("should have common time as a default", function () {
+			xit("should have common time as a default", function () {
 				measureModel = new MeasureModel();
 				expect(measureModel.get("meter")).to.be.an.instanceof(Object);
 				expect(measureModel.get("meter").upper).to.equal(4);
@@ -88,6 +88,15 @@ function (chai, MeasureModel, NoteCollection, NoteModel) {
 
 			afterEach(function () {
 				measureModel.nuke();
+			});
+		});
+
+		describe("Method: canAdd", function () {
+			it("should return true if the measure has no meter", function () {
+				measureModel = new MeasureModel();
+				expect(measureModel.get('meter')).to.be.undefined;
+				var note = new NoteModel({duration: 2});
+				expect(measureModel.canAdd(note)).to.be.true;
 			});
 		});
 
