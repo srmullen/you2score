@@ -4,6 +4,274 @@
 		"selected_items":
 		[
 			[
+				"Score",
+				"ScoreView"
+			],
+			[
+				"line",
+				"lineArray"
+			],
+			[
+				"stave",
+				"staveSpacing"
+			],
+			[
+				"oct",
+				"octaveHeight"
+			],
+			[
+				"head",
+				"headSize"
+			],
+			[
+				"meas",
+				"measurePadding"
+			],
+			[
+				"add",
+				"addChild"
+			],
+			[
+				"note",
+				"noteHandles"
+			],
+			[
+				"cal",
+				"calculateNoteYpos"
+			],
+			[
+				"calcu",
+				"calculateDuration"
+			],
+			[
+				"up",
+				"updateDuration"
+			],
+			[
+				"mea",
+				"measureView"
+			],
+			[
+				"calc",
+				"calculateNoteXpos"
+			],
+			[
+				"addChil",
+				"addChildren"
+			],
+			[
+				"right",
+				"right"
+			],
+			[
+				"left",
+				"leftBar"
+			],
+			[
+				"ad",
+				"addChild"
+			],
+			[
+				"svg",
+				"svgnote"
+			],
+			[
+				"clef",
+				"clefBase"
+			],
+			[
+				"get",
+				"getClefBase"
+			],
+			[
+				"pos",
+				"positionY"
+			],
+			[
+				"draw",
+				"drawElement"
+			],
+			[
+				"Meas",
+				"MeasureModel"
+			],
+			[
+				"first",
+				"firstSegment"
+			],
+			[
+				"M",
+				"MeasureModel"
+			],
+			[
+				"Mea",
+				"MeasureView"
+			],
+			[
+				"score",
+				"scoreContainer"
+			],
+			[
+				"in",
+				"innerRect"
+			],
+			[
+				"cir",
+				"circlePath"
+			],
+			[
+				"circle",
+				"circlePath"
+			],
+			[
+				"sec",
+				"secondPath"
+			],
+			[
+				"chil",
+				"children"
+			],
+			[
+				"st",
+				"strokeColor"
+			],
+			[
+				"pro",
+				"project"
+			],
+			[
+				"mid",
+				"midiObj"
+			],
+			[
+				"pit",
+				"pitchVal"
+			],
+			[
+				"circl",
+				"circlePath"
+			],
+			[
+				"Re",
+				"RegularPolygon"
+			],
+			[
+				"No",
+				"NoteModel"
+			],
+			[
+				"Note",
+				"NoteView"
+			],
+			[
+				"pi",
+				"pitchToMidi"
+			],
+			[
+				"pitchTo",
+				"pitchToFreq"
+			],
+			[
+				"midiT",
+				"midiToPitch"
+			],
+			[
+				"set",
+				"setMidi"
+			],
+			[
+				"not",
+				"noteHelper"
+			],
+			[
+				"me",
+				"meter"
+			],
+			[
+				"measu",
+				"measureModel"
+			],
+			[
+				"S",
+				"StaffModel"
+			],
+			[
+				"St",
+				"StaffCollection"
+			],
+			[
+				"mode",
+				"model1"
+			],
+			[
+				"mo",
+				"model1"
+			],
+			[
+				"Bas",
+				"BaseModel"
+			],
+			[
+				"attr",
+				"attributes"
+			],
+			[
+				"des",
+				"destroy"
+			],
+			[
+				"e",
+				"equal"
+			],
+			[
+				"a",
+				"addStaves"
+			],
+			[
+				"be",
+				"beforeEach"
+			],
+			[
+				"sc",
+				"scoreModel"
+			],
+			[
+				"de",
+				"describe"
+			],
+			[
+				"Pa",
+				"PaperBaseVeiw"
+			],
+			[
+				"P",
+				"PaperBaseView"
+			],
+			[
+				"bo",
+				"bower_components"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"render",
+				"renderMeasures"
+			],
+			[
+				"child",
+				"childViews"
+			],
+			[
+				"b",
+				"backbone"
+			],
+			[
 				"B",
 				"BaseView"
 			],
@@ -20,10 +288,6 @@
 				"handleDragEnd"
 			],
 			[
-				"add",
-				"addEventListener"
-			],
-			[
 				"back",
 				"background-color"
 			],
@@ -34,10 +298,6 @@
 			[
 				"json",
 				"json"
-			],
-			[
-				"pro",
-				"proportions"
 			],
 			[
 				"my",
@@ -78,10 +338,6 @@
 			[
 				"gau",
 				"gauss"
-			],
-			[
-				"ad",
-				"audioContext"
 			],
 			[
 				"audio",
@@ -144,10 +400,6 @@
 				"write_form"
 			],
 			[
-				"M",
-				"MidiFormatter"
-			],
-			[
 				"gbid",
 				"gbid_hash"
 			],
@@ -170,10 +422,6 @@
 			[
 				"track",
 				"track_data"
-			],
-			[
-				"note",
-				"note_array"
 			],
 			[
 				"midi",
@@ -251,6 +499,95 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/index.html",
+			"settings":
+			{
+				"buffer_size": 2405,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/app.js",
+			"settings":
+			{
+				"buffer_size": 2213,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/models/ScoreModel.js",
+			"settings":
+			{
+				"buffer_size": 1078,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/models/StaffModel.js",
+			"settings":
+			{
+				"buffer_size": 827,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/models/MeasureModel.js",
+			"settings":
+			{
+				"buffer_size": 1055,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/models/NoteModel.js",
+			"settings":
+			{
+				"buffer_size": 3648,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/base/BaseModel.js",
+			"settings":
+			{
+				"buffer_size": 964,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/handlebarViews/ScoreView.js",
+			"settings":
+			{
+				"buffer_size": 248,
+				"line_ending": "Unix",
+				"name": "define([])"
+			}
+		},
+		{
+			"file": "app/scripts/handlebarViews/score.tmpl",
+			"settings":
+			{
+				"buffer_size": 230,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/base/HandlebarsBaseView.js",
+			"settings":
+			{
+				"buffer_size": 3057,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/collections/StaffCollection.js",
+			"settings":
+			{
+				"buffer_size": 222,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -280,6 +617,72 @@
 	},
 	"file_history":
 	[
+		"/Users/srmullen/you2score/app/scripts/base/HandlebarsBaseView.js",
+		"/Users/srmullen/you2score/app/scripts/paperViews/SheetView.js",
+		"/Users/srmullen/you2score/app/scripts/models/SheetModel.js",
+		"/Users/srmullen/you2score/app/scripts/junk/Scribbles.js",
+		"/Users/srmullen/you2score/app/scripts/base/Context.js",
+		"/Users/srmullen/you2score/package.json",
+		"/Users/srmullen/you2score/app/scripts/views/SheetView.js",
+		"/Users/srmullen/you2score/app/scripts/views/MeasureView.js",
+		"/Users/srmullen/you2score/app/scripts/views/NoteView.js",
+		"/Users/srmullen/you2score/app/index.html",
+		"/Users/srmullen/you2score/app/styles/score.css",
+		"/Users/srmullen/you2score/app/scripts/helpers/NoteHelper.js",
+		"/Users/srmullen/you2score/test/test-config.js",
+		"/Users/srmullen/you2score/test/spec/models/NoteModelSpec.js",
+		"/Users/srmullen/you2score/test/spec/models/MeasureModelSpec.js",
+		"/Users/srmullen/you2score/app/scripts/base/BaseModel.js",
+		"/Users/srmullen/you2score/test/spec/views/MeasureViewSpec.js",
+		"/Users/srmullen/you2score/app/scripts/main.js",
+		"/Users/srmullen/you2score/app/scripts/collections/NoteCollection.js",
+		"/Users/srmullen/you2score/test/testrunner.html",
+		"/Users/srmullen/you2score/app/images/svg/treble.svg",
+		"/Users/srmullen/you2score/app/images/svg/qNote.svg",
+		"/Users/srmullen/you2score/test/spec/views/NoteViewSpec.js",
+		"/Users/srmullen/you2score/test/spec/helpers/NoteHelperSpec.js",
+		"/Users/srmullen/you2score/app/scripts/base/PaperBaseView.js",
+		"/Users/srmullen/you2score/app/examples/cmajScale.json",
+		"/Users/srmullen/you2score/app/scripts/models/MeasureModel.js",
+		"/Users/srmullen/you2score/app/scripts/models/NoteModel.js",
+		"/Users/srmullen/you2score/test/spec/collections/MeasureCollectionSpec.js",
+		"/Users/srmullen/you2score/test/spec/collections/NoteCollectionSpec.js",
+		"/Users/srmullen/you2score/test/spec/factories/NoteModelFactorySpec.js",
+		"/Users/srmullen/you2score/app/scripts/app.js",
+		"/Users/srmullen/you2score/app/scripts/helpers/noteHelper.js",
+		"/Users/srmullen/you2score/test/spec/helpers/noteHelperSpec.js",
+		"/Users/srmullen/you2score/app/scripts/factories/NoteModelFactory.js",
+		"/Users/srmullen/you2score/test/spec/models/StaffModelSpec.js",
+		"/Users/srmullen/you2score/app/scripts/models/ScoreModel.js",
+		"/Users/srmullen/you2score/test/spec/base/BaseCollectionSpec.js",
+		"/Users/srmullen/you2score/test/spec/collections/StaffCollectionSpec.js",
+		"/Users/srmullen/you2score/app/scripts/collections/StaffCollection.js",
+		"/Users/srmullen/you2score/app/scripts/models/StaffModel.js",
+		"/Users/srmullen/you2score/test/spec/models/ScoreModelSpec.js",
+		"/Users/srmullen/you2score/app/scripts/base/BaseCollection.js",
+		"/Users/srmullen/you2score/test/spec/base/BaseModelSpec.js",
+		"/Users/srmullen/you2score/test/spec/StaffModelSpec.js",
+		"/Users/srmullen/you2score/test/spec/ScoreModelSpec.js",
+		"/Users/srmullen/you2score/test/spec/test.js",
+		"/Users/srmullen/you2score/app/scripts/collections/MeasureCollection.js",
+		"/Users/srmullen/you2score/app/scripts/score/PaperScoreView.js",
+		"/Users/srmullen/you2score/app/scripts/measure/MeasureModel.js",
+		"/Users/srmullen/you2score/app/scripts/measure/MeasureView.js",
+		"/Users/srmullen/you2score/app/scripts/measure/measure.tmpl",
+		"/Users/srmullen/you2score/app/scripts/notes/NoteModel.js",
+		"/Users/srmullen/you2score/app/scripts/score/score.tmpl",
+		"/Users/srmullen/you2score/app/scripts/score/ScoreView.js",
+		"/Users/srmullen/you2score/app/scripts/score/ScoreModel.js",
+		"/Users/srmullen/you2score/app/scripts/score/MeasureCollection.js",
+		"/Users/srmullen/you2score/app/scripts/measure/NoteCollection.js",
+		"/Users/srmullen/you2score/app/styles/index.css",
+		"/Users/srmullen/you2score/app/scripts/base/BaseView.js",
+		"/Users/srmullen/you2score/app/scripts/notes/QuarterNoteView.js",
+		"/Users/srmullen/you2score/app/scripts/notes/quarterNote.tmpl",
+		"/Users/srmullen/you2score/app/scripts/notes/AbstractNoteView.js",
+		"/Users/srmullen/you2score/app/scripts/Score.js",
+		"/Users/srmullen/you2score/app/bower_components/jquery/package.json",
+		"/Users/srmullen/you2score/app/bower_components/jquery/component.json",
 		"/Users/srmullen/you/app/styles/score.css",
 		"/Users/srmullen/you/app/styles/bootstrap.css",
 		"/Users/srmullen/you/app/styles/h5bp.css",
@@ -341,73 +744,7 @@
 		"/Users/srmullen/Desktop/Spring 2012/Bioinformatics/gene_music/other_midi/t0.mid",
 		"/Users/srmullen/projects/ember-app/app/midi-files/t1c.mid",
 		"/Users/srmullen/Desktop/Spring 2012/Bioinformatics/gene_music/other_midi/requests.mid",
-		"/Users/srmullen/Desktop/Spring 2012/Bioinformatics/gene_music/other_midi/first_try_hex.mid",
-		"/Users/srmullen/Desktop/Spring 2012/Bioinformatics/gene_music/other_midi/midi_seqs.mid",
-		"/Users/srmullen/projects/ember-app/app/jasmid-master/minute_waltz.mid",
-		"/Users/srmullen/projects/ember-app/app/jasmid-master/index.html",
-		"/Users/srmullen/projects/ember-app/app/jasmid-master/replayer.js",
-		"/Users/srmullen/projects/ember-app/app/scripts/models/application-model.js",
-		"/Users/srmullen/projects/ember-app/app/scripts/store.js",
-		"/Users/srmullen/projects/audio_app/app/scripts/tuner.js",
-		"/Users/srmullen/projects/audio_app/app/index.html",
-		"/Users/srmullen/projects/audio_app/app/scripts/app.js",
-		"/Users/srmullen/projects/audio_app/app/scripts/main.js",
-		"/Users/srmullen/projects/audio_app/Gruntfile.js",
-		"/Users/srmullen/projects/audio_app/app/scripts/config.js",
-		"/Users/srmullen/projects/audio_app/app/scripts/router.js",
-		"/Users/srmullen/Documents/Library/jasmid-master/index.html",
-		"/Users/srmullen/Documents/Library/jasmid-master/replayer.js",
-		"/Users/srmullen/Documents/Library/jasmid-master/midifile.js",
-		"/Users/srmullen/Documents/Library/jasmid-master/stream.js",
-		"/Users/srmullen/Documents/Library/jasmid-master/README",
-		"/Users/srmullen/projects/audio_app/app/scripts/GuitarTuner.js",
-		"/Users/srmullen/projects/audio_app/app/scripts/dsp.js",
-		"/Users/srmullen/projects/audio_app/app/scripts/learnDsp/learnDspModel.js",
-		"/Users/srmullen/Desktop/spence/tuner.js",
-		"/Users/srmullen/Documents/Bach_midi/aof/can4.mid",
-		"/Users/srmullen/redis/redis-2.6.7/redis.conf",
-		"/Users/srmullen/redis/redis-2.6.7/sentinel.conf",
-		"/Users/srmullen/projects/audio_app/app/scripts/FunctionalityTests.js",
-		"/Users/srmullen/projects/app/app/index.html",
-		"/Users/srmullen/projects/app/app/scripts/main.js",
-		"/Users/srmullen/projects/app/app/scripts/vendor/require.js",
-		"/Users/srmullen/Documents/Library/dsp.js-master/dsp.js",
-		"/Users/srmullen/projects/app/app/scripts/recorder.js",
-		"/Users/srmullen/projects/app/app/scripts/recorderWorker.js",
-		"/Users/srmullen/Desktop/javascriptTuner.html",
-		"/Users/srmullen/projects/app/app/scripts/audioScript.js",
-		"/Users/srmullen/projects/web_audio/soundPage.html",
-		"/Users/srmullen/Desktop/tuner.js",
-		"/Users/srmullen/Bioinformatics/rosalind/counting-nucleotides.clj",
-		"/Users/srmullen/projects/web_audio/audioScript.js",
-		"/Users/srmullen/Documents/workspace/clojure/learning-clojure/checkers/project.clj",
-		"/Users/srmullen/projects/myapp/webapp/src/webapp/server.clj",
-		"/Users/srmullen/projects/myapp/webapp/src/webapp/views/welcome.clj",
-		"/Users/srmullen/projects/myapp/webapp/src/webapp/views/common.clj",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/app/styles/index.css",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/app/index.html",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/app/styles/h5bp.css",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/Gruntfile.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/scripts/config.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/scripts/app.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/scripts/router.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/public/scripts/main.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/Gruntfile.js",
-		"/Users/srmullen/projects/Noir-blog-master/src/noir_blog/views/common.clj",
-		"/Users/srmullen/projects/Noir-blog-master/src/noir_blog/server.clj",
-		"/Users/srmullen/projects/Noir-blog-master/resources/public/css/default.css",
-		"/Users/srmullen/projects/Noir-blog-master/resources/public/css/reset.css",
-		"/Users/srmullen/projects/Noir-blog-master/resources/public/css/seanstyle.css",
-		"/Users/srmullen/projects/myapp/webapp/resources/app/scripts/app.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/app/scripts/config.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/app/scripts/main.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/app/scripts/router.js",
-		"/Users/srmullen/projects/myapp/webapp/resources/app/index.html",
-		"/Users/srmullen/projects/myapp/webapp/resources/app/404.html",
-		"/Users/srmullen/projects/myapp/webapp/src/webapp/routes.clj",
-		"/Users/srmullen/projects/myapp/webapp/target/classes/noir/content/getting_started$header.class",
-		"/Users/srmullen/projects/myapp/webapp/.gitignore",
-		"/Users/srmullen/Documents/workspace/clojure/db-tutorial/src/db_tutorial/user.clj"
+		"/Users/srmullen/Desktop/Spring 2012/Bioinformatics/gene_music/other_midi/first_try_hex.mid"
 	],
 	"find":
 	{
@@ -425,6 +762,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"build",
+			"noteHelper",
+			"midiNum",
+			"should",
+			"Model",
+			"\n		",
 			"main",
 			"rope6crop",
 			"rope2cr",
@@ -473,8 +816,306 @@
 	"groups":
 	[
 		{
+			"selected": 10,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/index.html",
+					"settings":
+					{
+						"buffer_size": 2405,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1344,
+								1344
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/scripts/app.js",
+					"settings":
+					{
+						"buffer_size": 2213,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2028,
+								2028
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 434.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/scripts/models/ScoreModel.js",
+					"settings":
+					{
+						"buffer_size": 1078,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								800,
+								800
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/scripts/models/StaffModel.js",
+					"settings":
+					{
+						"buffer_size": 827,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								97,
+								97
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/scripts/models/MeasureModel.js",
+					"settings":
+					{
+						"buffer_size": 1055,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								258,
+								258
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/scripts/models/NoteModel.js",
+					"settings":
+					{
+						"buffer_size": 3648,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								168,
+								168
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/scripts/base/BaseModel.js",
+					"settings":
+					{
+						"buffer_size": 964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								551,
+								551
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/scripts/handlebarViews/ScoreView.js",
+					"settings":
+					{
+						"buffer_size": 248,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								102,
+								102
+							]
+						],
+						"settings":
+						{
+							"auto_name": "define([])",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/scripts/handlebarViews/score.tmpl",
+					"settings":
+					{
+						"buffer_size": 230,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								82,
+								82
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/scripts/base/HandlebarsBaseView.js",
+					"settings":
+					{
+						"buffer_size": 3057,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								914,
+								914
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 373.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "app/scripts/collections/StaffCollection.js",
+					"settings":
+					{
+						"buffer_size": 222,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -520,6 +1161,90 @@
 		"selected_items":
 		[
 			[
+				"handlebarb",
+				"app/scripts/base/HandlebarsBaseView.js"
+			],
+			[
+				"contex",
+				"app/scripts/base/Context.js"
+			],
+			[
+				"scor",
+				"app/styles/score.css"
+			],
+			[
+				"con",
+				"app/scripts/base/Context.js"
+			],
+			[
+				"noteh",
+				"app/scripts/helpers/NoteHelper.js"
+			],
+			[
+				"basemod",
+				"app/scripts/base/BaseModel.js"
+			],
+			[
+				"measuremo",
+				"app/scripts/models/MeasureModel.js"
+			],
+			[
+				"measuremod",
+				"test/spec/models/MeasureModelSpec.js"
+			],
+			[
+				"measureview",
+				"test/spec/views/MeasureViewSpec.js"
+			],
+			[
+				"notemodels",
+				"test/spec/models/NoteModelSpec.js"
+			],
+			[
+				"notecollecion",
+				"app/scripts/collections/NoteCollection.js"
+			],
+			[
+				"notev",
+				"app/scripts/views/NoteView.js"
+			],
+			[
+				"app",
+				"app/scripts/app.js"
+			],
+			[
+				"noteco",
+				"app/scripts/collections/NoteCollection.js"
+			],
+			[
+				"basem",
+				"app/scripts/base/BaseModel.js"
+			],
+			[
+				"bas",
+				"app/scripts/base/BaseModel.js"
+			],
+			[
+				"ma",
+				"app/scripts/main.js"
+			],
+			[
+				"notec",
+				"app/scripts/measure/NoteCollection.js"
+			],
+			[
+				"main",
+				"app/scripts/main.js"
+			],
+			[
+				"base",
+				"app/scripts/base/BaseCollection.js"
+			],
+			[
+				"note",
+				"app/scripts/measure/NoteCollection.js"
+			],
+			[
 				"h5",
 				"app/styles/h5bp.css"
 			],
@@ -541,7 +1266,7 @@
 		[
 			[
 				"",
-				"/Users/srmullen/you/youscore.sublime-project"
+				"/Users/srmullen/cs184/cs184.sublime-project"
 			]
 		],
 		"width": 380.0

@@ -1,8 +1,8 @@
 define(["base/PaperBaseView", 
 	"../models/SheetModel", 
-	"../views/MeasureView", 
+	"../paperViews/MeasureView", 
 	"../models/NoteModel", 
-	"../views/NoteView"], 
+	"../paperViews/NoteView"], 
 function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 
 	/*

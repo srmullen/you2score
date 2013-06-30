@@ -108,13 +108,6 @@ function (chai, ScoreModel, StaffModel) {
 				expect(scoreModel.addStaves).to.be.ok;
 			});
 
-			// Need to work on StaffModel attributes
-			it("should add a default StaffModel given no paramaters", function () {
-				expect(scoreModel.get("staves").length).to.equal(0);
-				scoreModel.addStaves();
-				expect(scoreModel.get("staves").length).to.equal(1);
-			});
-
 			it("should add the StaffModel given a StaffModel", function () {
 				expect(scoreModel.get("staves").length).to.equal(0);
 
@@ -122,11 +115,12 @@ function (chai, ScoreModel, StaffModel) {
 				var cid = staffModel.cid;
 				scoreModel.addStaves(staffModel);
 				expect(scoreModel.get("staves").get(cid)).to.equal(staffModel);
-			})
+				expect(scoreModel.get("staves").length).to.equal(1);
+			});
 
 			afterEach(function () {
 				scoreModel.nuke();
-			})
+			});
 
 		});
 	});

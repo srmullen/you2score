@@ -26,7 +26,7 @@ define(["backbone"], function (Backbone) {
 		// it should serialize any models or collections belonging too it as well
 		serialize: function () {
 
-		}
+		},
 
 		// no-op method, should be overridden in child class or maybe externalized
 		// generate a playable midi file of this and all child models

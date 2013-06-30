@@ -41,7 +41,7 @@ define(["backbone", "handlebars"], function (Backbone, Handlebars) {
 			data = this.modelToTmplContext(data);
 
 			var tmpl = Handlebars.compile(this.template);
-			return tmpl(this.model);
+			return tmpl(data);
 		},
 
 		// The serialize method is responsible for taking the view's data 

@@ -30,8 +30,21 @@ require.config({
     }
 });
 
-require(["app", 'jquery', 'bootstrap'], function (App, $) {
+require(["app", 'jquery', 'handlebars', 'bootstrap'], function (App, $, Handlebars) {
     'use strict';
+
+    // Handlebars helper to iterate over the models in a collection and 
+    // use its attributes as the template context
+    // FIXME: Should be in a handlebars helper file.
+    Handlebars.registerHelper("eachModel", function (context, options) {
+        var ret = "";
+
+        for (var i = 0, l = context.models.length; i < l; i++) {
+            ret += options.fn(context.models[i].toJSON());
+        }
+
+        return ret;
+    });
 
     var app = new App();
 });

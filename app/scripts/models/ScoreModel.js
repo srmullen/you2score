@@ -15,7 +15,6 @@ function (BaseModel, StaffCollection, StaffModel) {
 		locked: false,
 
 		defaults: {
-			staves: new StaffCollection(),
 			markings: [] // Could be use for additional markings to the staff that need to be saved.
 		},
 
@@ -24,9 +23,13 @@ function (BaseModel, StaffCollection, StaffModel) {
 				this.locked = options.locked || false;
 			}
 
+			if (this.get("staves") === undefined) {
+				this.set({staves: new StaffCollection});
+			}
+
 			this.listenTo(this.get("staves"), "add", function () {
 				console.log("more staves!");
-			})
+			});
 		},
 
 		/**

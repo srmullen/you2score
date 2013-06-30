@@ -1,0 +1,11 @@
+{{#eachModel staves}}
+	<div>{{instrument}}</div>
+	<ul>
+		{{#eachModel notes}}
+			<li>{{type}}</li>
+		{{/eachModel}}
+		{{#eachModel measures}}
+			<li>{{clef}}</li>
+		{{/eachModel}}
+	</ul>
+{{/eachModel}}

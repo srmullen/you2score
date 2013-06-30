@@ -14,11 +14,14 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		defaults: {
 			clef: "treble",
 			meter: {upper: 4, lower: 4},
-			notes: new NoteCollection()
 		},
 		
 		initialize: function () {
 			console.log("Initializing MeasureModel");
+
+			if (this.get("notes") === undefined) {
+				this.set({notes: new NoteCollection});
+			}
 		},
 
 		// Can only add one note at a time.

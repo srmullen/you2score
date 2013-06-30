@@ -1,22 +1,31 @@
 /*global define */
 define(["base/HandlebarsBaseView", 
   "base/Context",
-  "score/PaperScoreView", 
-  "models/ScoreModel", 
+  // "score/PaperScoreView",
+
+  /* html model testing */
+  "models/ScoreModel",
+  "handlebarViews/ScoreView",
   "models/NoteModel", 
-  "views/NoteView",
-  "views/MeasureView",
   "models/MeasureModel",
-  "views/SheetView",
+  "models/StaffModel",
+
+  "paperViews/NoteView",
+  "paperViews/MeasureView",
+  "paperViews/SheetView",
   "models/SheetModel"], 
 function (HandlebarsBaseView, 
           Context, 
-          PaperScoreView, 
+          // PaperScoreView, 
+          
           ScoreModel, 
+          ScoreView,
           NoteModel, 
+          MeasureModel,
+          StaffModel,
+
           NoteView, 
           MeasureView, 
-          MeasureModel, 
           SheetView,
           SheetModel) {
     'use strict';
@@ -55,9 +64,36 @@ function (HandlebarsBaseView,
           // // Add the MeasureView to the Context
           // var measure = context.addChildView(MeasureView, measureModel);
 
-          var sheetModel = new SheetModel();
 
-          var sheet = context.addChildView(SheetView, sheetModel);
+          var scoreModel = new ScoreModel();
+          // Create Staves and add them to the score model
+          var staff1 = new StaffModel({instrument: "Voice"});
+          var staff2 = new StaffModel({instrument: "Piano"});
+          scoreModel.addStaves([staff1, staff2]);
+
+          // create some notes and add them to the staff models
+          var note1 = new NoteModel({type: 1}),
+              note2 = new NoteModel({type: 1/2}),
+              note3 = new NoteModel({type: 1/4}),
+              note4 = new NoteModel({type: 1/8});
+
+          staff1.addNote(note1);
+          staff1.addNote(note2);
+          staff2.addNote(note3);
+          staff2.addNote(note4);
+
+          // create some measures and add them to the staves
+          var measure1 = new MeasureModel(),
+              measure2 = new MeasureModel();
+
+          staff1.addMeasure(measure1);
+          staff2.addMeasure(measure2);
+          
+          var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
+
+          // // Render as paper
+          // var sheetModel = new SheetModel();
+          // var sheet = context.addChildView(SheetView, sheetModel);
 
   		}
   	});

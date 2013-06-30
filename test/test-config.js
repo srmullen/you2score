@@ -43,7 +43,6 @@ require(["require", "mocha"], function (require) {
 		"spec/models/MeasureModelSpec",
 		"spec/collections/NoteCollectionSpec",
 		"spec/models/NoteModelSpec",
-		"spec/factories/NoteModelFactorySpec",
 		"spec/helpers/NoteHelperSpec"/*,
 		"spec/views/MeasureViewSpec"*/ // needs and http server to run
 	], function () {
