@@ -3,3 +3,5 @@ dist
 .tmp
 .sass-cache
 app/bower_components
+you2score.sublime-project
+you2score.sublime-workspace
