@@ -31,7 +31,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		 * @param note {NoteModel} - the NoteModel to be added to the NoteCollection
 		 */
 		addNote: function (note) {
-			if (canAdd(note)) {
+			if (this.canAdd(note)) {
 				this.get('notes').add(note);
 			}
 		},

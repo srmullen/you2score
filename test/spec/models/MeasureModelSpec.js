@@ -1,7 +1,12 @@
-define(["chai", "scripts/models/MeasureModel", "scripts/collections/NoteCollection", "scripts/models/NoteModel"], 
-function (chai, MeasureModel, NoteCollection, NoteModel) {
+define(["chai", "sinonChai", 
+	"scripts/models/MeasureModel", 
+	"scripts/collections/NoteCollection", 
+	"scripts/models/NoteModel"], 
+function (chai, sinonChai, MeasureModel, NoteCollection, NoteModel) {
 
 	var expect = chai.expect;
+	
+	chai.use(sinonChai);
 
 	describe("MeasureModel", function () {
 		var measureModel;
@@ -92,6 +97,16 @@ function (chai, MeasureModel, NoteCollection, NoteModel) {
 		});
 
 		describe("Method: canAdd", function () {
+
+			it("should be called when adding a note", function () {
+				measureModel = new MeasureModel();
+				var spy = sinon.spy(measureModel, "canAdd");
+				var note = new NoteModel();
+				measureModel.addNote(note);
+
+				expect(spy).to.have.been.called;
+			});
+
 			it("should return true if the measure has no meter", function () {
 				measureModel = new MeasureModel();
 				expect(measureModel.get('meter')).to.be.undefined;
