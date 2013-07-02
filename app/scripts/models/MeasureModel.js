@@ -8,6 +8,9 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	 *	meter {Object} - example {upper: 3, lower: 4} it might be a good idea to use where in 
 	 *		the futher there could be Backbone objects.
 	 *	notes {NoteCollection} - Collection of notes in the measure
+	 *
+	 * Properties: Properties can often be calculated from the attributes and don't need to be stored in the DB
+	 *	remainingDuration - {Number} the maximum duration of a note that can be place in the measure.
 	 */
 	var MeasureModel = BaseModel.extend({
 
@@ -23,6 +26,10 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 			if (this.get("notes") === undefined) {
 				this.set({notes: new NoteCollection});
 			}
+
+			// calculate the remaining duration and set it as a property
+			// TORESEARCH: might actually be less expensive to calulate just when it's needed
+			this.remainingDuration = this.calculateRemainingDuration();
 		},
 
 		// Can only add one note at a time.
@@ -33,6 +40,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		addNote: function (note) {
 			if (this.canAdd(note)) {
 				this.get('notes').add(note);
+				this.remainingDuration = this.calculateRemainingDuration(); // might want to listen for the add event
 			}
 		},
 
@@ -42,6 +50,24 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		 */
 		canAdd: function (note) {
 			if (this.get("meter") === undefined) return true;
+			if (this.get("remainingDuration") < note.get("duration")) return true;
+			return false;
+		},
+
+		/*
+		 * Calculates the maximum note length that can be added to the note collection.
+		 */
+		calculateRemainingDuration: function () {
+			if (!this.get("meter")) return Infinity;
+		},
+
+		calculateTotalDuration: function () {
+			var meter = this.get("meter");
+			if (meter) { 
+				return meter.upper / meter.lower;
+			} else {
+				return Infinity;
+			}
 		}
 	});
 	return MeasureModel;
