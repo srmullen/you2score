@@ -9,7 +9,7 @@ function (chai, StaffModel, MeasureCollection, NoteCollection, MeasureModel, Not
 	var expect = chai.expect;
 
 	describe("StaffModel", function () {
-		var staffModel;
+		var staffModel, measureCollection, noteCollection;
 
 		describe("Initialization", function () {
 			it("should be defined", function () {
@@ -49,20 +49,34 @@ function (chai, StaffModel, MeasureCollection, NoteCollection, MeasureModel, Not
 
 			it("should do nothing if there are no notes", function () {
 				expect(staff.get("notes").length).to.equal(0);
-				expect(staff.get("measures").length).to.equal(0);
+				expect(staff.get("measures").length).to.equal(1);
 				staff.notesIntoMeasures();
 				expect(staff.get("notes").length).to.equal(0);
-				expect(staff.get("measures").length).to.equal(0);
+				expect(staff.get("measures").length).to.equal(1);
 			});
 
-			it("should add a barebones measure if the measure collection is empty", function () {
+			xit("should add a barebones measure if the measure collection is empty", function () {
 				expect(staff.get("measures").length).to.equal(0);
-				expect(staff.get("measures").length).to.equal(0);
+				expect(staff.get("measures").length).to.equal(1);
 				var note = new NoteModel();
 				staff.addNote(note);
 				staff.notesIntoMeasures();
 				expect(staff.get("notes").length).to.equal(1);
 				expect(staff.get("measures").length).to.equal(1);
+			});
+
+			it("should add notes to the MeasureModel's NoteCollection", function () {
+				var note1 = new NoteModel();
+				noteCollection = new NoteCollection([note1]);
+				measureCollection = new MeasureCollection();
+				staffModel = new StaffModel();
+				staffModel.notesIntoMeasures();
+				expect(measureCollection.get(note1)).to.be.ok;
+				expect(noteCollection.at(0) === measureCollection.at(0).get("notes").at(0)).to.be.true;
+			});
+
+			it("MeasureModel.NoteCollection and StaffModel.NoteCollection should refernce the same notes", function () {
+
 			});
 		});
 
@@ -72,10 +86,10 @@ function (chai, StaffModel, MeasureCollection, NoteCollection, MeasureModel, Not
 	          	var staff2 = new StaffModel({instrument: "Piano"});
 	          	var measure = new MeasureModel();
 
-	          	expect(staff1.get("measures").length).to.equal(0);
-	          	staff1.addMeasure(measure);
 	          	expect(staff1.get("measures").length).to.equal(1);
-	          	expect(staff2.get("measures").length).to.equal(0);
+	          	staff1.addMeasure(measure);
+	          	expect(staff1.get("measures").length).to.equal(2);
+	          	expect(staff2.get("measures").length).to.equal(1);
 			});
 
 			it("Different staves should have different NoteCollections", function () {

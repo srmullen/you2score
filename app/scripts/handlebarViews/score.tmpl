@@ -1,11 +1,15 @@
 {{#eachModel staves}}
 	<div>{{instrument}}</div>
 	<ul>
+		<li><b>Notes</b></li>
 		{{#eachModel notes}}
 			<li>{{type}}</li>
 		{{/eachModel}}
+		<li><b>Measures</b></li>
 		{{#eachModel measures}}
-			<li>{{clef}}</li>
+			{{#eachModel notes}}
+				<li>{{type}}</li>
+			{{/eachModel}}
 		{{/eachModel}}
 	</ul>
 {{/eachModel}}

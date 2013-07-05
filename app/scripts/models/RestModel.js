@@ -1,0 +1,1 @@
+// The commonalities of rests and notes should be extracted out into a parent class

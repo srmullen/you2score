@@ -116,7 +116,7 @@ function (chai, sinonChai, MeasureModel, NoteCollection, NoteModel) {
 
 			it("should return false if the notes duration is greater than the mesure remaining duration", function () {
 				measureModel = new MeasureModel({meter: {upper: 4, lower: 4}});
-				var note = new NoteModel({duration: 2});
+				var note = new NoteModel({type: 2});
 				expect(measureModel.canAdd(note)).to.be.false;
 			});
 		});
@@ -165,6 +165,30 @@ function (chai, sinonChai, MeasureModel, NoteCollection, NoteModel) {
 				var note = new NoteModel({type: 1/4});
 				measureModel.addNote(note);
 				expect(spy).to.have.been.called;
+			});
+
+			it("should be called when a note is removed from the NoteCollection", function () {
+				measureModel = new MeasureModel({upper: 4, lower: 4});
+				var note = new NoteModel({type: 1/4});
+				measureModel.addNote(note);
+				var spy = sinon.spy(measureModel, "calculateRemainingDuration");
+				expect(spy).not.to.have.been.called;
+				measureModel.removeNote(note);
+				expect(spy).to.have.been.called;
+			});
+
+			it("should return the difference of the total measure duration and the sum of the notes in it", function () {
+				measureModel = new MeasureModel({meter: {upper: 4, lower: 4}});
+				var note = new NoteModel({type: 1/4});
+				expect(measureModel.calculateRemainingDuration()).to.equal(1);
+				measureModel.addNote(note);
+				expect(measureModel.calculateRemainingDuration()).to.equal(0.75);
+				var bigNote = new NoteModel({type: 2});
+				measureModel.addNote(bigNote);
+				expect(measureModel.calculateRemainingDuration()).to.equal(0.75);
+				var note2 = new NoteModel({type: 1/2, dotted: true}); // this note will fill up the rest of the measure
+				measureModel.addNote(note2);
+				expect(measureModel.calculateRemainingDuration()).to.equal(0);
 			});
 		});
 

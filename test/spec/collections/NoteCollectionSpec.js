@@ -30,5 +30,15 @@ function (chai, NoteCollection, NoteModel) {
 				expect(noteCollection.getTotalDuration()).to.equal(2.25);
 			});
 		});
+
+		describe("Method: addNote", function () {
+			it("should add a note to the end of the collection", function () {
+				noteCollection = new NoteCollection();
+				var note1 = new NoteModel(),
+					note2 = new NoteModel();
+				expect(noteCollection.last()).not.to.be.ok;
+
+			})
+		});
 	});
 });

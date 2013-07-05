@@ -9,7 +9,7 @@ define(["paper"], function () {
 
 		this.canvas = canvas;
 
-		paper.setup(canvas);
+		paper.setup(canvas); // if for some reason paper is undefined, make sure it doesn't need to be rebuilt
 
 		this.addChildView = function (View, model) {
 

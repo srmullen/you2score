@@ -19,7 +19,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		// defaults: {
 		// 	clef: "treble",
 		// },
-		
+
 		initialize: function () {
 			console.log("Initializing MeasureModel");
 
@@ -30,6 +30,15 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 			// calculate the remaining duration and set it as a property
 			// TORESEARCH: might actually be less expensive to calulate just when it's needed
 			this.remainingDuration = this.calculateRemainingDuration();
+
+			this.on("change:meter", function () {
+				this.remainingDuration = this.calculateRemainingDuration();
+			});
+
+			// listen to events from the NoteCollection
+			this.listenTo(this.get("notes"), "add remove", function () {
+				this.remainingDuration = this.calculateRemainingDuration();
+			});
 		},
 
 		// Can only add one note at a time.
@@ -40,8 +49,11 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		addNote: function (note) {
 			if (this.canAdd(note)) {
 				this.get('notes').add(note);
-				this.remainingDuration = this.calculateRemainingDuration(); // might want to listen for the add event
 			}
+		},
+
+		removeNote: function (note) {
+			this.get('notes').remove(note);
 		},
 
 		/**
@@ -50,7 +62,7 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		 */
 		canAdd: function (note) {
 			if (this.get("meter") === undefined) return true;
-			if (this.get("remainingDuration") < note.get("duration")) return true;
+			if (this.remainingDuration >= note.get("duration")) return true;
 			return false;
 		},
 
@@ -58,7 +70,9 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		 * Calculates the maximum note length that can be added to the note collection.
 		 */
 		calculateRemainingDuration: function () {
-			if (!this.get("meter")) return Infinity;
+			var meter = this.get("meter");
+			if (!meter) return Infinity;
+			return this.calculateTotalDuration() - this.get("notes").getTotalDuration();
 		},
 
 		calculateTotalDuration: function () {

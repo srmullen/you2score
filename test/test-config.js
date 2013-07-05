@@ -45,7 +45,7 @@ require(["require", "mocha"], function (require) {
 		// "spec/base/BaseCollectionSpec",
 		// "spec/models/ScoreModelSpec", 
 		"spec/models/StaffModelSpec",
-		// "spec/collections/MeasureCollectionSpec",
+		"spec/collections/MeasureCollectionSpec",
 		"spec/models/MeasureModelSpec",
 		"spec/collections/NoteCollectionSpec",
 		"spec/models/NoteModelSpec"
