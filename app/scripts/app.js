@@ -9,6 +9,7 @@ define(["base/HandlebarsBaseView",
   "models/NoteModel", 
   "models/MeasureModel",
   "models/StaffModel",
+  "text!../examples/cmajScale.json",
 
   "paperViews/NoteView",
   "paperViews/MeasureView",
@@ -23,6 +24,7 @@ function (HandlebarsBaseView,
           NoteModel, 
           MeasureModel,
           StaffModel,
+          cmaj,
 
           NoteView, 
           MeasureView, 
@@ -65,29 +67,34 @@ function (HandlebarsBaseView,
           // var measure = context.addChildView(MeasureView, measureModel);
 
 
-          var scoreModel = new ScoreModel();
-          // Create Staves and add them to the score model
-          var staff1 = new StaffModel({instrument: "Voice"});
-          var staff2 = new StaffModel({instrument: "Piano"});
-          scoreModel.addStaves([staff1, staff2]);
 
-          // create some notes and add them to the staff models
-          var note1 = new NoteModel({type: 1}),
-              note2 = new NoteModel({type: 1/2}),
-              note3 = new NoteModel({type: 1/4}),
-              note4 = new NoteModel({type: 1/8});
+          // // Switch to external json file for testing
+          // var scoreModel = new ScoreModel();
+          // // Create Staves and add them to the score model
+          // var staff1 = new StaffModel({instrument: "Voice"});
+          // var staff2 = new StaffModel({instrument: "Piano"});
+          // scoreModel.addStaves([staff1, staff2]);
 
-          staff1.addNote(note1);
-          staff1.addNote(note2);
-          staff2.addNote(note3);
-          staff2.addNote(note4);
+          // // create some notes and add them to the staff models
+          // var note1 = new NoteModel({type: 1}),
+          //     note2 = new NoteModel({type: 1/2}),
+          //     note3 = new NoteModel({type: 1/4}),
+          //     note4 = new NoteModel({type: 1/8});
 
-          // create some measures and add them to the staves
-          var measure1 = new MeasureModel(),
-              measure2 = new MeasureModel();
+          // staff1.addNote(note1);
+          // staff1.addNote(note2);
+          // staff2.addNote(note3);
+          // staff2.addNote(note4);
 
-          staff1.addMeasure(measure1);
-          staff2.addMeasure(measure2);
+          // // create some measures and add them to the staves
+          // var measure1 = new MeasureModel(),
+          //     measure2 = new MeasureModel();
+
+          // staff1.addMeasure(measure1);
+          // staff2.addMeasure(measure2);
+
+          var cMaJson = JSON.parse(cmaj);
+          var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
           
           var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
 

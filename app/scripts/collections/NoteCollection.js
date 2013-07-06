@@ -1,6 +1,8 @@
-define(["base/BaseCollection"], function (BaseCollection) {
+define(["base/BaseCollection", "../models/NoteModel"], function (BaseCollection, NoteModel) {
 
 	var NoteCollection = BaseCollection.extend({
+
+		model: NoteModel,
 
 		initialize: function () {
 			console.log("Initializing NoteCollection");

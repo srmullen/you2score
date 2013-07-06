@@ -4,23 +4,34 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 	/**
 	 * Attributes:
 	 *	instrument	{String (for now)} - The instrument the staff is to be played by.
-	 *	measures	{MeasureCollection[], MeasureCollection} - Array of MeasureModels, one for each line of music.
-	 *  notes		{NoteCollection[], NoteCollection} - same number and order as measures
+	 *	measures	{MeasureCollection[]} - Array of MeasureModels, one for each line of music.
+	 *  notes		{NoteCollection[]} - same number and order as measures
 	 */
 	var StaffModel = BaseModel.extend({
 
-		initialize: function () {
+		initialize: function (attributes, options) {
 			console.log("Initializing StaffModel");
-
 			// Set a MeasureCollection if one wasn't passed in the attributes
-			if (this.get("measures") === undefined) {
-				this.set({measures: new MeasureCollection()}); 
+			if (!this.get("measures")) {
+				this.set({measures: []}); 
 			}
 
 			// Set a NoteCollection if one wasn't passed in the attributes
-			if (this.get("notes") === undefined) {
-				this.set({notes: new NoteCollection()});
+			if (!this.get("notes")) {
+				this.set({notes: []});
 			}
+		},
+
+		parse: function (data, options) {
+			this.set({
+				instrument: data.instrument,
+				measures: _.map(data.measures, function (coll) {
+					return new MeasureCollection(coll);
+				}),
+				notes: _.map(data.notes, function (coll) {
+					return new NoteCollection(coll);
+				})
+			});
 		},
 
 		// Copies the notes in the note collection into the correct Measure
@@ -70,10 +81,30 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 		},
 
 		/*
+		 * Convienience method for getting a nested measure.
 		 * @return MeasureModel at the specified index.
 		 */
-		getMeasure: function (index) {
-			return this.get("measures").at(index);
+		getMeasure: function (i, j) {
+			return this.getLine(i).at(j);
+		},
+
+		/*
+		 * Gets an entire MeasureCollection.
+		 */
+		getLine: function (index) {
+			return this.get("measures")[index];
+		},
+
+		/*
+		 * @param line - The MeasureCollection to insert into the measures array
+		 * @param index - The optional index to insert at
+		 */
+		addLine: function (line, index) {
+			if (typeof index === 'undefined') {
+				this.get("measures").push(line);
+			} else {
+				this.get("measures").splice(index, 0, line);
+			}
 		},
 
 		// Not important right now. Implement in the future

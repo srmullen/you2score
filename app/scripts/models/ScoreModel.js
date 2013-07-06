@@ -23,13 +23,25 @@ function (BaseModel, StaffCollection, StaffModel) {
 				this.locked = options.locked || false;
 			}
 
-			if (this.get("staves") === undefined) {
-				this.set({staves: new StaffCollection});
+			// needs to exist if it's going to be listened to, even if parse isn't called.
+			if (!this.get("staves")) {
+				this.set({staves: new StaffCollection()});
 			}
 
 			this.listenTo(this.get("staves"), "add", function () {
 				console.log("more staves!");
 			});
+		},
+
+		parse: function (data, options) {
+			console.log("parsing");
+
+			// Set the staves. If data.staves is undefined it will just be an empty staff collection.
+			this.set({staves: new StaffCollection(data.staves)});
+
+			this.set({title: data.title});
+
+			this.set({composer: data.composer});
 		},
 
 		/**

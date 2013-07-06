@@ -2,6 +2,8 @@ define(["base/BaseCollection", "../models/MeasureModel"], function (BaseCollecti
 
 	var MeasureCollection = BaseCollection.extend({
 
+		model: MeasureModel,
+		
 		initialize: function () {
 			// Add a measure if none are passed in
 			if (this.isEmpty()) this.add(new MeasureModel());

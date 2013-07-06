@@ -59,6 +59,21 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 				this.on("change:triplet", this.updateDuration);
 			},
 
+			parse: function (data, options) {
+				this.set({
+					pitch: data.pitch,
+					midiNote: data.midiNote,
+					freq: data.freq,
+					type: data.type,
+					dotted: data.dotted,
+					triplet: data.triplet,
+					duration: data.duration,
+					dynamic: data.dynamic,
+					volume: data.volume,
+					stacato: data.stacato,
+					legato: data.legato
+				});
+			},
 			 
 			/* Explicit setter functions are needed because setting one property can alter another. */
 			 

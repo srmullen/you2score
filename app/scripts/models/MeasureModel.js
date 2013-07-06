@@ -14,12 +14,6 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	 */
 	var MeasureModel = BaseModel.extend({
 
-		// clef might be better as an attribute of StaffModel, and can be overwritten for
-		// individual measure when it needs to be
-		// defaults: {
-		// 	clef: "treble",
-		// },
-
 		initialize: function () {
 			console.log("Initializing MeasureModel");
 
@@ -38,6 +32,16 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 			// listen to events from the NoteCollection
 			this.listenTo(this.get("notes"), "add remove", function () {
 				this.remainingDuration = this.calculateRemainingDuration();
+			});
+		},
+
+		parse: function (data, options) {
+			this.set({
+				key: data.key, 
+				accidentals: data.accidentals,
+				clef: data.clef,
+				meter: data.meter,
+				notes: new NoteCollection(data.notes)
 			});
 		},
 
