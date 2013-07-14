@@ -19,6 +19,7 @@ function (BaseModel, StaffCollection, StaffModel) {
 		},
 
 		initialize: function (attributes, options) {
+			console.log("Initializing ScoreModel");
 			if (options) {
 				this.locked = options.locked || false;
 			}
@@ -37,7 +38,7 @@ function (BaseModel, StaffCollection, StaffModel) {
 			console.log("parsing");
 
 			// Set the staves. If data.staves is undefined it will just be an empty staff collection.
-			this.set({staves: new StaffCollection(data.staves)});
+			this.set({staves: new StaffCollection(data.staves, {parse: true})});
 
 			this.set({title: data.title});
 

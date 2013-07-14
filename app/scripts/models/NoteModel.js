@@ -26,14 +26,17 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 			initialize: function (attributes) {
 				console.log("Initializeing NoteModel");
 				/* Ignore for now, will use later */
-				if (attributes) {
-					if (attributes.pitch) {
-						var p = attributes.pitch, f, m;
-						f = noteHelper.pitchToFreq(p);
-						m = noteHelper.pitchToMidi(p);
-						this.set({freq: f}); // use Backbone set, so not to reinvoke conversion logic
-						this.set({midiNote: m});
-					}
+				// if (attributes) {
+				// 	if (attributes.pitch) {
+				// 		var p = attributes.pitch, f, m;
+
+				// 		// These should only be calculated when needed
+				// 		// f = noteHelper.pitchToFreq(p);
+				// 		// m = noteHelper.pitchToMidi(p);
+
+				// 		this.set({freq: f}); // use Backbone set, so not to reinvoke conversion logic
+				// 		this.set({midiNote: m});
+				// 	}
 
 					// if (attributes.midiNote) {
 					// 	var m = attributes.midiNote, p, f;
@@ -50,7 +53,7 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 					// 	this.set({pitch: p}); // use Backbone set, so not to reinvoke conversion logic
 					// 	this.set({midi: m});
 					// }
-				}
+				// }
 
 				// calculate the duration
 				this.set({duration: this.calculateDuration()});
@@ -60,8 +63,9 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 			},
 
 			parse: function (data, options) {
+				console.log("Parsing NoteModel");
 				this.set({
-					pitch: data.pitch,
+					pitch: data.pitch, //FIXME: will probably need to convert this to a pitch object
 					midiNote: data.midiNote,
 					freq: data.freq,
 					type: data.type,

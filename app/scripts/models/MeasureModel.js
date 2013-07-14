@@ -6,7 +6,8 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 	 *	accidentals {Object?} - note to accidental mapping (I can't remember what I wanted this for)
 	 *	clef {string} - which clef is the measure written in
 	 *	meter {Object} - example {upper: 3, lower: 4} it might be a good idea to use where in 
-	 *		the futher there could be Backbone objects.
+	 *		the futher there could be Backbone objects. Should be same object as in its containing staff
+	 *		except when deviating from the norm.
 	 *	notes {NoteCollection} - Collection of notes in the measure
 	 *
 	 * Properties: Properties can often be calculated from the attributes and don't need to be stored in the DB
@@ -36,12 +37,13 @@ define(["base/BaseModel", "../collections/NoteCollection"], function (BaseModel,
 		},
 
 		parse: function (data, options) {
+			console.log("Parsing MeasureModel");
 			this.set({
 				key: data.key, 
 				accidentals: data.accidentals,
 				clef: data.clef,
 				meter: data.meter,
-				notes: new NoteCollection(data.notes)
+				notes: new NoteCollection(data.notes, {parse: true})
 			});
 		},
 

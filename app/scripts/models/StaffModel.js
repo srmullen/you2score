@@ -4,6 +4,7 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 	/**
 	 * Attributes:
 	 *	instrument	{String (for now)} - The instrument the staff is to be played by.
+	 *	meter		{Object} - To give to the measures
 	 *	measures	{MeasureCollection[]} - Array of MeasureModels, one for each line of music.
 	 *  notes		{NoteCollection[]} - same number and order as measures
 	 */
@@ -23,14 +24,19 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 		},
 
 		parse: function (data, options) {
+			// make sure notes and measures are defined
+			data.measures = data.measures || [];
+			data.notes = data.notes || [];
+			
 			this.set({
 				instrument: data.instrument,
 				measures: _.map(data.measures, function (coll) {
-					return new MeasureCollection(coll);
-				}),
-				notes: _.map(data.notes, function (coll) {
-					return new NoteCollection(coll);
+					return new MeasureCollection(coll, {parse: true});
 				})
+				// Ignore notes for now.
+				// notes: _.map(data.notes, function (coll) {
+				// 	return new NoteCollection(coll);
+				// })
 			});
 		},
 

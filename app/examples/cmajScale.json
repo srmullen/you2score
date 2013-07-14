@@ -4,25 +4,37 @@
 		"staves": [
 			{
 				"instrument": "Piano",
+				"meter": {"upper": 4, "lower": 4},
 				"measures": [
 					{
-						"clef": {"upper": 4, "lower": "Infinity"},
 						"notes": [
-							{"pitch": "C4"},
-							{"pitch": "D4"},
-							{"pitch": "E4"},
-							{"pitch": "F4"},
-							{"pitch": "G4"},
-							{"pitch": "A4"},
-							{"pitch": "B4"},
-							{"pitch": "C5"},
-							{"pitch": "B4"},
-							{"pitch": "A4"},
-							{"pitch": "G4"},
-							{"pitch": "F4"},
-							{"pitch": "E4"},
-							{"pitch": "D4"},
-							{"pitch": "C4"}
+							{"pitch": "C4", "type": 0.25},
+							{"pitch": "D4", "type": 0.25},
+							{"pitch": "E4", "type": 0.25},
+							{"pitch": "F4", "type": 0.25}
+						]
+					},
+					{	
+						"notes": [
+							{"pitch": "G4", "type": 0.25},
+							{"pitch": "A4", "type": 0.25},
+							{"pitch": "B4", "type": 0.25},
+							{"pitch": "C5", "type": 0.25}
+						]
+					},
+					{
+						"notes": [
+							{"pitch": "B4", "type": 0.25},
+							{"pitch": "A4", "type": 0.25},
+							{"pitch": "G4", "type": 0.25},
+							{"pitch": "F4", "type": 0.25}
+						]
+					},
+					{
+						"notes": [
+							{"pitch": "E4", "type": 0.25},
+							{"pitch": "D4", "type": 0.25},
+							{"pitch": "C4", "type": 0.50}
 						]
 					}
 				]

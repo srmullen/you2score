@@ -1,15 +1,14 @@
 {{#eachModel staves}}
 	<div>{{instrument}}</div>
 	<ul>
-		<li><b>Notes</b></li>
-		{{#eachModel notes}}
-			<li>{{type}}</li>
-		{{/eachModel}}
 		<li><b>Measures</b></li>
-		{{#eachModel measures}}
-			{{#eachModel notes}}
-				<li>{{type}}</li>
+		{{#each measures}}
+			{{#eachModel this}} {{!FIXME: measures is now an array of Collections so it cant be directly iterated over}}
+				<li><b>Measure {{@index}}</b></li>
+				{{#eachModel notes}}
+					<li>pitch: {{pitch}}, type: {{type}}, duration: {{duration}}</li>
+				{{/eachModel}}
 			{{/eachModel}}
-		{{/eachModel}}
+		{{/each}}
 	</ul>
 {{/eachModel}}

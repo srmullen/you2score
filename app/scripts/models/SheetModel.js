@@ -6,11 +6,11 @@ function (BaseModel, NoteCollection, MeasureCollection) {
 	 */
 	var SheetModel = BaseModel.extend({
 
-		defaults: {
-			staves: 10,
-			notes: new NoteCollection(),
-			measures: new MeasureCollection()
-		},
+		// defaults: {
+		// 	staves: 10,
+		// 	notes: new NoteCollection(),
+		// 	measures: new MeasureCollection()
+		// },
 
 		initialize: function () {
 			
