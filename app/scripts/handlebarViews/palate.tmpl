@@ -1,0 +1,22 @@
+<div id="palate" class="palate">
+    <form id="noteForm" action="#">
+        <label>Staff 
+            <select name="staff">
+                {{#eachModel staves}}
+                    <option value="{{instrument}}">{{instrument}}</option>
+                {{/eachModel}}
+            </select>
+        </label>
+        <label>Measure <input type="text" /></label>
+        <label>#-let <input type="text" /></label>
+        <label><input type="checkbox" name="stacato" value="stacato" /> Stacato</label>
+        <label><input type="checkbox" name="legato" value="legato" /> Legato</label>
+        <label>Dotted<input type="text" name="dotted" value="0" /></label> 
+        <label><input type="radio" name="type" value="1" /> Whole Note</label>
+        <label><input type="radio" name="type" value="1/2" /> Half Note</label>
+        <label><input type="radio" name="type" value="1/4" /> Quarter Note</label>
+        <label><input type="radio" name="type" value="1/8" /> Eigth Note</label>
+        <label><input type="radio" name="type" value="1/16" /> Sixteenth Note</label>
+        <button id="addNoteBtn" class="button">Add Note</button>
+    </form>
+</div>

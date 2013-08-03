@@ -5,41 +5,44 @@
 			{
 				"instrument": "Piano",
 				"meter": {"upper": 4, "lower": 4},
-				"measures": [
+				"systems": [
 					{
-						"notes": [
-							{"pitch": "C4", "type": 0.25},
-							{"pitch": "D4", "type": 0.25},
-							{"pitch": "E4", "type": 0.25},
-							{"pitch": "F4", "type": 0.25}
-						]
-					},
-					{	
-						"notes": [
-							{"pitch": "G4", "type": 0.25},
-							{"pitch": "A4", "type": 0.25},
-							{"pitch": "B4", "type": 0.25},
-							{"pitch": "C5", "type": 0.25}
-						]
-					},
-					{
-						"notes": [
-							{"pitch": "B4", "type": 0.25},
-							{"pitch": "A4", "type": 0.25},
-							{"pitch": "G4", "type": 0.25},
-							{"pitch": "F4", "type": 0.25}
-						]
-					},
-					{
-						"notes": [
-							{"pitch": "E4", "type": 0.25},
-							{"pitch": "D4", "type": 0.25},
-							{"pitch": "C4", "type": 0.50}
+						"measures": [
+							{
+								"notes": [
+									{"pitch": "C4", "type": 0.25},
+									{"pitch": "D4", "type": 0.25},
+									{"pitch": "E4", "type": 0.25},
+									{"pitch": "F4", "type": 0.25}
+								]
+							},
+							{	
+								"notes": [
+									{"pitch": "G4", "type": 0.25},
+									{"pitch": "A4", "type": 0.25},
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "C5", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "A4", "type": 0.25},
+									{"pitch": "G4", "type": 0.25},
+									{"pitch": "F4", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "E4", "type": 0.25},
+									{"pitch": "D4", "type": 0.25},
+									{"pitch": "C4", "type": 0.50}
+								]
+							}
 						]
 					}
 				]
 			}
 		]
-
 	}
 }

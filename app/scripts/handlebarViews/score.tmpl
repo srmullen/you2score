@@ -1,12 +1,15 @@
 {{#eachModel staves}}
-	<div>{{instrument}}</div>
+	<div><input type="checkbox" name="staff" value="{{@index}}" /> {{instrument}}</div>
 	<ul>
 		<li><b>Measures</b></li>
-		{{#each measures}}
+		{{#each systems}}
 			{{#eachModel this}} {{!FIXME: measures is now an array of Collections so it cant be directly iterated over}}
-				<li><b>Measure {{@index}}</b></li>
+				<li><b><input type="checkbox" name="measure" value="{{@index}}" /> Measure {{@index}}</b></li>
 				{{#eachModel notes}}
-					<li>pitch: {{pitch}}, type: {{type}}, duration: {{duration}}</li>
+					<li>
+						<input type="checkbox" name="note" value="{{@index}}" />
+						pitch: {{pitch}}, type: {{type}}, duration: {{duration}}, dotted: {{dotted}}, triplet: {{triplet}}, stacato: {{stacato}}, legato: {{legato}}
+					</li>
 				{{/eachModel}}
 			{{/eachModel}}
 		{{/each}}

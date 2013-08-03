@@ -6,7 +6,7 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 	 *	midiNote {number} - The midi representation of the pitch.
 	 *	freq {number} - pitch represented in cycles per second
 	 *	type {number} - defaults to 1 (whole note) quarter note would be 1/4 or .25.
-	 *	dotted {boolean} - makes the duration 50% longer.
+	 *	dotted {integer} - makes the duration 50% longer.
 	 *	triplet {boolean} - makes the duration 1/3rd shorter
 	 *	duration {number} - value calculated based on 
 	 *	dynamic {string} - forte and whatnot
@@ -64,7 +64,21 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 
 			parse: function (data, options) {
 				console.log("Parsing NoteModel");
-				this.set({
+				// this.set({
+				// 	pitch: data.pitch, //FIXME: will probably need to convert this to a pitch object
+				// 	midiNote: data.midiNote,
+				// 	freq: data.freq,
+				// 	type: data.type,
+				// 	dotted: data.dotted,
+				// 	triplet: data.triplet,
+				// 	duration: data.duration,
+				// 	dynamic: data.dynamic,
+				// 	volume: data.volume,
+				// 	stacato: data.stacato,
+				// 	legato: data.legato
+				// });
+
+				return {
 					pitch: data.pitch, //FIXME: will probably need to convert this to a pitch object
 					midiNote: data.midiNote,
 					freq: data.freq,
@@ -76,7 +90,7 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 					volume: data.volume,
 					stacato: data.stacato,
 					legato: data.legato
-				});
+				};
 			},
 			 
 			/* Explicit setter functions are needed because setting one property can alter another. */
@@ -113,9 +127,10 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 
 			calculateDuration: function () {
 				var dur = this.get("type");
-				
-				if (this.get("dotted")) {
-					dur *= 1.5;
+				var dtd = this.get("dotted");
+
+				if (dtd) {
+					dur *= (1.5 * dtd); 
 				}
 
 				if (this.get("triplet")) {

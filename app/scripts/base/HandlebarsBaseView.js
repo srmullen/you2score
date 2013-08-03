@@ -30,10 +30,6 @@ define(["backbone", "handlebars"], function (Backbone, Handlebars) {
 
 			this.postRender();
 
-			// var tmpl = Handlebars.compile(this.template);
-			// var html = tmpl(this.model);
-			// this.$el.html(html);
-
 			return this;
 		},
 

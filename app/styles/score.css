@@ -1,73 +1,44 @@
-
-/* Measures */
-div.measure {
-	width: 20%;
-}
-
-/*#scoreContainer {
-	width: 95%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	height: 700px;
-	border: 1px solid #000;
-	padding: 2% 1% 2% 1%;
-}*/
-
-#measureContainer {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-div.measure {
-	border: 1px solid #000;
-	width: 24%;
-	height: 50px;
-	/*display: inline;*/
-	float: left;
-	margin: 20px 0px 20px 0px;
-	/*padding: 20px 0px 20px 0px;*/
-}
-
-.line {
-	/*margin: 10px 0px 10px 0px;*/
-	/*margin-top: 50%;*/
-	display: block;
-	width: 100%;
-	height: 1px;
-	background-color: #000;	
-	position: absolute;
-}
-
-.line-spacing {
-	position: relative;
-	display: block;
-	top: 0px;
-	height: 33%;
-	/*padding-bottom: 50%;*/
-}
-
-.note {
-	display: block;
-	width: 50px;
-	height: 100px;
-}
-
 canvas.full-screen {
-	width: 100%;
-	height: 100%;
-}
+  width: 100%;
+  height: 100%; }
+
+.workspace {
+  position: relative;
+  top: 90px;
+  width: 90%;
+  min-width: 1200px;
+  margin: auto; }
 
 .sheet {
-	position: relative;
-	padding: 10px;
-	width: 902px;
-	height: 1167px; /* setting the height like this streches the notes */
-	border: 1px solid #000;
-	margin: 20px;
-}
+  position: relative;
+  padding: 30px;
+  width: 902px;
+  height: 1167px;
+  /* setting the height like this streches the notes */
+  border: 1px solid #000;
+  top: 0px; }
 
+.toolbar {
+  position: relative;
+  margin: 20px 20px 0px 20px;
+  padding: 10px;
+  width: 902px;
+  height: 100px;
+  margin: 20px;
+  border: 1px solid #000; }
 
+.palate-wrapper {
+  position: absolute;
+  left: 925px;
+  top: 50px;
+  padding: 50px; }
 
+.palate {
+  position: relative;
+  border: 3px solid black;
+  padding: 50px; }
 
+.toolbar-container {
+  display: block;
+  width: 100%;
+  height: 45px; }

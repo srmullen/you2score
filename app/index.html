@@ -21,18 +21,33 @@
             Introduce the program as a beginner music notation lesson.
         </div> -->
         
-        <!-- Main Container for a Score -->
-        <!-- <div class="sheet">
-            <h1>Title</h1>
-            <div>composer</div>
-            <div>tempo marking</div>
-            <canvas id="scoreContainer" class="full-screen"></canvas>
-        </div> -->
+        <div class="fixed">
+            <nav class="top-bar">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="#">Score</a></h1>
+                    </li>
+                </ul>
+                <section class="top-bar-section">
+                    <ul class="left">
+                        <li><input type="text" placeholder="Search" /></li>
+                        <li><a href="#">Save</a></li>
+                        <li><a href="#">Resize</a></li>
+                    </ul>
+                    <ul class="right">
+                        <li><a href="#">Login</a></li>
+                        <li><a href="#">Sign Up</a></li>
+                    </ul>
+                </section>
+            </nav>
+        </div>
 
-        <div id="score" class="sheet"></div>
-
-
-
+        <div id="workspace" class="workspace">
+            <div class="sheet">
+                <div id="score"></div>
+            </div>
+            <div id="palate-container" class="palate-wrapper"></div>
+        </div>
 
         <!-- <img src="./images/svg/qNote.svg" class="note"> -->
         <!--[if lt IE 7]>

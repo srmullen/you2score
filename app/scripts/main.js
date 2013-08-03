@@ -2,6 +2,9 @@ require.config({
     paths: {
         jquery: '../bower_components/jquery/jquery',
         bootstrap: 'vendor/bootstrap',
+        foundation: '../bower_components/foundation/js/foundation/foundation',
+        topbar: '../bower_components/foundation/js/foundation/foundation.topbar',
+        sticky: 'vendor/jquery.sticky',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
         handlebars: '../bower_components/handlebars/handlebars',
@@ -13,6 +16,18 @@ require.config({
         svg: '../images/svg'
     },
     shim: {
+        foundation: {
+            deps: ['jquery'],
+            exports: 'jquery'
+        },
+        topbar: {
+            deps:['foundation'],
+            exports: 'foundation'
+        },
+        sticky: {
+            deps: ['jquery'],
+            exports: 'jquery'
+        },
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
@@ -30,17 +45,23 @@ require.config({
     }
 });
 
-require(["app", 'jquery', 'handlebars', 'bootstrap'], function (App, $, Handlebars) {
+require(["app", 'jquery', 'handlebars', 'foundation', 'topbar', 'sticky'], function (App, $, Handlebars) {
     'use strict';
 
     // Handlebars helper to iterate over the models in a collection and 
     // use its attributes as the template context
     // FIXME: Should be in a handlebars helper file.
     Handlebars.registerHelper("eachModel", function (context, options) {
-        var ret = "";
+        var ret = "", data;
 
         for (var i = 0, l = context.models.length; i < l; i++) {
-            ret += options.fn(context.models[i].toJSON());
+            if (options.data) {
+                data = Handlebars.createFrame(options.data || {});
+                data.index = i; // inject private index variable
+            }
+
+            ret += options.fn(context.models[i].toJSON(), {data: data});
+            
         }
 
         return ret;

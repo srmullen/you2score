@@ -9,6 +9,7 @@ define(["base/HandlebarsBaseView",
   "models/NoteModel", 
   "models/MeasureModel",
   "models/StaffModel",
+  "handlebarViews/PalateView",
   "text!../examples/cmajScale.json",
 
   "paperViews/NoteView",
@@ -24,6 +25,7 @@ function (HandlebarsBaseView,
           NoteModel, 
           MeasureModel,
           StaffModel,
+          PalateView,
           cmaj,
 
           NoteView, 
@@ -47,7 +49,11 @@ function (HandlebarsBaseView,
           var cMaJson = JSON.parse(cmaj);
           var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
           
-          var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
+          // var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
+          var scoreView = this.addChildView(ScoreView, {model: scoreModel}, "#score");
+
+          var palateView = this.addChildView(PalateView, {model: scoreModel}, "#palate-container");
+          scoreModel.listenTo(palateView, "addNote", scoreModel.addNote);
 
           // // Render as paper
           // var sheetModel = new SheetModel();

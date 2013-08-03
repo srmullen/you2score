@@ -5,6 +5,7 @@ define(["base/BaseCollection", "../models/MeasureModel"], function (BaseCollecti
 		model: MeasureModel,
 		
 		initialize: function () {
+			console.log("Initializing MeasureCollection");
 			// Add a measure if none are passed in
 			if (this.isEmpty()) this.add(new MeasureModel());
 		},
@@ -35,6 +36,10 @@ define(["base/BaseCollection", "../models/MeasureModel"], function (BaseCollecti
 			});
 
 			measure.addNote(note);
+		},
+
+		parse: function (data, options) {
+			return data.measures;
 		}
 	});
 	return MeasureCollection;

@@ -1,0 +1,54 @@
+@import "../bower_components/bourbon/app/assets/stylesheets/bourbon";
+
+canvas.full-screen {
+	width: 100%;
+	height: 100%;
+}
+
+.workspace {
+	position: relative;
+	top: 90px;
+	width: 90%;
+	min-width: 1200px;
+	margin: auto;
+}
+
+.sheet {
+	position: relative;
+	padding: 30px;
+	width: 902px;
+	height: 1167px; /* setting the height like this streches the notes */
+	border: 1px solid #000;
+	top: 0px;
+}
+
+.toolbar {
+	position: relative;
+	margin: 20px 20px 0px 20px;
+	padding: 10px;
+	width: 902px;
+	height: 100px;
+	margin: 20px;
+	border: 1px solid #000;
+}
+
+.palate-wrapper {
+	position: absolute;
+	left: 925px;
+	top: 50px;
+	padding: 50px;
+}
+
+.palate {
+	position: relative;
+	// left: 925px;
+	// top: 50px;
+	border: 3px solid black;
+	padding: 50px;
+}
+
+.toolbar-container {
+	display: block;
+	width: 100%;
+	height: 45px;
+}

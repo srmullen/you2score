@@ -13,8 +13,8 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 		initialize: function (attributes, options) {
 			console.log("Initializing StaffModel");
 			// Set a MeasureCollection if one wasn't passed in the attributes
-			if (!this.get("measures")) {
-				this.set({measures: []}); 
+			if (!this.get("systems")) {
+				this.set({systems: []}); 
 			}
 
 			// Set a NoteCollection if one wasn't passed in the attributes
@@ -25,19 +25,26 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 
 		parse: function (data, options) {
 			// make sure notes and measures are defined
-			data.measures = data.measures || [];
+			data.systems = data.systems || [];
 			data.notes = data.notes || [];
 			
-			this.set({
+			// this.set({
+			// 	instrument: data.instrument,
+			// 	measures: _.map(data.measures, function (coll) {
+			// 		return new MeasureCollection(coll, {parse: true});
+			// 	})
+			// 	// Ignore notes for now.
+			// 	// notes: _.map(data.notes, function (coll) {
+			// 	// 	return new NoteCollection(coll);
+			// 	// })
+			// });
+
+			return {
 				instrument: data.instrument,
-				measures: _.map(data.measures, function (coll) {
+				systems: _.map(data.systems, function (coll) {
 					return new MeasureCollection(coll, {parse: true});
 				})
-				// Ignore notes for now.
-				// notes: _.map(data.notes, function (coll) {
-				// 	return new NoteCollection(coll);
-				// })
-			});
+			};
 		},
 
 		// Copies the notes in the note collection into the correct Measure
