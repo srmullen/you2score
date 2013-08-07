@@ -1,14 +1,16 @@
 /*global define */
 define(["base/HandlebarsBaseView", 
   "base/Context",
-  // "score/PaperScoreView",
+  "paperViews/ScoreView",
 
   /* html model testing */
+  // "handlebarViews/ScoreView",
+
   "models/ScoreModel",
-  "handlebarViews/ScoreView",
   "models/NoteModel", 
   "models/MeasureModel",
   "models/StaffModel",
+
   "handlebarViews/PalateView",
   "text!../examples/cmajScale.json",
 
@@ -18,13 +20,15 @@ define(["base/HandlebarsBaseView",
   "models/SheetModel"], 
 function (HandlebarsBaseView, 
           Context, 
-          // PaperScoreView, 
-          
+          ScoreView, 
+
+          // ScoreView,
+
           ScoreModel, 
-          ScoreView,
           NoteModel, 
           MeasureModel,
           StaffModel,
+
           PalateView,
           cmaj,
 
@@ -44,13 +48,13 @@ function (HandlebarsBaseView,
           // A paper view must have a canvas as an 'el'
           // var noteView = new NoteView({el: "#scoreContainer"});
 
-          var context = new Context(document.getElementById("scoreContainer"));
+          var context = new Context(document.getElementById("score"));
 
           var cMaJson = JSON.parse(cmaj);
           var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
           
           // var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
-          var scoreView = this.addChildView(ScoreView, {model: scoreModel}, "#score");
+          // var scoreView = this.addChildView(ScoreView, {model: scoreModel}, "#score");
 
           var palateView = this.addChildView(PalateView, {model: scoreModel}, "#palate-container");
           scoreModel.listenTo(palateView, "addNote", scoreModel.addNote);
@@ -58,6 +62,8 @@ function (HandlebarsBaseView,
           // // Render as paper
           // var sheetModel = new SheetModel();
           // var sheet = context.addChildView(SheetView, sheetModel);
+
+          var paperScore = context.addChildView(ScoreView, scoreModel);
 
   		}
   	});

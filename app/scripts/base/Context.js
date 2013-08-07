@@ -25,4 +25,4 @@ define(["paper"], function () {
 		};
 	}
 	return Context;
-})
+});

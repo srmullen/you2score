@@ -48,3 +48,7 @@ canvas.full-screen {
   display: block;
   width: 100%;
   height: 45px; }
+
+#score {
+  width: 100%;
+  height: 100%; }
