@@ -5,14 +5,14 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 	 * Attributes:
 	 *	instrument	{String (for now)} - The instrument the staff is to be played by.
 	 *	meter		{Object} - To give to the measures
-	 *	measures	{MeasureCollection[]} - Array of MeasureModels, one for each line of music.
+	 *	systems		{MeasureCollection[]} - Array of MeasureCollections, might require its own model/collection.
 	 *  notes		{NoteCollection[]} - same number and order as measures
 	 */
 	var StaffModel = BaseModel.extend({
 
 		initialize: function (attributes, options) {
 			console.log("Initializing StaffModel");
-			// Set a MeasureCollection if one wasn't passed in the attributes
+			// Set a MeasureCollection[] if one wasn't passed in the attributes
 			if (!this.get("systems")) {
 				this.set({systems: []}); 
 			}
@@ -27,23 +27,15 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 			// make sure notes and measures are defined
 			data.systems = data.systems || [];
 			data.notes = data.notes || [];
-			
-			// this.set({
-			// 	instrument: data.instrument,
-			// 	measures: _.map(data.measures, function (coll) {
-			// 		return new MeasureCollection(coll, {parse: true});
-			// 	})
-			// 	// Ignore notes for now.
-			// 	// notes: _.map(data.notes, function (coll) {
-			// 	// 	return new NoteCollection(coll);
-			// 	// })
-			// });
 
 			return {
 				instrument: data.instrument,
 				systems: _.map(data.systems, function (coll) {
 					return new MeasureCollection(coll, {parse: true});
 				})
+				// notes: _.map(data.notes, function (coll) {
+				// 	return new NoteCollection(coll);
+				// })
 			};
 		},
 

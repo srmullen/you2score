@@ -1,0 +1,6 @@
+{{#eachModel notes}}
+	<li>
+		<input type="checkbox" name="note" value="{{@index}}" />
+		pitch: {{pitch}}, type: {{type}}, duration: {{duration}}, dotted: {{dotted}}, triplet: {{triplet}}, stacato: {{stacato}}, legato: {{legato}}
+	</li>
+{{/eachModel}}

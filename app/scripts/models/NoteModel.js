@@ -13,6 +13,8 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 	 *	volume {number} - dynamic needs to be backed up by an actual number for playing it.
 	 *	stacato {boolean} - default false
 	 *	legato {boolean} - default false
+	 *	rest {boolean} - true if the note is a rest, undefined/false otherwise
+	 *		it might be wise to make rest its own class, could maybe use pitch to determine vertical position
 	 */
 	var NoteModel = (function () {
 		return BaseModel.extend({
@@ -64,20 +66,6 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 
 			parse: function (data, options) {
 				console.log("Parsing NoteModel");
-				// this.set({
-				// 	pitch: data.pitch, //FIXME: will probably need to convert this to a pitch object
-				// 	midiNote: data.midiNote,
-				// 	freq: data.freq,
-				// 	type: data.type,
-				// 	dotted: data.dotted,
-				// 	triplet: data.triplet,
-				// 	duration: data.duration,
-				// 	dynamic: data.dynamic,
-				// 	volume: data.volume,
-				// 	stacato: data.stacato,
-				// 	legato: data.legato
-				// });
-
 				return {
 					pitch: data.pitch, //FIXME: will probably need to convert this to a pitch object
 					midiNote: data.midiNote,
@@ -89,7 +77,8 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 					dynamic: data.dynamic,
 					volume: data.volume,
 					stacato: data.stacato,
-					legato: data.legato
+					legato: data.legato,
+					rest: data.rest
 				};
 			},
 			 

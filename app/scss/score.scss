@@ -17,7 +17,15 @@ canvas.full-screen {
 	position: relative;
 	padding: 30px;
 	width: 902px;
-	height: 1167px; /* setting the height like this streches the notes */
+	height: 1167px;
+	border: 1px solid #000;
+	top: 0px;
+}
+
+.text-sheet { // no height because not ready to deal with separating pages yet
+	position: relative;
+	padding: 30px;
+	width: 902px;
 	border: 1px solid #000;
 	top: 0px;
 }

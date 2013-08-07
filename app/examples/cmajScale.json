@@ -1,6 +1,7 @@
 {
 	"score": {
 		"title": "C Major Scale",
+		"composer": "The Universe",
 		"staves": [
 			{
 				"instrument": "Piano",
@@ -22,6 +23,36 @@
 									{"pitch": "A4", "type": 0.25},
 									{"pitch": "B4", "type": 0.25},
 									{"pitch": "C5", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"type": 1, "rest": true}
+								]
+							},
+							{
+								"notes": [
+									{"type": 1, "rest": true}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"instrument": "Violin",
+				"meter": {"upper": 4, "lower": 4},
+				"systems": [
+					{
+						"measures": [
+							{
+								"notes": [
+									{"type": 1, "rest": true}
+								]
+							},
+							{	
+								"notes": [
+									{"type": 1, "rest": true}
 								]
 							},
 							{

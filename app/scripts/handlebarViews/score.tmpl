@@ -3,7 +3,7 @@
 	<ul>
 		<li><b>Measures</b></li>
 		{{#each systems}}
-			{{#eachModel this}} {{!FIXME: measures is now an array of Collections so it cant be directly iterated over}}
+			{{#eachModel this}}
 				<li><b><input type="checkbox" name="measure" value="{{@index}}" /> Measure {{@index}}</b></li>
 				{{#eachModel notes}}
 					<li>

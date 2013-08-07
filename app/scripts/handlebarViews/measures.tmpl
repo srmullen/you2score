@@ -1,0 +1,7 @@
+<ul>
+	<li><b>Measures</b></li>
+	{{#each this}} {{! collection is turned into an array so need to iterate over this}}
+		<li><b><input type="checkbox" name="measure" value="{{@index}}" /> Measure {{@index}}</b></li>
+		<div class="notes"></div>
+	{{/each}}
+</ul>
