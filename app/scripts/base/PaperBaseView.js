@@ -10,7 +10,7 @@ define(["backbone", "paper"], function (Backbone) {
 
 		// group: new paper.Group(),
 
-		render: function () {
+		render: function (args) {
 			this.preRender();
 
 			this.drawElement();

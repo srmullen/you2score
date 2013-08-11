@@ -67,7 +67,7 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 			parse: function (data, options) {
 				console.log("Parsing NoteModel");
 				return {
-					pitch: data.pitch, //FIXME: will probably need to convert this to a pitch object
+					pitch: this.strToPitchObj(data.pitch), 
 					midiNote: data.midiNote,
 					freq: data.freq,
 					type: data.type,
@@ -130,6 +130,33 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 
 			updateDuration: function () {
 				this.set({duration: this.calculateDuration()});
+			},
+
+			strToPitchObj: function (str) {
+				if (str === "rest") return {
+					name: "C",
+					degree: 0,
+					octave: 4,
+					accidental: ""
+				}; // FIXME: Need to figure out best way to deal with rests
+
+				var obj = {};
+				var re = /([A-G])(b*#*)(\d)/;
+				var match = str.match(re);
+				obj.name = match[1];
+				obj.accidental = match[2];
+				obj.octave = match[3];
+				obj.degree = {
+					"C": 0,
+					"D": 1,
+					"E": 2,
+					"F": 3,
+					"G": 4,
+					"A": 5,
+					"B": 6
+				}[obj.name];
+
+				return obj;
 			},
 
 			/**

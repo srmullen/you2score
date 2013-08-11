@@ -5,6 +5,7 @@ function (BaseModel, StaffCollection, StaffModel) {
 	 * Attributes:
 	 *	title 		{String} - The title of the Score.
 	 *	composer	{String} - The composer(s) of the Score.
+	 *	tempo		{String} - Tempo Marking
 	 *	staves		{Collection} - Collection of Staves.
 	 *  sections	{?} - ?.
 	 */
@@ -39,7 +40,8 @@ function (BaseModel, StaffCollection, StaffModel) {
 			return {
 				staves: new StaffCollection(data.staves, {parse: true}),
 				title: data.title,
-				composer: data.composer
+				composer: data.composer,
+				tempo: data.tempo
 			}
 		},
 

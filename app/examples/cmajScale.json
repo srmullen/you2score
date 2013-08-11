@@ -2,12 +2,14 @@
 	"score": {
 		"title": "C Major Scale",
 		"composer": "The Universe",
+		"tempo": "Adagio Sostenuto",
 		"staves": [
 			{
 				"instrument": "Piano",
 				"meter": {"upper": 4, "lower": 4},
 				"systems": [
 					{
+						"clef": "treble",
 						"measures": [
 							{
 								"notes": [
@@ -27,12 +29,43 @@
 							},
 							{
 								"notes": [
-									{"type": 1, "rest": true}
+									{"pitch": "rest", "type": 1, "rest": true}
 								]
 							},
 							{
 								"notes": [
-									{"type": 1, "rest": true}
+									{"pitch": "rest", "type": 1, "rest": true}
+								]
+							}
+						]
+					},
+					{
+						"clef": "bass",
+						"measures": [
+							{
+								"notes": [
+									{"pitch": "C4", "type": 0.25},
+									{"pitch": "D4", "type": 0.25},
+									{"pitch": "E4", "type": 0.25},
+									{"pitch": "F4", "type": 0.25}
+								]
+							},
+							{	
+								"notes": [
+									{"pitch": "G4", "type": 0.25},
+									{"pitch": "A4", "type": 0.25},
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "C5", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "rest", "type": 1, "rest": true}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "rest", "type": 1, "rest": true}
 								]
 							}
 						]
@@ -44,15 +77,16 @@
 				"meter": {"upper": 4, "lower": 4},
 				"systems": [
 					{
+						"clef": "treble",
 						"measures": [
 							{
 								"notes": [
-									{"type": 1, "rest": true}
+									{"pitch": "rest", "type": 1, "rest": true}
 								]
 							},
 							{	
 								"notes": [
-									{"type": 1, "rest": true}
+									{"pitch": "rest", "type": 1, "rest": true}
 								]
 							},
 							{

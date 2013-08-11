@@ -39,7 +39,13 @@ define(["base/BaseCollection", "../models/MeasureModel"], function (BaseCollecti
 		},
 
 		parse: function (data, options) {
-			return data.measures;
+			var clef = data.clef;
+
+			var measures = _.map(data.measures, function (measure) {
+				measure.clef = measure.clef || clef;
+				return measure;
+			});
+			return measures;
 		}
 	});
 	return MeasureCollection;

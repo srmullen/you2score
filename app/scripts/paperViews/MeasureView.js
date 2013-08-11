@@ -10,11 +10,11 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		// May want to make them static properties eventually
 		initialize: function (options) {
 			// this.barLength = 2000;
-			// this.barLength = this.$el.width(); // Moved to SheetView
+			this.barLength = this.$el.width(); // Moved to SheetView
 			
 			this.lineSpacing = this.barLength / 100; // Moved to SheetView
 			this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
-			// this.lines = this.createLines(this.barLength, this.lineSpacing);
+			this.lines = this.createLines(this.barLength, this.lineSpacing);
 			this.group = new paper.Group();
 			this.clefBase = this.getClefBase(this.model.get("clef"));
 		},
@@ -166,7 +166,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		// Moved to NoteView
 		getClefBase: function (clef) {
 			return {
-				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, this.lineSpacing/2])}
+				"treble": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, this.lineSpacing/2])},
+				// The bass object isn't correct, just added it for testing purposes
+				"bass": {pitch: "C", degree: 0, octave: 5, point: this.lines[1].firstSegment.point.add([0, this.lineSpacing/2])}
 			}[clef];
 		}
 
