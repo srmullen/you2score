@@ -13,7 +13,7 @@ function (PaperBaseView, StavesView) {
 			this.width = this.options.width;
 		},
 
-		drawElement: function () {
+		render: function () {
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
@@ -59,7 +59,8 @@ function (PaperBaseView, StavesView) {
 			// });
 			
 			var stavesView = new StavesView({collection: staves});
-			return stavesView.render({position: new paper.Point(50, 150)});
+			var position = new paper.Point(50, 150);
+			return stavesView.render(position);
 		}
 	});
 	return ScoreView;

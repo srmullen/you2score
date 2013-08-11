@@ -11,6 +11,10 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.headSize = [this.$el.width() / 45, this.$el.height() / 125]; // FIXME: divisions are hacks
 		},
 
+		render: function () {
+			return this;
+		},
+
 		// FIXME: baseNote feels kinda wrong. seems like it should just need the
 		// x position and y position
 		drawHead: function (baseNote, xPos, yPos) {

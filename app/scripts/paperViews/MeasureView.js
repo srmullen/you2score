@@ -31,7 +31,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return lineArray;
 		},
 
-		drawElement: function () {
+		render: function () {
 			
 			this.drawMeasure(this.lines);
 
