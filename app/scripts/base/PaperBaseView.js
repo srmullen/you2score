@@ -10,15 +10,17 @@ define(["backbone", "paper"], function (Backbone) {
 
 		// group: new paper.Group(),
 
-		render: function (args) {
-			this.preRender();
+		// childViews: [],
 
-			this.drawElement();
+		// render: function (args) {
+		// 	this.preRender();
 
-			this.postRender();
+		// 	this.drawElement();
 
-			return this;
-		},
+		// 	this.postRender();
+
+		// 	return this;
+		// },
 
 		// The render method will likely need to be 
 		// re-implemented for each type of element drawn.

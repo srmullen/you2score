@@ -1,6 +1,7 @@
 define(["base/PaperBaseView",
-	"./StavesView"], 
-function (PaperBaseView, StavesView) {
+	"./StavesView",
+	"./SheetView"], 
+function (PaperBaseView, StavesView, SheetView) {
 	"use strict";
 
 	/**
@@ -8,9 +9,10 @@ function (PaperBaseView, StavesView) {
 	 */
 	var ScoreView = PaperBaseView.extend({
 
-		construct: function () {
+		initialize: function () {
 			console.log("Constructing ScoreView");
-			this.width = this.options.width;
+			this.sheetWidth = this.options.sheetWidth;
+			this.margin = this.options.margin;
 		},
 
 		render: function () {
@@ -18,6 +20,8 @@ function (PaperBaseView, StavesView) {
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
 			this.drawStaves(this.model.get("staves"));
+			// this.drawPages(1);
+			return this;
 		},
 
 		drawTitle: function (title) {
@@ -51,16 +55,17 @@ function (PaperBaseView, StavesView) {
 		},
 
 		drawStaves: function (staves) {
-			// var staves = new paper.PointText({
-			// 	content: staves.length,
-			// 	point: new paper.Point([50, 150]),
-			// 	fontSize: 15,
-			// 	fillColor: 'black'
-			// });
-			
-			var stavesView = new StavesView({collection: staves});
-			var position = new paper.Point(50, 150);
+			var stavesView = new StavesView({el: this.el, collection: staves});
+			var position = new paper.Point(50, 150); // FIXME: Arbitrary point
 			return stavesView.render(position);
+		},
+
+		/*
+		 * @param num - The number of pages to draw.
+		 */
+		drawPages: function (num) {
+			var sheetView = new SheetView({el: this.el});
+			sheetView.render();
 		}
 	});
 	return ScoreView;

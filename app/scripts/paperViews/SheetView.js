@@ -21,7 +21,7 @@ function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 
 		initialize: function () {
 			this.model = this.options.model || new SheetModel();
-			this.staveWidth = this.$el.width();
+			this.staveWidth = this.$el.width() * .9;
 			this.lineSpacing = this.staveWidth / 100; // 100 is arbitrary, i'm not sure the math here is correct
 			this.group = new paper.Group();
 
@@ -31,7 +31,7 @@ function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 			}
 		},
 
-		drawElement: function () {
+		render: function () {
 			this.drawSheet();
 		},
 
@@ -39,7 +39,7 @@ function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 			// FIXME: 100 is arbitrary, should be based on page height and number of staves
 			// var staveSpacing = this.lineSpacing * 4 + 100;
 			var staveSpacing = 100; 
-			for (var i = 0, n = this.model.get("staves"); i < n; i++) {
+			for (var i = 0, n = 10; i < n; i++) {
 				var stave = this.createStave(this.staveWidth, this.lineSpacing);
 				// stave.position = stave.children[4].position.point.add([0, staveSpacing]);
 				stave.position.y = 100 * i + 50;
@@ -47,6 +47,8 @@ function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 			}
 
 			this.group.strokeColor = 'black';
+			this.group.justify = 'center';
+			this.group.position = paper.view.center;
 
 			return this;
 		},

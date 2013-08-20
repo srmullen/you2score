@@ -10,15 +10,14 @@ function (PaperBaseView, StaffView) {
 	 */
 	var StavesView = PaperBaseView.extend({
 
-		childViews: [],
-
-		construct: function () {
+		initialize: function () {
 			console.log("Constructing StavesView");
+			this.childViews = [];
 		},
 
 		render: function (position) {
 			this.collection.map(function (model, i, list) {
-				var staff = this.drawStaff(model, position.add(0, this.getTotalHeight()));
+				var staff = this.drawStaff(model, position.add(0, this.getTotalHeight(this.childViews)));
 				this.childViews.push(staff); // add the view to childViews and then return it.
 				return staff; // return value isn't being used right now
 			}, this);
@@ -26,15 +25,15 @@ function (PaperBaseView, StaffView) {
 		},
 
 		drawStaff: function (model, position) {
-			var staff = new StaffView({model: model}).render(position);
+			var staff = new StaffView({el: this.el, model: model}).render(position);
 			return staff;
 		},
 
 		// Method to get the total height of all the views in childViews.
 		// Seems a little too complex.
 		// This function could be memoized for performance gains.
-		getTotalHeight: function () {
-			var ans =  _.reduce(this.childViews, function (x, y) {
+		getTotalHeight: function (views) {
+			var ans =  _.reduce(views, function (x, y) {
 				return x + y.height;
 			}, 0);
 			return ans;

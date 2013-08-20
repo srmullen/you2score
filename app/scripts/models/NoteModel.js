@@ -145,7 +145,7 @@ define(["base/BaseModel", "../helpers/NoteHelper"], function (BaseModel, noteHel
 				var match = str.match(re);
 				obj.name = match[1];
 				obj.accidental = match[2];
-				obj.octave = match[3];
+				obj.octave = parseInt(match[3]);
 				obj.degree = {
 					"C": 0,
 					"D": 1,

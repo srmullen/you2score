@@ -13,7 +13,7 @@
 						"measures": [
 							{
 								"notes": [
-									{"pitch": "C4", "type": 0.25},
+									{"pitch": "G3", "type": 0.25},
 									{"pitch": "D4", "type": 0.25},
 									{"pitch": "E4", "type": 0.25},
 									{"pitch": "F4", "type": 0.25}
@@ -44,18 +44,18 @@
 						"measures": [
 							{
 								"notes": [
-									{"pitch": "C4", "type": 0.25},
-									{"pitch": "D4", "type": 0.25},
-									{"pitch": "E4", "type": 0.25},
-									{"pitch": "F4", "type": 0.25}
+									{"pitch": "C3", "type": 0.25},
+									{"pitch": "D3", "type": 0.25},
+									{"pitch": "E3", "type": 0.25},
+									{"pitch": "F3", "type": 0.25}
 								]
 							},
 							{	
 								"notes": [
-									{"pitch": "G4", "type": 0.25},
-									{"pitch": "A4", "type": 0.25},
-									{"pitch": "B4", "type": 0.25},
-									{"pitch": "C5", "type": 0.25}
+									{"pitch": "G3", "type": 0.25},
+									{"pitch": "A3", "type": 0.25},
+									{"pitch": "B3", "type": 0.25},
+									{"pitch": "C4", "type": 0.25}
 								]
 							},
 							{
