@@ -136,37 +136,38 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return this;
 		},
 
-		drawBar: function (lines, side) {
-			var leftBar, rightBar, topPoint, bottomPoint;
+		// I dont think this is needed.
+		// drawBar: function (lines, side) {
+		// 	var leftBar, rightBar, topPoint, bottomPoint;
 			
-			if (side === "left") {
+		// 	if (side === "left") {
 
-				topPoint = lines[0].firstSegment.point;
-				bottomPoint = lines[4].firstSegment.point;
-				leftBar = new paper.Path.Line(topPoint, bottomPoint);
-				this.group.addChild(leftBar);
+		// 		topPoint = lines[0].firstSegment.point;
+		// 		bottomPoint = lines[4].firstSegment.point;
+		// 		leftBar = new paper.Path.Line(topPoint, bottomPoint);
+		// 		this.group.addChild(leftBar);
 
-			} else if (side === "right") {
+		// 	} else if (side === "right") {
 
-				topPoint = lines[0].lastSegment.point;
-				bottomPoint = lines[4].lastSegment.point;
-				rightBar = new paper.Path.Line(topPoint, bottomPoint);
-				this.group.addChild(rightBar);
+		// 		topPoint = lines[0].lastSegment.point;
+		// 		bottomPoint = lines[4].lastSegment.point;
+		// 		rightBar = new paper.Path.Line(topPoint, bottomPoint);
+		// 		this.group.addChild(rightBar);
 				
-			} else if (side === "both") {
+		// 	} else if (side === "both") {
 
-				topPoint = lines[0].firstSegment.point;
-				bottomPoint = lines[4].firstSegment.point;
-				leftBar = new paper.Path.Line(topPoint, bottomPoint);
+		// 		topPoint = lines[0].firstSegment.point;
+		// 		bottomPoint = lines[4].firstSegment.point;
+		// 		leftBar = new paper.Path.Line(topPoint, bottomPoint);
 
-				topPoint = lines[0].lastSegment.point;
-				bottomPoint = lines[4].lastSegment.point;
-				rightBar = new paper.Path.Line(topPoint, bottomPoint);
-				this.group.addChildren([leftBar, rightBar]);
-			}
+		// 		topPoint = lines[0].lastSegment.point;
+		// 		bottomPoint = lines[4].lastSegment.point;
+		// 		rightBar = new paper.Path.Line(topPoint, bottomPoint);
+		// 		this.group.addChildren([leftBar, rightBar]);
+		// 	}
 
-			return this;
-		},
+		// 	return this;
+		// },
 
 		// position is the left-most part of the first line.
 		// BaseNotes exists so there any clef can be made.

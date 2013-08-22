@@ -107,22 +107,38 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			// get the distance from the center line.
 			var distance = this.noteHandles.segments[2].point.y - centerLine.y;
 			var legerLines = [];
+			var yPositionFunc = this.getYpositionFunc(distance, centerLine.y, lineSpacing);
 
 			if (Math.abs(distance) >= lineSpacing * 3) {
-				// var highLine = new paper.Path.Line(this.noteHandles.segments[0].point.subtract(10,0), this.noteHandles.segments[2].point.add(10,0))
-				for (var i = 0; i < (distance - (lineSpacing * 2)) / lineSpacing; i++) {
-					// var highLine = new paper.Path.Line(this.noteHandles.segments[0].point.subtract(10,0), this.noteHandles.segments[2].point.add(10,0))
-					// legerLines.push(new paper.Path(centerLine.subtract(10, lineSpacing * (-3 + i)), centerLine.add(10, lineSpacing * (3 + i))))
-					legerLines.push(new paper.Path.Line(new paper.Point(this.noteHandles.segments[0].point.x - 10, centerLine.y + (lineSpacing * 3) + i), new paper.Point(this.noteHandles.segments[2].point.x + 10, centerLine.y + (lineSpacing * 3) + i)))
+				for (var i = 0; i <= (Math.abs(distance) - (lineSpacing * 3)) / lineSpacing; i++) {
+					var yPos = yPositionFunc(i);
+					var point1 = new paper.Point(this.noteHandles.segments[0].point.x - 10, yPos);
+					var point2 = new paper.Point(this.noteHandles.segments[2].point.x + 10, yPos);
+					legerLines.push(new paper.Path.Line(point1, point2));
 				}
 			}
 
-			if (legerLines) {
-				// legerLines.strokeColor = 'black';
+			if (legerLines.length) {
 				this.group.addChildren(legerLines);
 				this.group.strokeColor = 'black';
 			}
 			return this
+		},
+
+		/*
+		 * Given a number, returns a function that returns the y position of a leger line
+		 * given which leger, the center y position, and the line spacing.
+		 */
+		getYpositionFunc: function (num, centerY, lineSpacing) {
+			if (num >= 0) {
+				return function (i) {
+					return centerY + (lineSpacing * (3 + i))
+				}
+			} else {
+				return function (i) {
+					return centerY - (lineSpacing * (3 + i))
+				}
+			}
 		},
 
 		updatePosition: function (event) {
