@@ -7,11 +7,24 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.group = new paper.Group();
 			this.pitch = this.model.get('pitch');
 
-			this.clef = this.options.cleff || "treble";
+			this.clefBase = this.options.clefBase;
+			// this.clef = this.options.cleff || "treble";
 			// this.headSize = [this.$el.width() / 45, this.$el.height() / 125]; // FIXME: divisions are hacks
 		},
 
-		render: function () {
+		render: function (xPos, yPos, clefBase, centerLine, lineSpacing) {
+			var octaveHeight = lineSpacing * 3.5;
+
+			this.drawHead(clefBase, xPos, yPos);
+
+			this.drawStem(centerLine, octaveHeight);
+
+			this.drawFlag();
+
+			this.drawLegerLines(centerLine, lineSpacing);
+
+			this.drawAccidental();
+
 			return this;
 		},
 
@@ -87,16 +100,30 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			return this;
 		},
 
+		// FIXME: should be able to draw more than one accidental
 		drawAccidental: function () {
+			var accidental = this.model.get("pitch").accidental;
+			if (accidental === "#") {
+				this.drawSharp();
+			} else if (accidental === "b") {
+				this.drawFlat();
+			}
 
+			return this;
 		},
 
 		drawSharp: function () {
-
+			var sharpSvg = paper.project.importSVG(document.getElementById('sharpSvg'));
+			sharpSvg.scale(0.07);
+			sharpSvg.position = this.noteHandles.segments[2].point.add(10, 0);
+			this.group.addChild(sharpSvg);
 		},
 
 		drawFlat: function () {
-
+			var flatSvg = paper.project.importSVG(document.getElementById('flatSvg'));
+			flatSvg.scale(0.05);
+			flatSvg.position = this.noteHandles.segments[2].point.add(10, -5);
+			this.group.addChild(flatSvg);
 		},
 
 		/*

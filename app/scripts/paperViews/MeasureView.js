@@ -14,7 +14,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			// this.barLength = this.$el.width(); // Moved to SheetView
 			//need to get el from somewhere. Not neccisarily the canvas width.
 			// this should be controllable on each measure.
-			// maybe a default param that can be overridden.ß
+			// maybe a default param that can be overridden.
 
 			this.lineSpacing = 10;
 			// this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
@@ -24,7 +24,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		render: function (position, barLength) {
 			this.barLength = barLength; // FIXME: These should not be set as global properties.
 			this.measurePadding = this.barLength / 8;
-			
+			var clef = this.model.get("clef");
+			var centerLine = position.add(0, this.lineSpacing * 2);
+
 			this.drawBars(position, barLength);
 
 			this.clefBase = this.getClefBase(position, this.model.get("clef"));
@@ -33,9 +35,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 			// this.drawBar(lines, "both");
 
-			// this.drawClef(position);
+			this.drawClef(centerLine, clef);
 
-			var notesGroup = this.drawNotes(position);
+			var notesGroup = this.drawNotes(centerLine);
 
 			// var notesGroup = this.notesReduce();
 			// this.group.addChild(notesGroup);
@@ -65,8 +67,8 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		 *	Iterates over the NoteCollection and draws the notes.
 		 *	@return group of notes
 		 */
-		drawNotes: function (position) {
-			var centerLine = position.add(0, this.lineSpacing * 2);
+		drawNotes: function (centerLine) {
+			// var centerLine = position.add(0, this.lineSpacing * 2);
 
 			return this.model.get("notes").reduce(function (group, note) {
 				var noteView = new NoteView({el: this.el, model: note})
@@ -74,12 +76,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 				var xPos = this.calculateNoteXpos(note);
 				var yPos = this.calculateNoteYpos(note, this.lineSpacing/2);
 
-				noteView.drawHead(this.clefBase, xPos, yPos)
-						.drawStem(centerLine, this.lineSpacing/2 * 7)
-						.drawFlag()
-						.drawLegerLines(centerLine, this.lineSpacing);
+				noteView.render(xPos, yPos, this.clefBase, centerLine, this.lineSpacing);
 
-				group.addChild(noteView.group);
+				group.addChild(noteView.group); // I'm not sure if this is necessary
 
 				return group;
 			}, new paper.Group(), this);
@@ -119,14 +118,22 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return this;
 		},
 
-		drawClef: function (position) {
-			$('#svgContainer').append(treble); // put the svg in the dom
-			var svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
-			svgItem.scale(0.05);
+		drawClef: function (centerLine, clef) {
+			var svgItem
+			switch (clef) {
+				case "treble":
+					svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
+					svgItem.scale(0.05); //FIXME: shouldn't have to scale svg's individually
+					break;
+				case "bass":
+					svgItem = paper.project.importSVG(document.getElementById('bassSVG'));
+					svgItem.scale(0.1);
+					break;
+			}
 
 			// the position should probably be a percentage of the barLength
 			// svgItem.position = this.lines[2].firstSegment.point.add([120, 0]);
-			svgItem.position = position;
+			svgItem.position = centerLine;
 			this.group.addChild(svgItem);
 
 			// Flag indicating that a clef has been drawn on this measure
@@ -135,39 +142,6 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 			return this;
 		},
-
-		// I dont think this is needed.
-		// drawBar: function (lines, side) {
-		// 	var leftBar, rightBar, topPoint, bottomPoint;
-			
-		// 	if (side === "left") {
-
-		// 		topPoint = lines[0].firstSegment.point;
-		// 		bottomPoint = lines[4].firstSegment.point;
-		// 		leftBar = new paper.Path.Line(topPoint, bottomPoint);
-		// 		this.group.addChild(leftBar);
-
-		// 	} else if (side === "right") {
-
-		// 		topPoint = lines[0].lastSegment.point;
-		// 		bottomPoint = lines[4].lastSegment.point;
-		// 		rightBar = new paper.Path.Line(topPoint, bottomPoint);
-		// 		this.group.addChild(rightBar);
-				
-		// 	} else if (side === "both") {
-
-		// 		topPoint = lines[0].firstSegment.point;
-		// 		bottomPoint = lines[4].firstSegment.point;
-		// 		leftBar = new paper.Path.Line(topPoint, bottomPoint);
-
-		// 		topPoint = lines[0].lastSegment.point;
-		// 		bottomPoint = lines[4].lastSegment.point;
-		// 		rightBar = new paper.Path.Line(topPoint, bottomPoint);
-		// 		this.group.addChildren([leftBar, rightBar]);
-		// 	}
-
-		// 	return this;
-		// },
 
 		// position is the left-most part of the first line.
 		// BaseNotes exists so there any clef can be made.

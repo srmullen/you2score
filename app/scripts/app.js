@@ -3,39 +3,22 @@ define(["base/HandlebarsBaseView",
   "base/Context",
   "paperViews/ScoreView",
 
-  /* html model testing */
-  // "handlebarViews/ScoreView",
-
   "models/ScoreModel",
-  "models/NoteModel", 
-  "models/MeasureModel",
-  "models/StaffModel",
 
   "handlebarViews/PalateView",
   "text!../examples/cmajScale.json",
 
-  "paperViews/NoteView",
-  "paperViews/MeasureView",
-  "paperViews/SheetView",
-  "models/SheetModel"], 
+  "helpers/svgLoader"], 
 function (HandlebarsBaseView, 
           Context, 
           ScoreView, 
 
-          // ScoreView,
-
           ScoreModel, 
-          NoteModel, 
-          MeasureModel,
-          StaffModel,
-
+         
           PalateView,
           cmaj,
 
-          NoteView, 
-          MeasureView, 
-          SheetView,
-          SheetModel) {
+          svgLoader) {
     'use strict';
 
   	var App = HandlebarsBaseView.extend({
@@ -43,7 +26,8 @@ function (HandlebarsBaseView,
   		construct: function () {
   				console.log("app construct");
   				
-          
+          // load the svgs
+          svgLoader();
 
           // A paper view must have a canvas as an 'el'
           // var noteView = new NoteView({el: "#scoreContainer"});
