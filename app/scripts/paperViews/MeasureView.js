@@ -11,23 +11,20 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		// All number used for drawing should be created during initialization.
 		// May want to make them static properties eventually
 		initialize: function (options) {
-			// this.barLength = this.$el.width(); // Moved to SheetView
-			//need to get el from somewhere. Not neccisarily the canvas width.
-			// this should be controllable on each measure.
-			// maybe a default param that can be overridden.
+			
+			this.barLength = this.calculateMeasureLength(this.model.get("notes"));
 
 			this.lineSpacing = 10;
 			// this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
 			this.group = new paper.Group();
 		},
 
-		render: function (position, barLength) {
-			this.barLength = barLength; // FIXME: These should not be set as global properties.
+		render: function (position) {
 			this.measurePadding = this.barLength / 8;
 			var clef = this.model.get("clef");
 			var centerLine = position.add(0, this.lineSpacing * 2);
 
-			this.drawBars(position, barLength);
+			this.drawBars(position, this.barLength);
 
 			this.clefBase = this.getClefBase(position, this.model.get("clef"));
 			
@@ -36,6 +33,8 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			// this.drawBar(lines, "both");
 
 			this.drawClef(centerLine, clef);
+
+			this.drawKeySignature();
 
 			var notesGroup = this.drawNotes(centerLine);
 
@@ -143,6 +142,10 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			return this;
 		},
 
+		drawKeySignature: function () {
+
+		},
+
 		// position is the left-most part of the first line.
 		// BaseNotes exists so there any clef can be made.
 		getClefBase: function (position, clef) {
@@ -151,6 +154,18 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 				// The bass object isn't correct, just added it for testing purposes
 				"bass": {pitch: "F", degree: 3, octave: 3, point: position.add([0, this.lineSpacing/2 * 2])}
 			}[clef];
+		},
+
+		/*
+		 * @param notes {NoteCollection} 
+		 * @param first {boolean} optional true if the measure is the first on the line
+		 *						  so clef and signature can be calculated in.
+		 */
+		calculateMeasureLength: function (notes, first) {
+			var length = 200; // arbitrary
+			if (notes.isEmpty()) return length;
+
+			return length;
 		}
 
 	});

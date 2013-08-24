@@ -7,18 +7,25 @@ function (PaperBaseView, MeasureView) {
 
 		initialize: function () {
 			console.log("constructing MeasureCollectionView");
-			this.childViews = [];
+			this.childViews = this.initChildViews(this.collection);
 			this.group = new paper.Group(); // probably dont need childViews because of this.
+			this.length = this.calculateCollectionLength(this.childViews);
+		},
+
+		initChildViews: function (collection) {
+			return collection.map(function (model) {
+				var measureView = new MeasureView({model: model});
+				return measureView;
+			});
 		},
 
 		render: function (position) {
-			// var barLength = 300;
 			var barLength = this.$el.width() * 0.9; // here it is the length of the page.
 			var lineSpacing = 10;
 			var lines = this.createLines(position, barLength, lineSpacing);
 			this.drawSystem(lines);
 
-			this.drawMeasures(this.collection, position);
+			this.drawMeasures(this.childViews, position);
 
 			this.height = 100; //FIXME: arbitrary height for text test
 
@@ -28,10 +35,13 @@ function (PaperBaseView, MeasureView) {
 		// Creates lines the length of the page.
 		createLines: function (position, barLength, lineSpacing) {
 			var line,
+				leftPoint,
+				rightPoint,
 				lineArray = [];
 			for (var i = 0; i < 5; i++) {
-				// line = new paper.Path.Line(new paper.Point(0, i * lineSpacing), new paper.Point(barLength, i * lineSpacing));
-				line = new paper.Path.Line(position.add(0, i * lineSpacing), position.add(barLength, i * lineSpacing));
+				leftPoint = position.add(0, i * lineSpacing);
+				rightPoint = position.add(barLength, i * lineSpacing);
+				line = new paper.Path.Line(leftPoint, rightPoint);
 				lineArray.push(line);
 			}
 
@@ -47,9 +57,8 @@ function (PaperBaseView, MeasureView) {
 			return this;
 		},
 
-		drawMeasures: function (collection, position) {
-			collection.each(function (model) {
-				var measure = new MeasureView({model: model});
+		drawMeasures: function (childViews, position) {
+			_.each(childViews, function (view, i, list) {
 				
 					 // barlength should probably come from systems or even higher.
 					 // All measures at the same index in each MeasureCollection need to have the
@@ -58,13 +67,10 @@ function (PaperBaseView, MeasureView) {
 					 // based on the notes that are in each measure. Could simplify this by
 					 // letting the user set their own barLengths.
 
-				// calculate the length of the last bar and add it to the position to get the
-				// position of the bar that is being drawn.
-				var barLength = this.getMeasureLength(model);
-				var previousBarLength = this.getPreviousMeasureLength();
-				position = position.add(previousBarLength, 0);
-				measure.render(position, barLength);
-				this.childViews.push(measure);
+				// if i is 0 then the previous length is 0
+				var previousBarLength = i ? list[i-1].barLength : i;
+				position = position.add(previousBarLength, 0);	
+				view.render(position);
 			}, this);
 		},
 
@@ -73,32 +79,24 @@ function (PaperBaseView, MeasureView) {
 			return new MeasureView({model: model}).render();
 		},
 
-		// Measures should have a standard length when empty. 
-		// If the measure is full but has few notes, i.e. a whole note, it should be shorter.
-		// If the measure has many notes, i.e. all sixteenths, it should be longer.
-		// 
-		// The length of a measure also depends on the way notes are grouped, which is determined by
-		// the meter.
-		// FIXME: Just render the standard length for now.
-		getMeasureLength: function (measureModel) {
-			var notes = measureModel.get("notes"), 
-				length = 200; // arbitrary
-			if (notes.isEmpty()) return length;
-
-			return length;
-		},
-
-		getTotalMeasureLength: function () {
-			if (this.childViews.length === 0) return 0;
-			return _.reduce(this.childViews, function (x, y) {
-				return x + this.getMeasureLength(y.model);
+		// This is untested and unused.
+		getTotalMeasureLength: function (childViews) {
+			if (childViews.length === 0) return 0;
+			return _.reduce(childViews, function (x, y) {
+				return x + y.barLength;
 			}, 0, this);
 		},
 
-		getPreviousMeasureLength: function () {
-			if (this.childViews.length === 0) return 0;
-			return this.getMeasureLength(this.childViews[this.childViews.length - 1].model);
-		} 
+		/*
+		 * Calculates the combined length of all the measures in the collection.
+		 *
+		 * Note: for this to work instantiating of child views needs to separated out from rendering.
+		 */
+		calculateCollectionLength: function (childViews) {
+			return _.reduce(childViews, function (x, y) {
+				return x + y.length;
+			}, 0, this)
+		}
 
 	});
 	return MeasureCollectionView;
