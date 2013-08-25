@@ -10,11 +10,13 @@ function (PaperBaseView, MeasureView) {
 			this.childViews = this.initChildViews(this.collection);
 			this.group = new paper.Group(); // probably dont need childViews because of this.
 			this.length = this.calculateCollectionLength(this.childViews);
+			this.height = 100; // FIXME: Arbitrary height
 		},
 
 		initChildViews: function (collection) {
+			var measureView;
 			return collection.map(function (model) {
-				var measureView = new MeasureView({model: model});
+				measureView = new MeasureView({model: model});
 				return measureView;
 			});
 		},
@@ -27,7 +29,7 @@ function (PaperBaseView, MeasureView) {
 
 			this.drawMeasures(this.childViews, position);
 
-			this.height = 100; //FIXME: arbitrary height for text test
+			// this.height = 100; //FIXME: arbitrary height for text test
 
 			return this;
 		},

@@ -7,19 +7,22 @@ function (PaperBaseView, MeasureCollectionView) {
 
 		initialize: function () {
 			console.log("Constructing StaffView");
-			this.childViews = [];
+			this.childViews = this.initChildViews(this.model.get("systems"));
+		},
+
+		initChildViews: function (systems) {
+			var measures;
+			return _.map(systems, function (measureCollection) {
+				measures = new MeasureCollectionView({el: this.el, collection: measureCollection});
+				return measures;
+			}, this);
 		},
 
 		render: function (position) {
 			this.drawInstrument(this.model.get("instrument"));
 			this.drawMeter(this.model.get("meter"));
-			this.drawSystems(this.model.get("systems"), position);
-			// var staff = new paper.PointText({
-			// 	content: "StaffView",
-			// 	point: position,
-			// 	fontSize: 15,
-			// 	fillColor: 'black'
-			// });
+			this.drawSystems(this.childViews, position);
+			
 			this.height = this.getTotalHeight(this.childViews); // set the height of the staff so staves view can determine where to place other staves
 							  // It is set arbitrarily for testing purposes right now.
 			return this;
@@ -33,15 +36,16 @@ function (PaperBaseView, MeasureCollectionView) {
 
 		},
 
-		drawSystems: function (systems, position) {
-			_.each(systems, function (collection, i) {
-				var measures = new MeasureCollectionView({el: this.el, collection: collection});
-				measures.render(position.add(0, this.getTotalHeight(this.childViews)));
-				this.childViews.push(measures); // FIXME?: adding to child views has to come after render because
-												// render sets the height which is needed for getTotalHeight()
+		drawSystems: function (childViews, position) {
+			_.each(childViews, function (collectionView, i) {
+
+				// Get the total height of all the views that have been rendered thus far.
+				collectionView.render(position.add(0, this.getTotalHeight(childViews.slice(0, i))));
+				
 			}, this);
 		},
 
+		// Unused
 		drawMeasureCollection: function (collection) {
 			return new MeasureCollectionView({collection: collection}).render();
 		},

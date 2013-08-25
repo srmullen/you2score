@@ -8,8 +8,9 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.pitch = this.model.get('pitch');
 
 			this.clefBase = this.options.clefBase;
-			// this.clef = this.options.cleff || "treble";
-			// this.headSize = [this.$el.width() / 45, this.$el.height() / 125]; // FIXME: divisions are hacks
+
+			this.length = this.calculateLength(this.model);
+
 		},
 
 		render: function (xPos, yPos, clefBase, centerLine, lineSpacing) {
@@ -168,9 +169,19 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			}
 		},
 
+		// FIXME: This method is unused. I don't remember what it was for.
 		updatePosition: function (event) {
 
 			this.circle.position = event.point;
+		},
+
+		// Probably shouldn't be absolute lengths, but relative to the standard measure layout.
+		// This depends on knowledge of the meter and beat groups and whatnot.
+		// Might need to specify somehow the beat groups that notes fall into.
+		// Should probably be handled by NoteCollection.
+		// Should make a NoteCollectionView.
+		calculateLength: function (model) {
+
 		}
 	});
 	return NoteView;

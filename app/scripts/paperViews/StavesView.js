@@ -12,21 +12,37 @@ function (PaperBaseView, StaffView) {
 
 		initialize: function () {
 			console.log("Constructing StavesView");
-			this.childViews = [];
+			this.childViews = this.initChildViews(this.collection);
+		},
+
+		initChildViews: function (staffCollection) {
+			var staffView;
+			return staffCollection.map(function (staffModel) {
+				staffView = new StaffView({el: this.el, model: staffModel});
+				return staffView;
+			}, this);
 		},
 
 		render: function (position) {
-			this.collection.map(function (model, i, list) {
-				var staff = this.drawStaff(model, position.add(0, this.getTotalHeight(this.childViews)));
-				this.childViews.push(staff); // add the view to childViews and then return it.
-				return staff; // return value isn't being used right now
-			}, this);
+
+			this.drawStaves(this.childViews, position);
 			return this;
 		},
 
+		// Cleanup - Unused
 		drawStaff: function (model, position) {
 			var staff = new StaffView({el: this.el, model: model}).render(position);
 			return staff;
+		},
+
+		drawStaves: function (childViews, position) {
+			var previousHeight;
+			_.each(childViews, function (view, i, list) {
+
+				previousHeight = i ? list[i-1].height : i;
+				position = position.add(0, previousHeight);
+				view.render(position);
+			});
 		},
 
 		// Method to get the total height of all the views in childViews.

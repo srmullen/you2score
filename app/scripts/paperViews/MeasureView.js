@@ -6,18 +6,35 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 	var MeasureView = PaperBaseView.extend({
 
-		childViews: [],
-
 		// All number used for drawing should be created during initialization.
 		// May want to make them static properties eventually
 		initialize: function (options) {
 			
-			this.barLength = this.calculateMeasureLength(this.model.get("notes"));
+			var notes = this.model.get("notes");
+
+			// this.clefBase = this.getClefBase(this.model.get("clef"));
+
+			this.childViews = this.initChildViews(notes);
+
+			this.barLength = this.calculateMeasureLength(notes);
 
 			this.lineSpacing = 10;
 			// this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
 			this.group = new paper.Group();
 		},
+
+		// No NoteCollectionView initialization.
+		initChildViews: function (notes) {
+			var noteView;
+			return notes.map(function (note) {
+				noteView = new NoteView({el: this.el, model: note, clefBase: this.clefBase});
+				return noteView;
+			});
+		},
+
+		// initChildViews: function (notes) {
+			
+		// },	
 
 		render: function (position) {
 			this.measurePadding = this.barLength / 8;
@@ -36,7 +53,7 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 			this.drawKeySignature();
 
-			var notesGroup = this.drawNotes(centerLine);
+			var notesGroup = this.drawNotes(centerLine, this.childViews);
 
 			// var notesGroup = this.notesReduce();
 			// this.group.addChild(notesGroup);
@@ -66,14 +83,12 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		 *	Iterates over the NoteCollection and draws the notes.
 		 *	@return group of notes
 		 */
-		drawNotes: function (centerLine) {
-			// var centerLine = position.add(0, this.lineSpacing * 2);
+		drawNotes: function (centerLine, childViews) {
 
-			return this.model.get("notes").reduce(function (group, note) {
-				var noteView = new NoteView({el: this.el, model: note})
-
-				var xPos = this.calculateNoteXpos(note);
-				var yPos = this.calculateNoteYpos(note, this.lineSpacing/2);
+			return _.reduce(childViews, function (group, noteView) {
+				
+				var xPos = this.calculateNoteXpos(noteView);
+				var yPos = this.calculateNoteYpos(noteView, this.lineSpacing/2);
 
 				noteView.render(xPos, yPos, this.clefBase, centerLine, this.lineSpacing);
 
@@ -84,7 +99,8 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 		},
 
-		calculateNoteYpos: function (note, step) {
+		calculateNoteYpos: function (noteView, step) {
+			var note = noteView.model;
 			var octave = note.get('pitch').octave;
 			var degree = note.get('pitch').degree;
 			var diffY = (this.clefBase.degree + (this.clefBase.octave * 7)) - (degree + (octave * 7));
@@ -92,7 +108,8 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		},
 
 		// Could also do this right when a note is placed in a collection
-		calculateNoteXpos: function (note) {
+		calculateNoteXpos: function (noteView) {
+			var note = noteView.model;
 			// Get the position of the note in the NoteCollection
 			var noteIndex = this.model.get("notes").indexOf(note),
 				xPos = 0;
@@ -155,6 +172,21 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 				"bass": {pitch: "F", degree: 3, octave: 3, point: position.add([0, this.lineSpacing/2 * 2])}
 			}[clef];
 		},
+
+		// This might be useful, to have the point as a function.
+		// getClefBase: function (clef) {
+		// 	return {
+		// 		"treble": {pitch: "C", degree: 0, octave: 5, getPoint: function (position) {
+		// 				position.add([0, this.lineSpacing/2 * 3])
+		// 			}
+		// 		},
+		// 		// The bass object isn't correct, just added it for testing purposes
+		// 		"bass": {pitch: "F", degree: 3, octave: 3, getPoint: function (position) {
+		// 				position.add([0, this.lineSpacing/2 * 2])
+		// 			}
+		// 		}
+		// 	}[clef];
+		// },
 
 		/*
 		 * @param notes {NoteCollection} 
