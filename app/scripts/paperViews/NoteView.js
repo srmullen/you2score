@@ -7,16 +7,20 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.group = new paper.Group();
 			this.pitch = this.model.get('pitch');
 
+			this.xPos = this.options.xPos;
+			this.yPos = this.options.yPos;
+
 			this.clefBase = this.options.clefBase;
 
 			this.length = this.calculateLength(this.model);
 
 		},
 
-		render: function (xPos, yPos, clefBase, centerLine, lineSpacing) {
+		render: function (clefBase, centerLine, lineSpacing) {
 			var octaveHeight = lineSpacing * 3.5;
 
-			this.drawHead(clefBase, xPos, yPos);
+			// this.drawHead(clefBase, this.xPos, this.yPos);
+			this.drawHead(centerLine, this.xPos, this.yPos);
 
 			this.drawStem(centerLine, octaveHeight);
 
@@ -31,7 +35,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 
 		// FIXME: baseNote feels kinda wrong. seems like it should just need the
 		// x position and y position
-		drawHead: function (baseNote, xPos, yPos) {
+		drawHead: function (centerLine, xPos, yPos) {
 			var type = this.model.get("type");
 
 			var outerRect = new paper.Rectangle({
@@ -53,7 +57,7 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			head.fillColor = 'black';
 
 			this.group.addChild(head);
-			this.group.position = baseNote.point.add([xPos, yPos]);
+			this.group.position = centerLine.add([xPos, yPos]);
 
 			return this;
 		},

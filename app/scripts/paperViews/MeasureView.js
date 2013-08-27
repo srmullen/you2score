@@ -1,8 +1,9 @@
 define(["base/PaperBaseView", 
 	"../models/MeasureModel", 
+	"./NoteCollectionView",
 	"./NoteView",
 	"text!svg/treble.svg"], 
-function (PaperBaseView, MeasureModel, NoteView, treble) {
+function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 	var MeasureView = PaperBaseView.extend({
 
@@ -12,32 +13,32 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 			
 			var notes = this.model.get("notes");
 
-			// this.clefBase = this.getClefBase(this.model.get("clef"));
+			this.lineSpacing = 10;
+
+			this.clefBase = this.getClefBase(this.model.get("clef"));
+
+			this.barLength = this.calculateMeasureLength(notes);
+			this.measurePadding = this.barLength / 8;
 
 			this.childViews = this.initChildViews(notes);
 
-			this.barLength = this.calculateMeasureLength(notes);
-
-			this.lineSpacing = 10;
-			// this.measurePadding = this.barLength / 8; // 10 is arbitrary, so notes arent on top of the bars
 			this.group = new paper.Group();
 		},
 
-		// No NoteCollectionView initialization.
+		// this would be a good place to add 'voices'
 		initChildViews: function (notes) {
-			var noteView;
-			return notes.map(function (note) {
-				noteView = new NoteView({el: this.el, model: note, clefBase: this.clefBase});
-				return noteView;
+			var noteCollection = new NoteCollectionView({
+				el: this.el, 
+				collection: notes, 
+				clefBase: this.clefBase,
+				lineSpacing: this.lineSpacing,
+				barLength: this.barLength
 			});
-		},
-
-		// initChildViews: function (notes) {
-			
-		// },	
+			return [noteCollection];
+		},	
 
 		render: function (position) {
-			this.measurePadding = this.barLength / 8;
+			// this.measurePadding = this.barLength / 8;
 			var clef = this.model.get("clef");
 			var centerLine = position.add(0, this.lineSpacing * 2);
 
@@ -85,46 +86,9 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 		 */
 		drawNotes: function (centerLine, childViews) {
 
-			return _.reduce(childViews, function (group, noteView) {
-				
-				var xPos = this.calculateNoteXpos(noteView);
-				var yPos = this.calculateNoteYpos(noteView, this.lineSpacing/2);
-
-				noteView.render(xPos, yPos, this.clefBase, centerLine, this.lineSpacing);
-
-				group.addChild(noteView.group); // I'm not sure if this is necessary
-
-				return group;
-			}, new paper.Group(), this);
-
-		},
-
-		calculateNoteYpos: function (noteView, step) {
-			var note = noteView.model;
-			var octave = note.get('pitch').octave;
-			var degree = note.get('pitch').degree;
-			var diffY = (this.clefBase.degree + (this.clefBase.octave * 7)) - (degree + (octave * 7));
-			return diffY * step;
-		},
-
-		// Could also do this right when a note is placed in a collection
-		calculateNoteXpos: function (noteView) {
-			var note = noteView.model;
-			// Get the position of the note in the NoteCollection
-			var noteIndex = this.model.get("notes").indexOf(note),
-				xPos = 0;
-
-			// the sum of the durations of the notes previous to noteIndex indicate where
-			// the note should be placed
-			for (var i = 0; i < noteIndex; i++) {
-				xPos += this.model.get("notes").at(i).get("duration");
-			}
-
-			// xPos *= (this.barLength - this.measurePadding);
-			xPos *= this.barLength;
-			xPos += (this.measurePadding / 2); // divide by 2 to account for padding on each side
-
-			return xPos; // cause not implemented yet
+			_.each(childViews, function (view) {
+				view.render(centerLine);
+			});
 		},
 
 		drawMeasure: function (lines) {
@@ -163,30 +127,15 @@ function (PaperBaseView, MeasureModel, NoteView, treble) {
 
 		},
 
-		// position is the left-most part of the first line.
-		// BaseNotes exists so there any clef can be made.
-		getClefBase: function (position, clef) {
-			return {
-				"treble": {pitch: "C", degree: 0, octave: 5, point: position.add([0, this.lineSpacing/2 * 3])},
-				// The bass object isn't correct, just added it for testing purposes
-				"bass": {pitch: "F", degree: 3, octave: 3, point: position.add([0, this.lineSpacing/2 * 2])}
+		/*
+		 * offset is the number of steps from the top line.
+		 */
+		getClefBase: function (clef) {
+			return { 
+				"treble": {pitch: "C", degree: 0, octave: 5, offset: 3},
+				"bass": {pitch: "F", degree: 3, octave: 3, offset: 2}
 			}[clef];
 		},
-
-		// This might be useful, to have the point as a function.
-		// getClefBase: function (clef) {
-		// 	return {
-		// 		"treble": {pitch: "C", degree: 0, octave: 5, getPoint: function (position) {
-		// 				position.add([0, this.lineSpacing/2 * 3])
-		// 			}
-		// 		},
-		// 		// The bass object isn't correct, just added it for testing purposes
-		// 		"bass": {pitch: "F", degree: 3, octave: 3, getPoint: function (position) {
-		// 				position.add([0, this.lineSpacing/2 * 2])
-		// 			}
-		// 		}
-		// 	}[clef];
-		// },
 
 		/*
 		 * @param notes {NoteCollection} 
