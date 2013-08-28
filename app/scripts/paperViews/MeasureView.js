@@ -13,6 +13,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 			
 			var notes = this.model.get("notes");
 
+			this.meter = this.options.meter;
+
 			this.lineSpacing = 10;
 
 			this.clefBase = this.getClefBase(this.model.get("clef"));
@@ -32,13 +34,13 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 				collection: notes, 
 				clefBase: this.clefBase,
 				lineSpacing: this.lineSpacing,
-				barLength: this.barLength
+				barLength: this.barLength,
+				meter: this.meter
 			});
 			return [noteCollection];
 		},	
 
 		render: function (position) {
-			// this.measurePadding = this.barLength / 8;
 			var clef = this.model.get("clef");
 			var centerLine = position.add(0, this.lineSpacing * 2);
 
@@ -46,13 +48,15 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.clefBase = this.getClefBase(position, this.model.get("clef"));
 			
-			// this.drawMeasure(lines);
+			// this.drawMeasure(lines); // can probably be removed.
 
 			// this.drawBar(lines, "both");
 
 			this.drawClef(centerLine, clef);
 
 			this.drawKeySignature();
+
+			this.drawMeter();
 
 			var notesGroup = this.drawNotes(centerLine, this.childViews);
 
@@ -61,16 +65,17 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.group.strokeColor = 'black';
 
-
-			// All methods beginning with draw should return themselves to facilitate chaining
 			return this; 
 		},
 
 		drawBars: function (position, width) {
-			var line1 = new paper.Path.Line(position, position.add(0, this.lineSpacing * 4));
-			// var line2 = new paper.Path.Line(position.add(width, 0), position.add(width, this.lineSpacing * 4));
-			this.group.addChild(line1);
-			// this.group.addChild(line2);
+			// draw bar to the left
+			// var line1 = new paper.Path.Line(position, position.add(0, this.lineSpacing * 4));
+			// this.group.addChild(line1);
+
+			//draw bar to the right
+			var line2 = new paper.Path.Line(position.add(width, 0), position.add(width, this.lineSpacing * 4));
+			this.group.addChild(line2);
 		},
 
 		/*
@@ -85,18 +90,16 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 		 *	@return group of notes
 		 */
 		drawNotes: function (centerLine, childViews) {
-
 			_.each(childViews, function (view) {
 				view.render(centerLine);
 			});
 		},
 
-		drawMeasure: function (lines) {
-
-			this.group.addChildren(lines);
-
-			return this;
-		},
+		// // Lines are already drawn now. Can probably be removed.
+		// drawMeasure: function (lines) {
+		// 	this.group.addChildren(lines);
+		// 	return this;
+		// },
 
 		drawClef: function (centerLine, clef) {
 			var svgItem
@@ -124,6 +127,10 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 		},
 
 		drawKeySignature: function () {
+
+		},
+
+		drawMeter: function () {
 
 		},
 

@@ -7,13 +7,20 @@ function (PaperBaseView, MeasureCollectionView) {
 
 		initialize: function () {
 			console.log("Constructing StaffView");
+
+			// this.meter = this.options.meter;
+
 			this.childViews = this.initChildViews(this.model.get("systems"));
 		},
 
 		initChildViews: function (systems) {
 			var measures;
 			return _.map(systems, function (measureCollection) {
-				measures = new MeasureCollectionView({el: this.el, collection: measureCollection});
+				measures = new MeasureCollectionView({
+					el: this.el, 
+					collection: measureCollection,
+					meter: this.model.get("meter")
+				});
 				return measures;
 			}, this);
 		},

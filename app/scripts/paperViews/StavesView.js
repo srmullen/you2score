@@ -18,7 +18,11 @@ function (PaperBaseView, StaffView) {
 		initChildViews: function (staffCollection) {
 			var staffView;
 			return staffCollection.map(function (staffModel) {
-				staffView = new StaffView({el: this.el, model: staffModel});
+				staffView = new StaffView({
+					el: this.el, 
+					model: staffModel
+					// meter: this.model.get("meter")
+				});
 				return staffView;
 			}, this);
 		},
@@ -30,10 +34,13 @@ function (PaperBaseView, StaffView) {
 		},
 
 		// Cleanup - Unused
-		drawStaff: function (model, position) {
-			var staff = new StaffView({el: this.el, model: model}).render(position);
-			return staff;
-		},
+		// drawStaff: function (model, position) {
+		// 	var staff = new StaffView({
+		// 		el: this.el, 
+		// 		model: model
+		// 	}).render(position);
+		// 	return staff;
+		// },
 
 		drawStaves: function (childViews, position) {
 			var previousHeight;

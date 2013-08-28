@@ -7,11 +7,12 @@ function (PaperBaseView, NoteView) {
 
 		initialize: function () {
 			console.log("Initializing NoteCollectionView");
+
+			this.meter = this.options.meter;
 			this.lineSpacing = this.options.lineSpacing;
-
 			this.clefBase = this.options.clefBase;
-
 			this.barLength = this.options.barLength;
+
 			this.measurePadding = this.barLength / 8; // Not really sure where measure padding should
 														// actually come from, or if it's really needed.
 														// Just calculating it where ever it's needed for the 

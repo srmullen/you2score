@@ -27,9 +27,11 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 			// make sure notes and measures are defined
 			data.systems = data.systems || [];
 			data.notes = data.notes || [];
+			data.meter = data.meter || {upper: 4, lower: 4};
 
 			return {
 				instrument: data.instrument,
+				meter: data.meter,
 				systems: _.map(data.systems, function (coll) {
 					return new MeasureCollection(coll, {parse: true});
 				})

@@ -13,13 +13,19 @@ function (PaperBaseView, StavesView, SheetView) {
 			console.log("Constructing ScoreView");
 			this.sheetWidth = this.options.sheetWidth;
 			this.margin = this.options.margin;
+			this.childViews = this.initChildViews(this.model.get("staves"));
+		},
+
+		initChildViews: function (staves) {
+			var stavesView = new StavesView({el: this.el, collection: staves});
+			return [stavesView];
 		},
 
 		render: function () {
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
-			this.drawStaves(this.model.get("staves"));
+			this.drawStaves(this.childViews);
 			// this.drawPages(1);
 			return this;
 		},
@@ -54,10 +60,10 @@ function (PaperBaseView, StavesView, SheetView) {
 			});
 		},
 
-		drawStaves: function (staves) {
-			var stavesView = new StavesView({el: this.el, collection: staves});
+		// Currently just renders the staves. not sure if childViews needs to be an array.
+		drawStaves: function (childViews) {
 			var position = new paper.Point(50, 150); // FIXME: Arbitrary point
-			return stavesView.render(position);
+			return childViews[0].render(position);
 		},
 
 		/*

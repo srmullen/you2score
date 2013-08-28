@@ -7,6 +7,9 @@ function (PaperBaseView, MeasureView) {
 
 		initialize: function () {
 			console.log("constructing MeasureCollectionView");
+
+			this.meter = this.options.meter;
+
 			this.childViews = this.initChildViews(this.collection);
 			this.group = new paper.Group(); // probably dont need childViews because of this.
 			this.length = this.calculateCollectionLength(this.childViews);
@@ -16,9 +19,13 @@ function (PaperBaseView, MeasureView) {
 		initChildViews: function (collection) {
 			var measureView;
 			return collection.map(function (model) {
-				measureView = new MeasureView({model: model});
+				measureView = new MeasureView({
+					el: this.el,
+					model: model,
+					meter: this.meter
+				});
 				return measureView;
-			});
+			}, this);
 		},
 
 		render: function (position) {
