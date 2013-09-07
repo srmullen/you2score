@@ -12,6 +12,9 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 
 			this.clefBase = this.options.clefBase;
 
+			this.headSize = [13, 10];
+			// this.accidental = this.getAccidental(this.model);
+
 			this.length = this.calculateLength(this.model);
 
 		},
@@ -39,8 +42,8 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			var type = this.model.get("type");
 
 			var outerRect = new paper.Rectangle({
-				// size: this.headSize
-				size: [13, 10] // 10 is the lineSpacing
+				size: this.headSize
+				// size: [13, 10] // 10 is the lineSpacing
 			});
 			var head = new paper.Path.Ellipse(outerRect);
 			this.noteHandles = head;
@@ -179,13 +182,32 @@ define(["base/PaperBaseView", "../models/NoteModel"], function (PaperBaseView, N
 			this.circle.position = event.point;
 		},
 
+		getAccidentalWidth: function (acdl) {
+			// var acdl = model.get("pitch").accidental;
+			var width = 0;
+			if (acdl === "#") {
+				width = $("#sharpSvg").attr("width") * 0.07;
+			} else if (acdl === "b") {
+				width = $("#flatSvg").attr("width") * 0.05;
+			}
+
+			return width;
+		},
+
 		// Probably shouldn't be absolute lengths, but relative to the standard measure layout.
 		// This depends on knowledge of the meter and beat groups and whatnot.
 		// Might need to specify somehow the beat groups that notes fall into.
 		// Should probably be handled by NoteCollection.
 		// Should make a NoteCollectionView.
 		calculateLength: function (model) {
+			var length = 0,
+				accidental = model.get("pitch").accidental;
 
+			// Investigate accidentalWidth. Seems like it might be too big compared to headsize.
+			var	headWidth = this.headSize[0],
+				accidentalWidth = this.getAccidentalWidth(accidental);
+
+			return headWidth + accidentalWidth;
 		}
 	});
 	return NoteView;

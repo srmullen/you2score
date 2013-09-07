@@ -18,6 +18,8 @@ function (PaperBaseView, NoteView) {
 														// Just calculating it where ever it's needed for the 
 														// time being.
 
+			this.notesIntoBeatGroups(this.collection, this.meter);
+
 			this.childViews = this.initChildViews(this.collection);
 
 			this.height = this.calculateHeight(this.childViews);
@@ -76,6 +78,23 @@ function (PaperBaseView, NoteView) {
 		},
 
 		// Could also do this right when a note is placed in a collection
+		// calculateNoteXpos: function (note) {
+		// 	// Get the position of the note in the NoteCollection
+		// 	var noteIndex = this.collection.indexOf(note),
+		// 		xPos = 0;
+
+		// 	// the sum of the durations of the notes previous to noteIndex indicate where
+		// 	// the note should be placed
+		// 	for (var i = 0; i < noteIndex; i++) {
+		// 		xPos += this.collection.at(i).get("duration");
+		// 	}
+
+		// 	xPos *= this.barLength;
+		// 	xPos += (this.measurePadding / 2); // divide by 2 to account for padding on each side
+
+		// 	return xPos; // cause not implemented yet
+		// },
+
 		calculateNoteXpos: function (note) {
 			// Get the position of the note in the NoteCollection
 			var noteIndex = this.collection.indexOf(note),
@@ -92,6 +111,21 @@ function (PaperBaseView, NoteView) {
 
 			return xPos; // cause not implemented yet
 		},
+
+		// BeatGroup should be its own view.
+		notesIntoBeatGroups: function (notes, meter) {
+			var beatGroups = [[]], // initialize with one empty beatGroup
+				groupLength = 1 / meter.upper; 
+		},
+
+		/*
+		 * returns the sum of all durations of notes in a beatGroup.
+		 */
+		sumBeatGroup: function (group) {
+			return _.reduce(group, function (sum, note) {
+				return sum + note.get("duration");
+			}, 0);
+		}
 	});
 	return NoteCollectionView;
 });

@@ -7,6 +7,7 @@ define(["base/HandlebarsBaseView",
 
   "handlebarViews/PalateView",
   "text!../examples/cmajScale.json",
+  "text!../examples/eigthsAndQuarters.json",
 
   "helpers/svgLoader"], 
 function (HandlebarsBaseView, 
@@ -17,6 +18,7 @@ function (HandlebarsBaseView,
          
           PalateView,
           cmaj,
+          eigthsAndQuarters,
 
           svgLoader) {
     'use strict';
@@ -35,7 +37,8 @@ function (HandlebarsBaseView,
           var context = new Context(document.getElementById("score"));
 
           var cMaJson = JSON.parse(cmaj);
-          var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
+          var eigthJson = JSON.parse(eigthsAndQuarters);
+          var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
           
           // var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
           // var scoreView = this.addChildView(ScoreView, {model: scoreModel}, "#score");

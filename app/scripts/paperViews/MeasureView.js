@@ -50,9 +50,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 			
 			// this.drawMeasure(lines); // can probably be removed.
 
-			// this.drawBar(lines, "both");
-
-			this.drawClef(centerLine, clef);
+			// this.drawClef(centerLine, clef);
 
 			this.drawKeySignature();
 
