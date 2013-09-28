@@ -3,8 +3,8 @@
 		"title": "C Major Scale",
 		"composer": "The Universe",
 		"tempo": "Adagio Sostenuto",
-		"staves": [
-			{
+		"staves": [ 
+			{ 
 				"instrument": "Piano",
 				"meter": {"upper": 4, "lower": 4},
 				"systems": [
@@ -72,7 +72,7 @@
 					}
 				]
 			},
-			{
+			{ 
 				"instrument": "Violin",
 				"meter": {"upper": 4, "lower": 4},
 				"systems": [

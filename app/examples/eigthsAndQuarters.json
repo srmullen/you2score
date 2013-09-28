@@ -44,7 +44,43 @@
 									{"pitch": "D4", "type": 0.25},
 									{"pitch": "C4", "type": 0.50}
 								]
+							},
+
+							{
+								"notes": [
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "A4", "type": 0.125},
+									{"pitch": "G4", "type": 0.125},
+									{"pitch": "F4", "type": 0.25},
+									{"pitch": "F5", "type": 0.25}
+								]
+							},
+							{	
+								"notes": [
+									{"pitch": "E5", "type": 0.125},
+									{"pitch": "C5", "type": 0.125},
+									{"pitch": "G4", "type": 0.125},
+									{"pitch": "C5", "type": 0.125},
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "G3", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "A4", "type": 0.25},
+									{"pitch": "G4", "type": 0.25},
+									{"pitch": "F4", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "E4", "type": 0.25},
+									{"pitch": "D4", "type": 0.25},
+									{"pitch": "C4", "type": 0.50}
+								]
 							}
+							
 						]
 					}
 				]
