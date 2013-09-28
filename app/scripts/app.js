@@ -50,7 +50,11 @@ function (HandlebarsBaseView,
           // var sheetModel = new SheetModel();
           // var sheet = context.addChildView(SheetView, sheetModel);
 
-          var paperScore = context.addChildView(ScoreView, scoreModel);
+          // pre-branch version
+          // var paperScore = context.addChildView(ScoreView, scoreModel);
+
+          // Initialize a blank score.
+          var blankScore = context.addChildView(ScoreView, new ScoreModel());
 
   		}
   	});
