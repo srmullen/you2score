@@ -1,41 +1,43 @@
-define(["base/BaseView", 
-	"./ScoreModel", 
-	"../measure/MeasureView", 
-	"../measure/MeasureModel", 
-	"./MeasureCollection", 
-	"text!./score.tmpl"], 
-function (BaseView, ScoreModel, MeasureView, MeasureModel, MeasureCollection, tmpl) {
+define(["base/PaperBaseView", 
+		"./ScoreModel",
+		"./LineView"], 
+function (BaseView, ScoreModel, LineView) {
 	"use strict"
 
 	/**
-	 * Module for handling everything that happens on the musical score
+	 * The score is a structure that can be rendered without knowlege of the music that is to be written on it.
 	 */
 	var Score = BaseView.extend({
 
-		template: tmpl,
-
-		measureCollection: new MeasureCollection(),
-
-		construct: function () {
+		initialize: function () {
 			console.log("Initializing Score");
 
 			this.model = this.options.model || new ScoreModel();
+
+			this.group = new paper.Group(); // probably dont need childViews because of this.
+
+			this.lines = this.initLines(this.model.get("numLines"));
+
+			// var position = new paper.Point(50, 150);
+			// this.render(position);
 		},
 
-		postPlaceAt: function () {
-			this.renderMeasures();
-			this.measureCollection.get(1).addNote(); // addNote should take parameters in the future
-													 // Now it's just a generic note.
+		initLines: function (numLines) {
+			var lines = [];
+
+			for (var i = 0; i < numLines; i++) {
+				lines.push(new LineView({el: this.el}));
+			};
+
+			return lines;
 		},
 
-		// Renders the Scores number of measures specified in the ScoreModel
-		renderMeasures: function () {
-			for (var i = 0; i < this.model.get("length"); i++) {
-				var measureModel;
-				measureModel = new MeasureModel({id: i});
-				this.measureCollection.add(measureModel);
-				this.addChildView(MeasureView, {model: measureModel}, "#measureContainer");
-			}
+		render: function (position) {
+			_.each(this.lines, function (line) {
+				line.render(position);
+			});
+
+			return this;
 		}
 	});
 	return Score;

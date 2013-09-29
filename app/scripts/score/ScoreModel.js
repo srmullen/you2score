@@ -4,15 +4,9 @@ define(["base/BaseModel"], function (BaseModel) {
 	var ScoreModel = BaseModel.extend({
 
 		defaults: {
-			length: 12 // Number of measures
-		},
-
-		// A Score can optionally have a title
-		title: null,
-
-		// A Score can optionally have a tempo marking
-		tempo: null
-
+			numLines: 10, 
+			measuresPerLine: 4
+		}
 	});
 	return ScoreModel;
 });

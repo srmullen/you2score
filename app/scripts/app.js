@@ -1,9 +1,12 @@
 /*global define */
 define(["base/HandlebarsBaseView", 
   "base/Context",
-  "paperViews/ScoreView",
 
+  "paperViews/ScoreView",
   "models/ScoreModel",
+
+  // "score/ScoreView",
+  // "score/ScoreModel",
 
   "handlebarViews/PalateView",
   "text!../examples/cmajScale.json",
@@ -12,8 +15,8 @@ define(["base/HandlebarsBaseView",
   "helpers/svgLoader"], 
 function (HandlebarsBaseView, 
           Context, 
-          ScoreView, 
 
+          ScoreView, 
           ScoreModel, 
          
           PalateView,
@@ -38,13 +41,13 @@ function (HandlebarsBaseView,
 
           var cMaJson = JSON.parse(cmaj);
           var eigthJson = JSON.parse(eigthsAndQuarters);
-          var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
+          // var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
           
           // var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
           // var scoreView = this.addChildView(ScoreView, {model: scoreModel}, "#score");
 
-          var palateView = this.addChildView(PalateView, {model: scoreModel}, "#palate-container");
-          scoreModel.listenTo(palateView, "addNote", scoreModel.addNote);
+          // var palateView = this.addChildView(PalateView, {model: scoreModel}, "#palate-container");
+          // scoreModel.listenTo(palateView, "addNote", scoreModel.addNote);
 
           // // Render as paper
           // var sheetModel = new SheetModel();
@@ -54,7 +57,9 @@ function (HandlebarsBaseView,
           // var paperScore = context.addChildView(ScoreView, scoreModel);
 
           // Initialize a blank score.
+          var position = new paper.Point(50, 150);
           var blankScore = context.addChildView(ScoreView, new ScoreModel());
+          blankScore.render(position);
 
   		}
   	});
