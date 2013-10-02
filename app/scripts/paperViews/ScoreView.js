@@ -25,8 +25,8 @@ function (PaperBaseView, StavesView, SheetView) {
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
-			this.drawStaves(this.childViews);
-			// this.drawPages(1);
+			// this.drawStaves(this.childViews);
+			this.drawPages(1);
 			return this;
 		},
 
@@ -71,7 +71,8 @@ function (PaperBaseView, StavesView, SheetView) {
 		 */
 		drawPages: function (num) {
 			var sheetView = new SheetView({el: this.el});
-			sheetView.render();
+			var position = new paper.Point(50, 150);
+			sheetView.render(position);
 		}
 	});
 	return ScoreView;

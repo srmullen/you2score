@@ -1,9 +1,7 @@
 define(["base/PaperBaseView", 
-	"../models/SheetModel", 
-	"../paperViews/MeasureView", 
-	"../models/NoteModel", 
-	"../paperViews/NoteView"], 
-function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
+	"../models/SheetModel",
+	"./LineView"], 
+function (PaperBaseView, SheetModel, LineView) {
 
 	/*
 	 * A SheetView represents a blank page of Staff Paper.
@@ -23,19 +21,85 @@ function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 			this.model = this.options.model || new SheetModel();
 			this.staveWidth = this.$el.width() * .9;
 			this.lineSpacing = this.staveWidth / 100; // 100 is arbitrary, i'm not sure the math here is correct
-			this.group = new paper.Group();
+			// this.group = new paper.Group();
+			this.lines = this.initLines();
+		},
 
-			var that = this;
-			paper.tool.onKeyDown = function (event) {
-				that.addNote(event);
+		initLines: function () {
+			var lines = [];
+
+			for (var i = 0, n = 10; i < n; i++) {
+				// var stave = this.createStave(this.staveWidth, this.lineSpacing);
+				// // stave.position = stave.children[4].position.point.add([0, staveSpacing]);
+				// stave.position.y = 100 * i + 50;
+				// this.group.addChild(stave);
+
+				var line = new LineView({staveWidth: this.staveWidth, lineSpacing: this.lineSpacing});
+				lines.push(line);
 			}
+
+			return lines;
 		},
 
-		render: function () {
-			this.drawSheet();
+		render: function (position) {
+			// this.drawSheet();
+
+			this.drawLines();
+
+			// var barLength = this.$el.width() * 0.9; // here it is the length of the page.
+			// var lineSpacing = 10;
+			// var lineArray = [];
+			// var line, position;
+
+			// for (var i = 0, n = 10; i < n; i++) {
+			// 	line = this.createLine(new paper.Point(0, 0), barLength, lineSpacing);
+			// 	lineArray.push(line);
+			// 	position = 100 * i + 50;
+			// 	this.drawLine(line, position);
+			// };
 		},
+
+		// renders each LineView in this.lines
+		drawLines: function () {
+			this.group = _.reduce(this.lines, function (group, lineView, i) {
+				// lineView.setYPosition(100 * i + 50);
+				lineView.render(100 * i + 50)
+				group.addChild(lineView.group);
+				return group;
+			}, new paper.Group());
+
+			// for (var i = 0, n = 10; i < n; i++) {
+			// 	var stave = this.createStave(this.staveWidth, this.lineSpacing);
+			// 	// stave.position = stave.children[4].position.point.add([0, staveSpacing]);
+			// 	stave.position.y = 100 * i + 50;
+			// 	this.group.addChild(stave);
+			// }
+
+			this.group.strokeColor = 'black';
+			this.group.justify = 'center';
+			this.group.position = paper.view.center;
+
+			return this;
+		},
+
+		// drawLine: function (line, position) {
+		// 	line.position.y = position;
+
+		// 	this.group.addChild(line);
+
+		// 	// this.group.strokeColor = 'black';
+
+		// 	line.strokeColor = 'black';
+
+		// 	this.group.justify = 'center';
+
+		// 	this.group.position = paper.view.center;
+
+		// 	return this;
+		// },
 
 		drawSheet: function () {
+			this.group = new paper.Group();
 			// FIXME: 100 is arbitrary, should be based on page height and number of staves
 			// var staveSpacing = this.lineSpacing * 4 + 100;
 			var staveSpacing = 100; 
@@ -68,23 +132,24 @@ function (PaperBaseView, SheetModel, MeasureView, NoteModel, NoteView) {
 			var stave = new paper.Group(lineArray);
 			stave.insertChild(0, rectangle);
 
-			// event handlers can be attached to specific items
-			// this only works if the right places on the line are clicked
-			var that = this;
-			stave.onClick = function (event) {
-				// var target = event.item;
-				// this.strokeColor = 'blue';
-			}
-
 			return stave;
 		},
 
-		addNote: function (pitch) {
-			var noteModel = new NoteModel(pitch);
-			this.model.get("notes").add(noteModel);
+		// createLine: function (position, barLength, lineSpacing) {
+		// 	var line,
+		// 		leftPoint,
+		// 		rightPoint,
+		// 		lineArray = [];
+		// 	for (var i = 0; i < 5; i++) {
+		// 		leftPoint = position.add(0, i * lineSpacing);
+		// 		rightPoint = position.add(barLength, i * lineSpacing);
+		// 		line = new paper.Path.Line(leftPoint, rightPoint);
+		// 		lineArray.push(line);
+		// 	}
 
-			// var
-		}
+		// 	var lineGroup = new paper.Group(lineArray);
+		// 	return lineGroup;
+		// }
 	});
 	return SheetView;
 });

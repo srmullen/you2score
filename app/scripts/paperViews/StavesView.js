@@ -21,26 +21,15 @@ function (PaperBaseView, StaffView) {
 				staffView = new StaffView({
 					el: this.el, 
 					model: staffModel
-					// meter: this.model.get("meter")
 				});
 				return staffView;
 			}, this);
 		},
 
 		render: function (position) {
-
 			this.drawStaves(this.childViews, position);
 			return this;
 		},
-
-		// Cleanup - Unused
-		// drawStaff: function (model, position) {
-		// 	var staff = new StaffView({
-		// 		el: this.el, 
-		// 		model: model
-		// 	}).render(position);
-		// 	return staff;
-		// },
 
 		drawStaves: function (childViews, position) {
 			var previousHeight;
