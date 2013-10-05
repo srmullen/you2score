@@ -60,21 +60,21 @@ require(["app", 'jquery', 'handlebars', 'foundation', 'topbar', 'sticky'], funct
     // Handlebars helper to iterate over the models in a collection and 
     // use its attributes as the template context
     // FIXME: Should be in a handlebars helper file.
-    Handlebars.registerHelper("eachModel", function (context, options) {
-        var ret = "", data;
+    // Handlebars.registerHelper("eachModel", function (context, options) {
+    //     var ret = "", data;
 
-        for (var i = 0, l = context.models.length; i < l; i++) {
-            if (options.data) {
-                data = Handlebars.createFrame(options.data || {});
-                data.index = i; // inject private index variable
-            }
+    //     for (var i = 0, l = context.models.length; i < l; i++) {
+    //         if (options.data) {
+    //             data = Handlebars.createFrame(options.data || {});
+    //             data.index = i; // inject private index variable
+    //         }
 
-            ret += options.fn(context.models[i].toJSON(), {data: data});
+    //         ret += options.fn(context.models[i].toJSON(), {data: data});
             
-        }
+    //     }
 
-        return ret;
-    });
+    //     return ret;
+    // });
 
     var app = new App();
 });

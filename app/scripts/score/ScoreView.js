@@ -14,7 +14,9 @@ function (PaperBaseView, StavesView, SheetView) {
 			this.sheetWidth = this.options.sheetWidth;
 			this.margin = this.options.margin;
 			this.staves = this.initStaves(this.model.get("staves"));
-			this.pages = this.initPages(this.staves.getTotalPages());
+			this.pages = this.initPages(1);
+
+			this.staves.partitionLines(this.mergeLines(this.pages));
 		},
 
 		initStaves: function (staves) {
@@ -24,7 +26,13 @@ function (PaperBaseView, StavesView, SheetView) {
 
 		// initializes the number of pages given.
 		initPages: function (num) {
+			var pages = [];
 
+			for (var i = 0; i < num; i++) {
+				pages.push(new SheetView({el: this.el}));
+			};
+
+			return pages;
 		},
 
 		render: function () {
@@ -32,7 +40,7 @@ function (PaperBaseView, StavesView, SheetView) {
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
 			// this.drawStaves(this.staves);
-			this.drawPages(1);
+			this.drawPages();
 			return this;
 		},
 
@@ -75,12 +83,17 @@ function (PaperBaseView, StavesView, SheetView) {
 		/*
 		 * @param num - The number of pages to draw.
 		 */
-		drawPages: function (num) {
-			// should just make as many sheetViews as necessary and then pass the lines of the
-			// sheetViews to the apropriate instruments/staves
-			var sheetView = new SheetView({el: this.el});
-			var position = new paper.Point(50, 150);
-			sheetView.render(position);
+		drawPages: function () {
+			_.each(this.pages, function (sheetView) {
+				var position = new paper.Point(50, 150); // FIXME: need to change this on each iteration
+				sheetView.render(position);
+			});
+		},
+
+		mergeLines: function (pages) {
+			return _.reduce(pages, function (lineArr, sheet) {
+				return lineArr.concat(sheet.lines);
+			}, []);
 		}
 	});
 	return ScoreView;

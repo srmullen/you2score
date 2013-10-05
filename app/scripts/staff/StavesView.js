@@ -26,11 +26,6 @@ function (PaperBaseView, StaffView) {
 			}, this);
 		},
 
-		// returns the number of pages needed to render all the staves.
-		getTotalPages: function () {
-			
-		},
-
 		render: function (position) {
 			this.drawStaves(this.childViews, position);
 			return this;
@@ -54,6 +49,14 @@ function (PaperBaseView, StaffView) {
 				return x + y.height;
 			}, 0);
 			return ans;
+		},
+
+		/*
+		 * Divides the lines up among the instruments.
+		 * @param lines - LineView[]
+		 */
+		partitionLines: function (lines) {
+
 		}
 	});
 	return StavesView;

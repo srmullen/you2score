@@ -41,9 +41,9 @@ function (HandlebarsBaseView,
           // var paperScore = context.addChildView(ScoreView, scoreModel).render();
 
           // Initialize a blank score.
-          var position = new paper.Point(50, 150);
+          // var position = new paper.Point(50, 150);
           var blankScore = context.addChildView(ScoreView, scoreModel);
-          blankScore.render(position);
+          blankScore.render();
 
   		}
   	});
