@@ -2,11 +2,8 @@
 define(["base/HandlebarsBaseView", 
   "base/Context",
 
-  "paperViews/ScoreView",
-  "models/ScoreModel",
-
-  // "score/ScoreView",
-  // "score/ScoreModel",
+  "score/ScoreView",
+  "score/ScoreModel",
 
   "handlebarViews/PalateView",
   "text!../examples/cmajScale.json",
@@ -34,31 +31,18 @@ function (HandlebarsBaseView,
           // load the svgs
           svgLoader();
 
-          // A paper view must have a canvas as an 'el'
-          // var noteView = new NoteView({el: "#scoreContainer"});
-
           var context = new Context(document.getElementById("score"));
 
           var cMaJson = JSON.parse(cmaj);
           var eigthJson = JSON.parse(eigthsAndQuarters);
-          // var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
-          
-          // var scoreView = new ScoreView({model: scoreModel, el: "#score"}).render();
-          // var scoreView = this.addChildView(ScoreView, {model: scoreModel}, "#score");
-
-          // var palateView = this.addChildView(PalateView, {model: scoreModel}, "#palate-container");
-          // scoreModel.listenTo(palateView, "addNote", scoreModel.addNote);
-
-          // // Render as paper
-          // var sheetModel = new SheetModel();
-          // var sheet = context.addChildView(SheetView, sheetModel);
+          var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
 
           // pre-branch version
-          // var paperScore = context.addChildView(ScoreView, scoreModel);
+          // var paperScore = context.addChildView(ScoreView, scoreModel).render();
 
           // Initialize a blank score.
           var position = new paper.Point(50, 150);
-          var blankScore = context.addChildView(ScoreView, new ScoreModel());
+          var blankScore = context.addChildView(ScoreView, scoreModel);
           blankScore.render(position);
 
   		}

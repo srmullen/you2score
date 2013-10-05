@@ -13,7 +13,16 @@ require.config({
 
         // Application Specific
         base: 'base',
-        svg: '../images/svg'
+        svg: '../images/svg',
+
+        score: 'score',
+        sheet: 'sheet',
+        staff: 'staff',
+        line: 'line',
+        measure: 'measure',
+        beat: 'beat',
+        note: 'note'
+
     },
     shim: {
         foundation: {
