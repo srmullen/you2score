@@ -26,6 +26,11 @@ function (PaperBaseView, StaffView) {
 			}, this);
 		},
 
+		// returns the number of pages needed to render all the staves.
+		getTotalPages: function () {
+			
+		},
+
 		render: function (position) {
 			this.drawStaves(this.childViews, position);
 			return this;

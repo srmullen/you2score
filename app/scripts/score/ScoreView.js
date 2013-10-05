@@ -13,19 +13,25 @@ function (PaperBaseView, StavesView, SheetView) {
 			console.log("Constructing ScoreView");
 			this.sheetWidth = this.options.sheetWidth;
 			this.margin = this.options.margin;
-			this.childViews = this.initChildViews(this.model.get("staves"));
+			this.staves = this.initStaves(this.model.get("staves"));
+			this.pages = this.initPages(this.staves.getTotalPages());
 		},
 
-		initChildViews: function (staves) {
+		initStaves: function (staves) {
 			var stavesView = new StavesView({el: this.el, collection: staves});
-			return [stavesView];
+			return stavesView;
+		},
+
+		// initializes the number of pages given.
+		initPages: function (num) {
+
 		},
 
 		render: function () {
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
-			// this.drawStaves(this.childViews);
+			// this.drawStaves(this.staves);
 			this.drawPages(1);
 			return this;
 		},
@@ -70,6 +76,8 @@ function (PaperBaseView, StavesView, SheetView) {
 		 * @param num - The number of pages to draw.
 		 */
 		drawPages: function (num) {
+			// should just make as many sheetViews as necessary and then pass the lines of the
+			// sheetViews to the apropriate instruments/staves
 			var sheetView = new SheetView({el: this.el});
 			var position = new paper.Point(50, 150);
 			sheetView.render(position);

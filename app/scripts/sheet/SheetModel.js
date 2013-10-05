@@ -4,18 +4,14 @@ define(["base/BaseModel",
 function (BaseModel, NoteCollection, MeasureCollection) {
 
 	/*
-	 * staves {number} - The number of staves on the sheet
+	 * lines {number} - The number of staves on the sheet.
+	 * type  {string} - Different kinds of lines could be specified here, such as guitar tablature or voice.
 	 */
 	var SheetModel = BaseModel.extend({
 
-		// defaults: {
-		// 	staves: 10,
-		// 	notes: new NoteCollection(),
-		// 	measures: new MeasureCollection()
-		// },
-
-		initialize: function () {
-			
+		defaults: {
+			lines: 10
+			// type: 'regular', 'tabs', 'other?'
 		}
 	});
 	return SheetModel;

@@ -1,7 +1,8 @@
 define(["base/PaperBaseView", 
 		"./SheetModel",
-		"line/LineView"], 
-function (PaperBaseView, SheetModel, LineView) {
+		"line/LineView",
+		"line/LineModel"], 
+function (PaperBaseView, SheetModel, LineView, LineModel) {
 
 	/*
 	 * A SheetView represents a blank page of Staff Paper.
@@ -19,14 +20,14 @@ function (PaperBaseView, SheetModel, LineView) {
 
 		initialize: function () {
 			this.model = this.options.model || new SheetModel();
-			this.staveWidth = this.$el.width() * .9;
-			this.lineSpacing = this.staveWidth / 100; // 100 is arbitrary, i'm not sure the math here is correct
+			// this.staveWidth = this.$el.width() * this.model.get("width");
+			// this.lineSpacing = this.staveWidth / 100; // 100 is arbitrary, i'm not sure the math here is correct
 			// this.group = new paper.Group();
 			this.lines = this.initLines();
 		},
 
 		initLines: function () {
-			var lines = [];
+			var lines = [], line, lineModel;
 
 			for (var i = 0, n = 10; i < n; i++) {
 				// var stave = this.createStave(this.staveWidth, this.lineSpacing);
@@ -34,7 +35,9 @@ function (PaperBaseView, SheetModel, LineView) {
 				// stave.position.y = 100 * i + 50;
 				// this.group.addChild(stave);
 
-				var line = new LineView({staveWidth: this.staveWidth, lineSpacing: this.lineSpacing});
+				lineModel = new LineModel();
+				line = new LineView({el: this.el, model: lineModel});
+				// line = new LineView({staveWidth: this.staveWidth, lineSpacing: this.lineSpacing});
 				lines.push(line);
 			}
 
@@ -98,42 +101,42 @@ function (PaperBaseView, SheetModel, LineView) {
 		// 	return this;
 		// },
 
-		drawSheet: function () {
-			this.group = new paper.Group();
-			// FIXME: 100 is arbitrary, should be based on page height and number of staves
-			// var staveSpacing = this.lineSpacing * 4 + 100;
-			var staveSpacing = 100; 
-			for (var i = 0, n = 10; i < n; i++) {
-				var stave = this.createStave(this.staveWidth, this.lineSpacing);
-				// stave.position = stave.children[4].position.point.add([0, staveSpacing]);
-				stave.position.y = 100 * i + 50;
-				this.group.addChild(stave);
-			}
+		// drawSheet: function () {
+		// 	this.group = new paper.Group();
+		// 	// FIXME: 100 is arbitrary, should be based on page height and number of staves
+		// 	// var staveSpacing = this.lineSpacing * 4 + 100;
+		// 	var staveSpacing = 100; 
+		// 	for (var i = 0, n = 10; i < n; i++) {
+		// 		var stave = this.createStave(this.staveWidth, this.lineSpacing);
+		// 		// stave.position = stave.children[4].position.point.add([0, staveSpacing]);
+		// 		stave.position.y = 100 * i + 50;
+		// 		this.group.addChild(stave);
+		// 	}
 
-			this.group.strokeColor = 'black';
-			this.group.justify = 'center';
-			this.group.position = paper.view.center;
+		// 	this.group.strokeColor = 'black';
+		// 	this.group.justify = 'center';
+		// 	this.group.position = paper.view.center;
 
-			return this;
-		},
+		// 	return this;
+		// },
 
-		createStave: function (width, spacing) {
-			var line,
-				lineArray = [];
-			for (var i = 0; i < 5; i++) {
-				line = new paper.Path.Line(new paper.Point(0, i * spacing), new paper.Point(width, i * spacing));
-				lineArray.push(line);
-			}
+		// createStave: function (width, spacing) {
+		// 	var line,
+		// 		lineArray = [];
+		// 	for (var i = 0; i < 5; i++) {
+		// 		line = new paper.Path.Line(new paper.Point(0, i * spacing), new paper.Point(width, i * spacing));
+		// 		lineArray.push(line);
+		// 	}
 
-			var rectangle = new paper.Rectangle(lineArray[0].firstSegment.point, lineArray[4].lastSegment.point);			
-			rectangle = new paper.Path.Rectangle(rectangle);
-			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
-			rectangle.opacity = 0.0; // make the rectangle invisible
-			var stave = new paper.Group(lineArray);
-			stave.insertChild(0, rectangle);
+		// 	var rectangle = new paper.Rectangle(lineArray[0].firstSegment.point, lineArray[4].lastSegment.point);			
+		// 	rectangle = new paper.Path.Rectangle(rectangle);
+		// 	rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+		// 	rectangle.opacity = 0.0; // make the rectangle invisible
+		// 	var stave = new paper.Group(lineArray);
+		// 	stave.insertChild(0, rectangle);
 
-			return stave;
-		},
+		// 	return stave;
+		// },
 
 		// createLine: function (position, barLength, lineSpacing) {
 		// 	var line,

@@ -1,5 +1,6 @@
-define(["base/PaperBaseView"],
-function (PaperBaseView) {
+define(["base/PaperBaseView",
+		"./LineModel"],
+function (PaperBaseView, LineModel) {
 	"use strict";
 
 	var LineView = PaperBaseView.extend({
@@ -7,7 +8,8 @@ function (PaperBaseView) {
 		initialize: function () {
 			console.log("Initializing LineView");
 
-			this.group = this.createLine(this.options.staveWidth, this.options.lineSpacing);
+			this.model = this.model || new LineModel();
+			
 		},
 
 		addMeasures: function (measures) {
@@ -16,6 +18,9 @@ function (PaperBaseView) {
 
 		render: function (yPosition) {
 			console.log("Rendering lineView");
+			var width = this.model.get("width") * this.$el.width();
+			this.group = this.createLine(width, this.model.get("spacing"));
+
 			this.group.position.y = yPosition;
 
 			// this.drawLine(this.group, yPosition);
@@ -39,23 +44,23 @@ function (PaperBaseView) {
 			return stave;
 		},
 
-		drawLine: function (line, position) {
-			line.position.y = position;
+		// drawLine: function (line, position) {
+		// 	line.position.y = position;
 
-			// this.group.addChild(line);
+		// 	// this.group.addChild(line);
 
-			// this.group.strokeColor = 'black';
+		// 	// this.group.strokeColor = 'black';
 
-			line.strokeColor = 'black';
-			line.justify = 'center';
+		// 	line.strokeColor = 'black';
+		// 	line.justify = 'center';
 
 
-			// this.group.justify = 'center';
+		// 	// this.group.justify = 'center';
 
-			// this.group.position = paper.view.center;
+		// 	// this.group.position = paper.view.center;
 
-			return this;
-		}
+		// 	return this;
+		// }
 	});
 	return LineView
 });
