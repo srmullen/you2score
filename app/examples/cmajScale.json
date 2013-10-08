@@ -36,6 +36,19 @@
 								"notes": [
 									{"pitch": "rest", "type": 1, "rest": true}
 								]
+							},
+							{	
+								"notes": [
+									{"pitch": "G4", "type": 0.25},
+									{"pitch": "A4", "type": 0.25},
+									{"pitch": "B4", "type": 0.25},
+									{"pitch": "C5", "type": 0.25}
+								]
+							},
+							{
+								"notes": [
+									{"pitch": "rest", "type": 1, "rest": true}
+								]
 							}
 						]
 					},

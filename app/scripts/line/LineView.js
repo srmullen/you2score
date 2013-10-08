@@ -42,25 +42,7 @@ function (PaperBaseView, LineModel) {
 			stave.insertChild(0, rectangle);
 
 			return stave;
-		},
-
-		// drawLine: function (line, position) {
-		// 	line.position.y = position;
-
-		// 	// this.group.addChild(line);
-
-		// 	// this.group.strokeColor = 'black';
-
-		// 	line.strokeColor = 'black';
-		// 	line.justify = 'center';
-
-
-		// 	// this.group.justify = 'center';
-
-		// 	// this.group.position = paper.view.center;
-
-		// 	return this;
-		// }
+		}
 	});
 	return LineView
 });

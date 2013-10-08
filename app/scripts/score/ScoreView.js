@@ -39,7 +39,7 @@ function (PaperBaseView, StavesView, SheetView) {
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
-			// this.drawStaves(this.staves);
+			this.drawStaves(this.staves);
 			this.drawPages();
 			return this;
 		},
@@ -75,9 +75,9 @@ function (PaperBaseView, StavesView, SheetView) {
 		},
 
 		// Currently just renders the staves. not sure if childViews needs to be an array.
-		drawStaves: function (childViews) {
+		drawStaves: function (staves) {
 			var position = new paper.Point(50, 150); // FIXME: Arbitrary point
-			return childViews[0].render(position);
+			return staves.render(position);
 		},
 
 		/*

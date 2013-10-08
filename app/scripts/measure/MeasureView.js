@@ -15,6 +15,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.meter = this.options.meter;
 
+			this.lines = this.options.lines;
+
 			this.lineSpacing = 10;
 
 			this.clefBase = this.getClefBase(this.model.get("clef"));

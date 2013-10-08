@@ -12,10 +12,10 @@ function (PaperBaseView, StaffView) {
 
 		initialize: function () {
 			console.log("Constructing StavesView");
-			this.childViews = this.initChildViews(this.collection);
+			this.instruments = this.initInstruments(this.collection);
 		},
 
-		initChildViews: function (staffCollection) {
+		initInstruments: function (staffCollection) {
 			var staffView;
 			return staffCollection.map(function (staffModel) {
 				staffView = new StaffView({
@@ -27,7 +27,7 @@ function (PaperBaseView, StaffView) {
 		},
 
 		render: function (position) {
-			this.drawStaves(this.childViews, position);
+			this.drawStaves(this.instruments, position);
 			return this;
 		},
 
@@ -56,7 +56,13 @@ function (PaperBaseView, StaffView) {
 		 * @param lines - LineView[]
 		 */
 		partitionLines: function (lines) {
+			var i = 0, 
+				length = this.instruments.length;
 
+			while (lines.length) {
+				lines = this.instruments[i % length].addLines(lines);
+				i++;
+			}
 		}
 	});
 	return StavesView;

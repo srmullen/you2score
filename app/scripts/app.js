@@ -35,7 +35,7 @@ function (HandlebarsBaseView,
 
           var cMaJson = JSON.parse(cmaj);
           var eigthJson = JSON.parse(eigthsAndQuarters);
-          var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
+          var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
 
           // pre-branch version
           // var paperScore = context.addChildView(ScoreView, scoreModel).render();
@@ -44,7 +44,6 @@ function (HandlebarsBaseView,
           // var position = new paper.Point(50, 150);
           var blankScore = context.addChildView(ScoreView, scoreModel);
           blankScore.render();
-
   		}
   	});
   	return App;
