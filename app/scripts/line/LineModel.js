@@ -14,7 +14,7 @@ function (BaseModel) {
 		 defaults: {
 		 	width: 0.9,
 		 	spacing: 10,
-		 	measures: 4
+		 	measuresAllotted: 4
 		 }
 	});
 	return LineModel;

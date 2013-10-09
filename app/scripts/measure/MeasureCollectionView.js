@@ -18,6 +18,8 @@ function (PaperBaseView, MeasureView) {
 
 			this.measureViews = this.initMeasureViews(this.collection);
 
+			this.measuresIntoLines(this.measureViews, this.lines);
+
 			this.group = new paper.Group(); // probably dont need childViews because of this.
 			this.length = this.calculateCollectionLength(this.measureViews);
 			this.height = 100; // FIXME: Arbitrary height
@@ -33,6 +35,17 @@ function (PaperBaseView, MeasureView) {
 				});
 				return measureView;
 			}, this);
+		},
+
+		/*
+		 * Adds the number of allotted measures to each line.
+		 */
+		measuresIntoLines: function (measures, lines) {
+			var measureCopy = measures.slice(0); //copy the measures array so it can be modified without worrying about this.lines.
+			_.each(lines, function (line) {
+				var count = line.getMeasuresAllotted();
+				line.addMeasures(measureCopy.splice(0, count));
+			});
 		},
 
 		render: function (position) {

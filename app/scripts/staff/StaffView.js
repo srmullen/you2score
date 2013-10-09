@@ -14,7 +14,10 @@ function (PaperBaseView, MeasureCollectionView) {
 			var systems = this.model.get("systems");
 
 			this.lines = this.initLines(systems.length);
-			this.systems = this.initSystems(systems, this.lines);
+			// the line arrays have been initialized at this point but LineViews haven't been added.
+			// need to find the best place to do this, but it needs to happen before measures are added to
+			// the lines in MeasureCollectionView and after the lines are partitioned.
+			// this.systems = this.initSystems(systems, this.lines); // this cant happen in initialize
 		},
 
 		// Creates lines, an array of arrays. An array for each system, which will contain the lineViews

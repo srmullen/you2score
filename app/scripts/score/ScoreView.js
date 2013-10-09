@@ -13,8 +13,9 @@ function (PaperBaseView, StavesView, SheetView) {
 			console.log("Constructing ScoreView");
 			this.sheetWidth = this.options.sheetWidth;
 			this.margin = this.options.margin;
+
+			this.pages = this.initPages(1); // should maybe pass pages to initStaves rather than doing partitionLines here.
 			this.staves = this.initStaves(this.model.get("staves"));
-			this.pages = this.initPages(1);
 
 			this.staves.partitionLines(this.mergeLines(this.pages));
 		},
