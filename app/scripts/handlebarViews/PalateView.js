@@ -1,5 +1,4 @@
 define(['base/HandlebarsBaseView', 'text!./palate.tmpl'], function (BaseView, tmpl) {
-	'use strict';
 
 	var PalateView = BaseView.extend({
 

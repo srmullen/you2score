@@ -2,26 +2,33 @@ define(["base/PaperBaseView",
 		"staff/StavesView",
 		"sheet/SheetView"], 
 function (PaperBaseView, StavesView, SheetView) {
-	"use strict";
 
 	/**
 	 * width: the width of the score
 	 */
 	var ScoreView = PaperBaseView.extend({
 
+		name: "ScoreView",
+
 		initialize: function () {
 			console.log("Constructing ScoreView");
 			this.sheetWidth = this.options.sheetWidth;
 			this.margin = this.options.margin;
 
+			// Initialize all Views
 			this.pages = this.initPages(1); // should maybe pass pages to initStaves rather than doing partitionLines here.
 			this.staves = this.initStaves(this.model.get("staves"));
 
+			// Create all the connections between the sheet views and music views
 			this.staves.partitionLines(this.mergeLines(this.pages));
 		},
 
-		initStaves: function (staves) {
-			var stavesView = new StavesView({el: this.el, collection: staves});
+		initStaves: function (staves, pages) {
+			var stavesView = new StavesView({
+				el: this.el, 
+				collection: staves
+				// lines: this.mergeLines(pages)
+			});
 			return stavesView;
 		},
 
@@ -40,8 +47,9 @@ function (PaperBaseView, StavesView, SheetView) {
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
-			this.drawStaves(this.staves);
 			this.drawPages();
+			this.drawStaves(this.staves);
+			
 			return this;
 		},
 

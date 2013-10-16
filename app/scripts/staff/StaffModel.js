@@ -13,6 +13,8 @@ function (BaseModel, MeasureCollection, MeasureModel, NoteCollection) {
 	 */
 	var StaffModel = BaseModel.extend({
 
+		name: "StaffModel",
+
 		initialize: function (attributes, options) {
 			console.log("Initializing StaffModel");
 			// Set a MeasureCollection[] if one wasn't passed in the attributes

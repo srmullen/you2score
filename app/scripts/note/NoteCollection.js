@@ -4,6 +4,8 @@ function (BaseCollection, NoteModel) {
 
 	var NoteCollection = BaseCollection.extend({
 
+		name: "NoteCollection",
+
 		model: NoteModel,
 
 		initialize: function () {

@@ -1,8 +1,8 @@
 define(["backbone"], function (Backbone) {
 
-	"use strict"
-
 	var BaseModel = Backbone.Model.extend({
+
+		name: "BaseModel",
 
 		/*
 		 *	Obliterates the models attributes.

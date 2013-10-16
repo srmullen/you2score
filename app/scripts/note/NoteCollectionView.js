@@ -2,9 +2,10 @@ define(["base/PaperBaseView",
 		"beat/BeatGroupView",
 		"./NoteView"], 
 function (PaperBaseView, BeatGroupView, NoteView) {
-	"use strict";
 
 	var NoteCollectionView = PaperBaseView.extend({
+
+		name: "NoteCollectionView",
 
 		initialize: function () {
 			console.log("Initializing NoteCollectionView");

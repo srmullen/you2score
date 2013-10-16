@@ -4,6 +4,8 @@ function (BaseCollection, MeasureModel) {
 
 	var MeasureCollection = BaseCollection.extend({
 
+		name: "MeasureCollection",
+
 		model: MeasureModel,
 		
 		initialize: function () {

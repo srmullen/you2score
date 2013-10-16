@@ -1,7 +1,5 @@
 define(["base/PaperBaseView"], function (PaperBaseView) {
 
-	"use strict";
-
 	/*
 	 * Notes should be added to beatGroup one at a time, not when it is initialized.
 	 *
@@ -10,6 +8,8 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 	 * Transient Class
 	 */
 	var BeatGroupView = PaperBaseView.extend({
+
+		name: "BeatGroupView",
 
 		construct: function () {
 			this.collection = new NoteCollection();

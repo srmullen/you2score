@@ -1,9 +1,10 @@
 define(["base/PaperBaseView",
 		"./LineModel"],
 function (PaperBaseView, LineModel) {
-	"use strict";
 
 	var LineView = PaperBaseView.extend({
+
+		name: "LineView",
 
 		initialize: function () {
 			console.log("Initializing LineView");
@@ -14,10 +15,6 @@ function (PaperBaseView, LineModel) {
 			
 			this.group = new paper.Group();
 		},
-
-		// addMeasures: function (measures) {
-		// 	this.measures.add(measures);
-		// },
 
 		render: function (yPosition) {
 			console.log("Rendering lineView");

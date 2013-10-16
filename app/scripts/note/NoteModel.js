@@ -21,6 +21,8 @@ function (BaseModel, noteHelper) {
 	var NoteModel = (function () {
 		return BaseModel.extend({
 
+			name: "NoteModel",
+
 			defaults: {
 				type: 1,
 				stacato: false,

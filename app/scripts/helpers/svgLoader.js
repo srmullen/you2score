@@ -3,7 +3,6 @@ define(["text!svg/treble.svg",
 	"text!svg/flat.svg",
 	"text!svg/bass.svg"],
 function (treble, sharp, flat, bass) {
-	"use strict";
 
 	var svgLoader = function () {
 		$('#svgContainer').append(treble);

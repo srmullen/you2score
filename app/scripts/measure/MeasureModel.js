@@ -17,6 +17,8 @@ function (BaseModel, NoteCollection) {
 	 */
 	var MeasureModel = BaseModel.extend({
 
+		name: "MeasureModel",
+
 		initialize: function () {
 			console.log("Initializing MeasureModel");
 

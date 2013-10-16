@@ -4,6 +4,8 @@ function (PaperBaseView, NoteModel) {
 
 	var NoteView = PaperBaseView.extend({
 
+		name: "NoteView",
+
 		initialize: function () {
 			console.log("Initializing NoteView");
 			this.group = new paper.Group();

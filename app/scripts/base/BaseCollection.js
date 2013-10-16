@@ -1,7 +1,8 @@
 define(["backbone"], function (Backbone) {
-	"use strict"
 
 	var BaseCollection = Backbone.Collection.extend({
+
+		name: "BaseCollection",
 
 		/**
 		 * Nukes all models in the collection.

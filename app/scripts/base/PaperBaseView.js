@@ -3,10 +3,11 @@
  * The 'el' must be a canvas element.
  */
 define(["backbone", "paper"], function (Backbone) {
-	"use strict"
 
 	// PaperBaseView should install event handlers on 
 	var PaperBaseView = Backbone.View.extend({
+
+		name: "PaperBaseView",
 
 		// group: new paper.Group(),
 

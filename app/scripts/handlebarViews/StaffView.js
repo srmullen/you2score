@@ -1,7 +1,6 @@
 define(["base/HandlebarsBaseView",
 	"./MeasuresView"],
 function (HandlebarsBaseView, MeasuresView) {
-	"use strict";
 
 	var StaffView = HandlebarsBaseView.extend({
 

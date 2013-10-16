@@ -21,7 +21,6 @@ function (HandlebarsBaseView,
           eigthsAndQuarters,
 
           svgLoader) {
-    'use strict';
 
   	var App = HandlebarsBaseView.extend({
 

@@ -2,8 +2,6 @@ define(["base/HandlebarsBaseView",
 	"./MeasureView"], 
 function (HandlebarsBaseView, MeasureView, tmpl) {
 
-	"use strict";
-
 	var MeasuresView = HandlebarsBaseView.extend({
 
 		construct: function () {

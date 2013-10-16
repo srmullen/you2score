@@ -1,8 +1,9 @@
 define(["base/BaseModel"],
 function (BaseModel) {
-	"use strict";
 
 	var LineModel = BaseModel.extend({
+
+		name: "LineModel",
 
 		/*
 		 * Attributes:

@@ -1,8 +1,8 @@
 define(["backbone", "handlebars"], function (Backbone, Handlebars) {
 
-	"use strict"
-
 	var HandlebarsBaseView = Backbone.View.extend({
+
+		name: "HandlebarsBaseView",
 
 		initialize: function (options) {
 			this.childViews = [];

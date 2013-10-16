@@ -14,6 +14,8 @@ function (BaseModel, StaffCollection, StaffModel) {
 
 	var ScoreModel = BaseModel.extend({
 
+		name: "ScoreModel",
+
 		// locked is not an attribute, it is metadata
 		locked: false,
 

@@ -1,24 +1,26 @@
 define(["base/PaperBaseView",
 		"./MeasureView"], 
 function (PaperBaseView, MeasureView) {
-	"use strict";
 
 	/*
 	 * MeasureCollection is a grouping of all the measures in a system. It is responsible for splitting
 	 * the measures up between the lines.
 	 */
 	var MeasureCollectionView = PaperBaseView.extend({
+		// This should maybe be renamed SystemView
+		name: "MeasureCollectionView",
 
 		initialize: function () {
 			console.log("constructing MeasureCollectionView");
 
 			this.meter = this.options.meter;
 
-			this.lines = this.options.lines;
+			// this.lines = this.options.lines;
+			this.lines = [];
 
 			this.measureViews = this.initMeasureViews(this.collection);
 
-			this.measuresIntoLines(this.measureViews, this.lines);
+			// this.measuresIntoLines(this.measureViews, this.lines); // this needs to happen after StavesView.partitionLines
 
 			this.group = new paper.Group(); // probably dont need childViews because of this.
 			this.length = this.calculateCollectionLength(this.measureViews);
@@ -104,7 +106,10 @@ function (PaperBaseView, MeasureView) {
 		// },
 
 		drawMeasures: function (measures, lines) {
-
+			console.log("Rendering MeasureCollectionView");
+			// Measures may need to be added to the lines. That way if the lines are moved
+			// around the notes will go with it. Giving them the same location may do the trick
+			// just as well. I'm not sure.
 		},
 
 		// This is untested and unused.
@@ -124,6 +129,10 @@ function (PaperBaseView, MeasureView) {
 			return _.reduce(childViews, function (x, y) {
 				return x + y.length;
 			}, 0, this)
+		},
+
+		addLine: function (line) {
+			this.lines.push(line);
 		}
 
 	});

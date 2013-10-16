@@ -9,6 +9,8 @@ function (BaseModel, NoteCollection, MeasureCollection) {
 	 */
 	var SheetModel = BaseModel.extend({
 
+		name: "SheetModel",
+
 		defaults: {
 			lines: 10
 			// type: 'regular', 'tabs', 'other?'

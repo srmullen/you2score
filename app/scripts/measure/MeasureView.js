@@ -7,6 +7,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 	var MeasureView = PaperBaseView.extend({
 
+		name: "MeasureView",
+
 		// All number used for drawing should be created during initialization.
 		// May want to make them static properties eventually
 		initialize: function (options) {

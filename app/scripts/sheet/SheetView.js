@@ -18,6 +18,8 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 	 */
 	var SheetView = PaperBaseView.extend({
 
+		name: "SheetView",
+
 		initialize: function () {
 			this.model = this.options.model || new SheetModel();
 			
