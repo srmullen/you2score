@@ -58,6 +58,8 @@ function (PaperBaseView, MeasureView) {
 
 			// this.drawMeasures(this.measureViews, position);
 
+			this.measuresIntoLines(this.measureViews, this.lines);
+
 			this.drawMeasures(this.measureViews, this.lines);
 
 			return this;
@@ -110,6 +112,9 @@ function (PaperBaseView, MeasureView) {
 			// Measures may need to be added to the lines. That way if the lines are moved
 			// around the notes will go with it. Giving them the same location may do the trick
 			// just as well. I'm not sure.
+			_.each(lines, function (line) {
+				line.drawMeasures();
+			});
 		},
 
 		// This is untested and unused.

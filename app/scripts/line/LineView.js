@@ -1,6 +1,7 @@
 define(["base/PaperBaseView",
-		"./LineModel"],
-function (PaperBaseView, LineModel) {
+		"./LineModel",
+		"measure/MeasureCollectionView"],
+function (PaperBaseView, LineModel, MeasureCollectionView) {
 
 	var LineView = PaperBaseView.extend({
 
@@ -12,15 +13,16 @@ function (PaperBaseView, LineModel) {
 			this.model = this.model || new LineModel();
 
 			this.measures = [];
+			// this.measures = new MeasureCollectionView();
 			
 			this.group = new paper.Group();
 		},
 
 		render: function (yPosition) {
 			console.log("Rendering lineView");
-			var width = this.model.get("width") * this.$el.width();
+			this.lineWidth = this.model.get("width") * this.$el.width();
 			// this.group = this.createLine(width, this.model.get("spacing"));
-			this.createLine(width, this.model.get("spacing"));
+			this.createLine(this.lineWidth, this.model.get("spacing"));
 
 			this.group.position.y = yPosition;
 		},
@@ -37,13 +39,25 @@ function (PaperBaseView, LineModel) {
 			rectangle = new paper.Path.Rectangle(rectangle);
 			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
 			rectangle.opacity = 0.0; // make the rectangle invisible
-			// var stave = new paper.Group(lineArray);
-			// var stave = this.group.addChildren(lineArray);
 			this.group.addChildren(lineArray);
-			// stave.insertChild(0, rectangle);
 			this.group.insertChild(0, rectangle);
+		},
 
-			// return stave;
+		// This should be called after the render method.
+		drawMeasures: function () {
+			var position = this.group.children[0].segments[1].point;
+			var measuresAllotted = this.getMeasuresAllotted();
+			_.each(this.measures, function (measure, i, list) {
+
+				// the length (stored as a ratio of the line length) of each measure 
+				// should be stored in the line model or a view specific
+				// measure model, otherwise it should default to 1/measuresAllotted.
+				var previousBarLength = i ? (this.model.get("measurelength") || (1 / measuresAllotted) * this.lineWidth) : i;
+				// var previousBarLength = i ? list[i-1].barLength : i;
+				position = position.add(previousBarLength, 0);
+
+				measure.render(position); // get top left point
+			}, this);
 		},
 
 		/*
@@ -51,11 +65,11 @@ function (PaperBaseView, LineModel) {
 		 * the model are added the number will be increased.
 		 */
 		addMeasures: function (measures) {
-			this.measures.concat(measures);
+			this.measures = this.measures.concat(measures);
 			this.model.set({measuresAllotted: this.measures.length});
 		},
 
-		getMeasureAllotted: function () {
+		getMeasuresAllotted: function () {
 			return this.model.get("measuresAllotted")
 		}
 	});

@@ -21,17 +21,6 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 			this.systems = this.initSystems(systems, this.sections);
 		},
 
-		// Creates lines, an array of arrays. An array for each system, which will contain the lineViews
-		// initSections: function (numSystems) {
-		// 	var sections = [];
-
-		// 	for (var i = 0; i < numSystems; i++) {
-		// 		sections.push(new SectionView);
-		// 	};
-
-		// 	return sections;
-		// },
-
 		initSystems: function (systems, sections) {
 			var measures;
 			return _.map(systems, function (measureCollection, i) {
@@ -47,8 +36,6 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 
 		render: function (position) {
 
-			this.drawBars(this.sections);
-
 			this.drawInstrument(this.model.get("instrument"));
 			this.drawMeter(this.model.get("meter"));
 			this.drawSystems(this.systems, position);
@@ -58,28 +45,6 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 			this.height = this.getTotalHeight(this.systems); // set the height of the staff so staves view can determine where to place other staves
 							  // It is set arbitrarily for testing purposes right now.
 			return this;
-		},
-
-		/*
-		 * Draws the measure bars across the lines.
-		 * @param lines - Array of LinesView arrays.
-		 */
-		drawBars: function (sections) { // Lines need to have measures added to them at this point.
-			var section;
-			for (var i = 0, l = sections[0].length; i < l; i++) {
-				section = this.getSection(sections, i);
-
-				// get the first and last line in the section
-				var topLine = section[0],
-					bottomLine = section[section.length -1];
-
-
-				// get length of the section
-
-				//get number of measuresAllotted in the section
-
-
-			}
 		},
 
 		drawInstrument: function (instrument) {
