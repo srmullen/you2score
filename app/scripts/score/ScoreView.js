@@ -85,8 +85,9 @@ function (PaperBaseView, StavesView, SheetView) {
 
 		// Currently just renders the staves. not sure if childViews needs to be an array.
 		drawStaves: function (staves) {
-			var position = new paper.Point(50, 150); // FIXME: Arbitrary point
-			return staves.render(position);
+			// var position = new paper.Point(50, 200); // FIXME: Arbitrary point
+			return staves.render(); // dont need to pass render position anymore because 
+									// it is determined by the lines on the sheet.
 		},
 
 		/*
@@ -94,8 +95,7 @@ function (PaperBaseView, StavesView, SheetView) {
 		 */
 		drawPages: function () {
 			_.each(this.pages, function (sheetView) {
-				var position = new paper.Point(50, 150); // FIXME: need to change this on each iteration
-				sheetView.render(position);
+				sheetView.render();
 			});
 		},
 

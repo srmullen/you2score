@@ -1,6 +1,7 @@
 define(["base/PaperBaseView", 
 		"./MeasureModel", 
 		"note/NoteCollectionView",
+		"beat/BeatGroupView",
 		"note/NoteView",
 		"text!svg/treble.svg"], 
 function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {

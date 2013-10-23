@@ -34,13 +34,10 @@ function (PaperBaseView, StaffView) {
 			return this;
 		},
 
-		drawStaves: function (childViews, position) {
+		drawStaves: function (childViews) {
 			var previousHeight;
 			_.each(childViews, function (view, i, list) {
-
-				previousHeight = i ? list[i-1].height : i;
-				position = position.add(0, previousHeight);
-				view.render(position);
+				view.render();
 			});
 		},
 

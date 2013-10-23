@@ -50,62 +50,13 @@ function (PaperBaseView, MeasureView) {
 			});
 		},
 
-		render: function (position) {
-			// var barLength = this.$el.width() * 0.9; // here it is the length of the page.
-			// var lineSpacing = 10;
-			// var lines = this.createLines(position, barLength, lineSpacing);
-			// this.drawSystem(lines);
-
-			// this.drawMeasures(this.measureViews, position);
-
+		render: function () {
 			this.measuresIntoLines(this.measureViews, this.lines);
 
 			this.drawMeasures(this.measureViews, this.lines);
 
 			return this;
 		},
-
-		// // Creates lines the length of the page.
-		// createLines: function (position, barLength, lineSpacing) {
-		// 	var line,
-		// 		leftPoint,
-		// 		rightPoint,
-		// 		lineArray = [];
-		// 	for (var i = 0; i < 5; i++) {
-		// 		leftPoint = position.add(0, i * lineSpacing);
-		// 		rightPoint = position.add(barLength, i * lineSpacing);
-		// 		line = new paper.Path.Line(leftPoint, rightPoint);
-		// 		lineArray.push(line);
-		// 	}
-
-		// 	return lineArray;
-		// },
-
-		// drawSystem: function (lines) {
-
-		// 	this.group.addChildren(lines);
-
-		// 	this.group.strokeColor = 'black';
-
-		// 	return this;
-		// },
-
-		// drawMeasures: function (measureViews, position) {
-		// 	_.each(measureViews, function (view, i, list) {
-				
-		// 			 // barlength should probably come from systems or even higher.
-		// 			 // All measures at the same index in each MeasureCollection need to have the
-		// 			 // same barLength, across all instruments too.
-		// 			 // At the same time barLenth needs to be calculated from the bottom up
-		// 			 // based on the notes that are in each measure. Could simplify this by
-		// 			 // letting the user set their own barLengths.
-
-		// 		// if i is 0 then the previous length is 0
-		// 		var previousBarLength = i ? list[i-1].barLength : i;
-		// 		position = position.add(previousBarLength, 0);	
-		// 		view.render(position);
-		// 	}, this);
-		// },
 
 		drawMeasures: function (measures, lines) {
 			console.log("Rendering MeasureCollectionView");

@@ -2,6 +2,9 @@ define(["base/PaperBaseView",
 		"./NoteModel"], 
 function (PaperBaseView, NoteModel) {
 
+	// May want to make NoteView only responsible for drawing the Note Head (and accidentals).
+	// Stems and flags are dependent on the notes they are grouped with as well, so that should
+	// be moved to BeatGroupView, or maybe the NoteCollectionView kept by BeatGroupView.
 	var NoteView = PaperBaseView.extend({
 
 		name: "NoteView",
@@ -75,12 +78,14 @@ function (PaperBaseView, NoteModel) {
 		drawStem: function (centerLine, octaveHeight) {
 			var type = this.model.get("type");
 			var head = this.group.lastChild; // FIXME: this works because draw head is called right before in MeasureView
+			this.stemDirection = this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
 			// draw the stem
 			if (type < 1) {
-				if (this.noteHandles.segments[2].point.y > centerLine.y) {
+				if (this.stemDirection === "up") {
 					// draw stem up
 					var rightPoint = this.noteHandles.segments[2].point;
-					if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) {
+					if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) { // needs to be extracted. drawFlag also need to
+																				// know stem direction
 						var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
 					} else {
 						// draw stem to center line
@@ -108,6 +113,20 @@ function (PaperBaseView, NoteModel) {
 		},
 
 		drawFlag: function () {
+			var type = this.model.get("type");
+
+			if (type === 1/8) {
+				var flagPoint; // point on flag not connected to the stem.
+				if (this.stemDirection === "up") {
+					flagPoint = this.group.lastChild.segments[1].point.add(10, 20);
+				} else {
+					flagPoint = this.group.lastChild.segments[1].point.add(10, -20);
+				}
+				var flag = new paper.Path(this.group.lastChild.segments[1].point, flagPoint);
+				flag.strokeColor = 'black';
+				flag.strokeWidth = 2;
+				this.group.addChild(flag);
+			}
 
 			return this;
 		},

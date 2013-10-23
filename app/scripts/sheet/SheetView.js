@@ -38,9 +38,7 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 			return lines;
 		},
 
-		render: function (position) {
-			// this.drawSheet();
-
+		render: function () {
 			this.drawLines();
 		},
 
@@ -54,7 +52,7 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 
 			this.group.strokeColor = 'black';
 			this.group.justify = 'center';
-			this.group.position = paper.view.center;
+			this.group.position = paper.view.center.add(0, 50);
 
 			return this;
 		}

@@ -15,7 +15,6 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 
 			var systems = this.model.get("systems");
 
-			// this.sections = this.initSections(systems.length);
 			this.sections = [];
 
 			this.systems = this.initSystems(systems, this.sections);
@@ -28,17 +27,16 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 					el: this.el, 
 					collection: measureCollection,
 					meter: this.model.get("meter")
-					// lines: sections[i]
 				});
 				return measures;
 			}, this);
 		},
 
-		render: function (position) {
+		render: function () {
 
 			this.drawInstrument(this.model.get("instrument"));
 			this.drawMeter(this.model.get("meter"));
-			this.drawSystems(this.systems, position);
+			this.drawSystems(this.systems);
 
 			this.drawSections(this.sections); // this doesn't do much yet
 			
@@ -55,11 +53,10 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 
 		},
 
-		drawSystems: function (systems, position) {
-			_.each(systems, function (collectionView, i) {
+		drawSystems: function (systems) {
+			_.each(systems, function (collectionView) {
 
-				// Get the total height of all the views that have been rendered thus far.
-				collectionView.render(position.add(0, this.getTotalHeight(systems.slice(0, i))));
+				collectionView.render();
 				
 			}, this);
 		},
