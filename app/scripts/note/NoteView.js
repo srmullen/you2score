@@ -19,7 +19,7 @@ function (PaperBaseView, NoteModel) {
 
 			this.clefBase = this.options.clefBase;
 
-			this.headSize = [13, 10];
+			this.headSize = [this.config.note.head.width, this.config.note.head.height];
 			// this.accidental = this.getAccidental(this.model);
 
 			this.length = this.calculateLength(this.model);

@@ -13,23 +13,13 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 		render: function () {
 			this.drawBars();
 
+			this.drawClefs();
+
 			// what else does section view do?
+
 		},
 
 		drawBars: function () {
-			// var section;
-			// for (var i = 0, l = sections[0].length; i < l; i++) {
-			// 	section = this.getSection(sections, i);
-
-			// 	// get the first and last line in the section
-			// 	var topLine = section[0],
-			// 		bottomLine = section[section.length -1];
-
-
-			// 	// get length of the section
-
-			// 	//get number of measuresAllotted in the section
-
 			var topPoint = this.lines[0].group.children[0].segments[1].point,
 				bottomPoint = this.lines[this.lines.length - 1].group.children[0].segments[0].point;
 
@@ -38,6 +28,17 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 			this.group.addChild(bar);
 			this.group.strokeColor = 'black';
 			this.group.strokeWidth = 2;
+		},
+
+		// Draws the clef of the first measure in each line.
+		drawClefs: function () {
+			_.each(this.lines, function (line) {
+				// not all lines will have measures
+				if (line.measures.length) {
+					var centerLine = line.group.children[3].segments[0].point; // get the leftmost point of the centerline
+					line.measures[0].drawClef(centerLine);
+				}
+			}, this);
 		},
 
 		addLine: function (line) {

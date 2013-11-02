@@ -18,14 +18,11 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.meter = this.options.meter;
 
-			this.lines = this.options.lines;
-
-			this.lineSpacing = 10;
+			this.lineSpacing = this.config.lineSpacing;
 
 			this.clefBase = this.getClefBase(this.model.get("clef"));
 
 			this.barLength = this.calculateMeasureLength(notes);
-			this.measurePadding = this.barLength / 8;
 
 			this.childViews = this.initChildViews(notes);
 
@@ -46,7 +43,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 		},	
 
 		render: function (position) {
-			var clef = this.model.get("clef");
+			// var clef = this.model.get("clef");
 			var centerLine = position.add(0, this.lineSpacing * 2);
 
 			this.drawBars(position, this.barLength);
@@ -98,9 +95,9 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 			});
 		},
 
-		drawClef: function (centerLine, clef) {
+		drawClef: function (centerLine) {
 			var svgItem
-			switch (clef) {
+			switch (this.model.get("clef")) {
 				case "treble":
 					svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
 					svgItem.scale(0.05); //FIXME: shouldn't have to scale svg's individually

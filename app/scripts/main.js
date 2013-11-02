@@ -15,6 +15,8 @@ require.config({
         base: 'base',
         svg: '../images/svg',
 
+        config: "./config",
+        
         score: 'score',
         sheet: 'sheet',
         staff: 'staff',
