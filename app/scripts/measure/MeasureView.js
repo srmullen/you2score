@@ -13,10 +13,12 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 		// All number used for drawing should be created during initialization.
 		// May want to make them static properties eventually
 		initialize: function (options) {
+
+			this.model = this.model || new MeasureModel();
 			
 			var notes = this.model.get("notes");
 
-			this.meter = this.options.meter;
+			this.meter = this.options.meter || {upper: 4, lower: 4};
 
 			this.lineSpacing = this.config.lineSpacing;
 

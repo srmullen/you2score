@@ -29,7 +29,6 @@ function (PaperBaseView, NoteModel) {
 		render: function (clefBase, centerLine, lineSpacing) {
 			var octaveHeight = lineSpacing * 3.5;
 
-			// this.drawHead(clefBase, this.xPos, this.yPos);
 			this.drawHead(centerLine, this.xPos, this.yPos);
 
 			this.drawStem(centerLine, octaveHeight);
@@ -50,7 +49,6 @@ function (PaperBaseView, NoteModel) {
 
 			var outerRect = new paper.Rectangle({
 				size: this.headSize
-				// size: [13, 10] // 10 is the lineSpacing
 			});
 			var head = new paper.Path.Ellipse(outerRect);
 			this.noteHandles = head;

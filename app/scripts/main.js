@@ -23,7 +23,8 @@ require.config({
         line: 'line',
         measure: 'measure',
         beat: 'beat',
-        note: 'note'
+        note: 'note',
+        tools: 'tools'
 
     },
     shim: {

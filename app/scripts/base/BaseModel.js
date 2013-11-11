@@ -1,8 +1,10 @@
-define(["backbone"], function (Backbone) {
+define(["backbone", "config"], function (Backbone, config) {
 
 	var BaseModel = Backbone.Model.extend({
 
 		name: "BaseModel",
+
+		config: config,
 
 		/*
 		 *	Obliterates the models attributes.

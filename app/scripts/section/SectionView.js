@@ -13,7 +13,9 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 		render: function () {
 			this.drawBars();
 
-			this.drawClefs();
+			// this.drawClefs();
+
+			this.drawKeySignatures();
 
 			// what else does section view do?
 
@@ -39,6 +41,10 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 					line.measures[0].drawClef(centerLine);
 				}
 			}, this);
+		},
+
+		drawKeySignatures: function () {
+
 		},
 
 		addLine: function (line) {
