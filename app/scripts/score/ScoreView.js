@@ -19,6 +19,8 @@ function (PaperBaseView, StavesView, SheetView) {
 
 			// Create all the connections between the sheet views and music views
 			this.staves.partitionLines(this.mergeLines(this.pages));
+
+			this.group = new paper.Group();
 		},
 
 		initStaves: function (staves, pages) {

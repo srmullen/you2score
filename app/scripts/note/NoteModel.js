@@ -26,7 +26,8 @@ function (BaseModel, noteHelper) {
 			defaults: {
 				type: 1,
 				stacato: false,
-				legato: false
+				legato: false,
+				pitch: "A4"
 			},
 
 			initialize: function (attributes) {

@@ -35,19 +35,18 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 		},
 
 		removeHighlight: function (toHighlight) {
-			if (!toHighlight) {
-				_.each(HighlightTool.highlighted, function (value, key) {
+			_.each(HighlightTool.highlighted, function (value, key) {
+				if (toHighlight && toHighlight.view.group.id == key) {} else { // uses double equals because key must be a string
 					value.children[0].opacity = 0;
 					delete HighlightTool.highlighted[key];
-				}, this);
-			}; 
+				};
+			}, this);
 		},
 
 		decorateView: function (view, color) {
 			var viewObj = {
-				"LineView": {
-					color: 'green'
-				}
+				"LineView": {color: 'green'},
+				"MeasureView": {color: "blue"}
 			}[view.name];
 
 			viewObj.view = view;

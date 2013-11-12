@@ -35,7 +35,7 @@ function (PaperBaseView, LineModel, MeasureCollectionView) {
 				lineArray.push(line);
 			}
 
-			var rectangle = new paper.Rectangle(lineArray[0].firstSegment.point, lineArray[4].lastSegment.point);			
+			var rectangle = new paper.Rectangle(lineArray[0].firstSegment.point, lineArray[4].lastSegment.point);
 			rectangle = new paper.Path.Rectangle(rectangle);
 			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
 			rectangle.opacity = 0.0; // make the rectangle invisible
@@ -48,12 +48,30 @@ function (PaperBaseView, LineModel, MeasureCollectionView) {
 			var position = this.group.children[0].segments[1].point;
 			var measuresAllotted = this.getMeasuresAllotted();
 			_.each(this.measures, function (measure, i, list) {
+				
+				var previousBarLength;
 
 				// the length (stored as a ratio of the line length) of each measure 
 				// should be stored in the line model or a view specific
 				// measure model, otherwise it should default to 1/measuresAllotted.
 				var previousBarLength = i ? (this.model.get("measurelength") || (1 / measuresAllotted) * this.lineWidth) : i;
-				// var previousBarLength = i ? list[i-1].barLength : i;
+				
+				// if (i === 0) {
+				// 	previousBarLength = 0
+				// // } else if (previousBarLength = measure.model.get("measureLength")) { 
+				// } else if (previousBarLength = list[i-1].model.get("barlength")) {
+				// 	// assignment done in if
+				// } else {
+				// 	previousBarLength = (1 / measuresAllotted) * this.lineWidth;
+				// 	list[i-1].model.set({barLength: previousBarLength});
+				// }
+
+				// if (i == 0) {
+				// 	previousBarLength = 0;
+				// } else {
+				// 	previousBarLength = list[i-1].barLength;
+				// };
+
 				position = position.add(previousBarLength, 0);
 
 				measure.render(position); // get top left point
@@ -67,6 +85,14 @@ function (PaperBaseView, LineModel, MeasureCollectionView) {
 		addMeasures: function (measures) {
 			this.measures = this.measures.concat(measures);
 			this.model.set({measuresAllotted: this.measures.length});
+			this.setBarLength(this.measures);
+		},
+
+		setBarLength: function (measures) {
+			var measuresAllotted = this.getMeasuresAllotted();
+			_.each(measures, function (measure) {
+				measure.barLength = measure.barLength /* and do some math to accomodate new bar */ || (1 / measuresAllotted) * this.lineWidth;
+			}, this);
 		},
 
 		getMeasuresAllotted: function () {

@@ -11,6 +11,7 @@ function (BaseModel, NoteCollection) {
 	 *		the futher there could be Backbone objects. Should be same object as in its containing staff
 	 *		except when deviating from the norm.
 	 *	notes {NoteCollection} - Collection of notes in the measure
+	 *	barLength {number} - the length the bar is to be drawn. (not a musical feature, should probably go in rendering specific model)
 	 *
 	 * Properties: Properties can often be calculated from the attributes and don't need to be stored in the DB
 	 *	remainingDuration - {Number} the maximum duration of a note that can be place in the measure.

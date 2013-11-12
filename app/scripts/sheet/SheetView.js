@@ -24,6 +24,8 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 			this.model = this.options.model || new SheetModel();
 			
 			this.lines = this.initLines();
+
+			this.group = new paper.Group();
 		},
 
 		initLines: function () {
@@ -48,7 +50,7 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 				lineView.render(100 * i + 50)
 				group.addChild(lineView.group);
 				return group;
-			}, new paper.Group());
+			}, this.group);
 
 			this.group.strokeColor = 'black';
 			this.group.justify = 'center';

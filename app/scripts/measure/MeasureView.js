@@ -24,7 +24,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.clefBase = this.getClefBase(this.model.get("clef"));
 
-			this.barLength = this.calculateMeasureLength(notes);
+			// this.barLength = this.calculateMeasureLength(notes);
+			this.barLength = this.model.get("barLength");
 
 			this.childViews = this.initChildViews(notes);
 
@@ -38,7 +39,6 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 				collection: notes, 
 				clefBase: this.clefBase,
 				lineSpacing: this.lineSpacing,
-				barLength: this.barLength,
 				meter: this.meter
 			});
 			return [noteCollection];
@@ -67,6 +67,13 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.group.strokeColor = 'black';
 
+			// make enclosing rectangle
+			var rectangle = new paper.Rectangle(position, position.add(this.barLength, this.lineSpacing * 4));
+			rectangle = new paper.Path.Rectangle(rectangle);
+			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+			rectangle.opacity = 0.0;
+			this.group.insertChild(0, rectangle);
+
 			return this; 
 		},
 
@@ -93,8 +100,12 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 		 */
 		drawNotes: function (centerLine, childViews) {
 			_.each(childViews, function (view) {
+				// These types of properties that are needed before rendering could be in their own rendering models
+				view.barLength = this.barLength;
+				view.measurePadding = this.barLength / 8;
+
 				view.render(centerLine);
-			});
+			}, this);
 		},
 
 		drawClef: function (centerLine) {

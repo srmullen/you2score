@@ -13,9 +13,9 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 			this.meter = this.options.meter;
 			this.lineSpacing = this.options.lineSpacing;
 			this.clefBase = this.options.clefBase;
-			this.barLength = this.options.barLength;
+			// this.barLength = this.options.barLength;
 
-			this.measurePadding = this.barLength / 8; // Not really sure where measure padding should
+			// this.measurePadding = this.barLength / 8; // Not really sure where measure padding should
 														// actually come from, or if it's really needed.
 														// Just calculating it where ever it's needed for the 
 														// time being.
@@ -34,13 +34,11 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 			var noteView, xPos, yPos;
 			return collection.map(function (model) {
 				
-				xPos = this.calculateNoteXpos(model);
-				yPos = this.calculateNoteYpos(model, this.lineSpacing/2);
+				// xPos = this.calculateNoteXpos(model);
+				// yPos = this.calculateNoteYpos(model, this.lineSpacing/2);
 				
 				noteView = new NoteView({el: this.el, 
 					model: model, 
-					xPos: xPos, 
-					yPos: yPos, 
 					clefBase: this.clefBase
 				});
 
@@ -53,7 +51,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 
 		},
 
-		render: function (centerLine) {
+		render: function (centerLine, barLength) {
 
 			this.drawNotes(centerLine, this.childViews);
 
@@ -63,7 +61,12 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 		drawNotes: function (centerLine, childViews) {
 			return _.reduce(childViews, function (group, noteView) {
 
-				noteView.render(this.clefBase, centerLine, this.lineSpacing);
+				var xPos = this.calculateNoteXpos(noteView.model),
+					yPos = this.calculateNoteYpos(noteView.model, this.lineSpacing/2);
+				noteView.xPos = xPos;
+				noteView.yPos = yPos;
+
+				noteView.render( centerLine, this.lineSpacing);
 
 				group.addChild(noteView.group); // I'm not sure if this is necessary
 
@@ -94,7 +97,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 			xPos *= this.barLength;
 			xPos += (this.measurePadding / 2); // divide by 2 to account for padding on each side
 
-			return xPos; // cause not implemented yet
+			return xPos;
 		},
 
 		// BeatGroup should be its own view.

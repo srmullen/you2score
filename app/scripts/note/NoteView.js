@@ -11,13 +11,16 @@ function (PaperBaseView, NoteModel) {
 
 		initialize: function () {
 			console.log("Initializing NoteView");
+
+			this.model = this.model || new NoteModel();
 			this.group = new paper.Group();
+
 			this.pitch = this.model.get('pitch');
 
-			this.xPos = this.options.xPos;
-			this.yPos = this.options.yPos;
+			// this.xPos = this.options.xPos;
+			// this.yPos = this.options.yPos;
 
-			this.clefBase = this.options.clefBase;
+			// this.clefBase = this.options.clefBase;
 
 			this.headSize = [this.config.note.head.width, this.config.note.head.height];
 			// this.accidental = this.getAccidental(this.model);
@@ -26,7 +29,7 @@ function (PaperBaseView, NoteModel) {
 
 		},
 
-		render: function (clefBase, centerLine, lineSpacing) {
+		render: function (centerLine, lineSpacing) {
 			var octaveHeight = lineSpacing * 3.5;
 
 			this.drawHead(centerLine, this.xPos, this.yPos);
