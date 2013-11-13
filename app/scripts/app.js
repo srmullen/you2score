@@ -41,11 +41,11 @@ function (HandlebarsBaseView,
           var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
 
           // Initialize a blank score.
-          // var position = new paper.Point(50, 150);
-          // var blankScore = context.addChildView(ScoreView, scoreModel);
-          // blankScore.render();
+          var position = new paper.Point(50, 150);
+          var blankScore = context.addChildView(ScoreView, scoreModel);
+          blankScore.render();
 
-          expandableMeasure(context);
+          // expandableMeasure(context);
 
           
   		}

@@ -46,7 +46,8 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 		decorateView: function (view, color) {
 			var viewObj = {
 				"LineView": {color: 'green'},
-				"MeasureView": {color: "blue"}
+				"MeasureView": {color: "blue"},
+				"NoteView": {color: 'red'}
 			}[view.name];
 
 			viewObj.view = view;

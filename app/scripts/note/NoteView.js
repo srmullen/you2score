@@ -17,11 +17,6 @@ function (PaperBaseView, NoteModel) {
 
 			this.pitch = this.model.get('pitch');
 
-			// this.xPos = this.options.xPos;
-			// this.yPos = this.options.yPos;
-
-			// this.clefBase = this.options.clefBase;
-
 			this.headSize = [this.config.note.head.width, this.config.note.head.height];
 			// this.accidental = this.getAccidental(this.model);
 
@@ -34,13 +29,29 @@ function (PaperBaseView, NoteModel) {
 
 			this.drawHead(centerLine, this.xPos, this.yPos);
 
-			this.drawStem(centerLine, octaveHeight);
+			if (this.model.get("type") < 1) {
+				var stemDirection = this.getStemDirection(centerLine);
+			};
 
-			this.drawFlag();
+			if (stemDirection) {
+				this.drawStem(centerLine, octaveHeight, stemDirection);
+				this.drawFlag(stemDirection);
+			};
 
 			this.drawLegerLines(centerLine, lineSpacing);
 
 			this.drawAccidental();
+
+			// Make enclosing rectangle
+			// there should be a minimum width of the rectangle, which expands based on its duration and accidentals.
+			// can give a center point for the rectangle, possibly calculated by getting halving the stem hight.
+			var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
+			rectangle = new paper.Path.Rectangle(rectangle);
+			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+			rectangle.opacity = 0.0;
+			this.group.insertChild(0, rectangle);
+
+			this.makeEnclosure(centerLine);
 
 			return this;
 		},
@@ -76,49 +87,44 @@ function (PaperBaseView, NoteModel) {
 		/*
 		 * @centerLine - {Point} B line on treble clef, left-most point in the measure.
 		 */
-		drawStem: function (centerLine, octaveHeight) {
-			var type = this.model.get("type");
+		drawStem: function (centerLine, octaveHeight, stemDirection) {
 			var head = this.group.lastChild; // FIXME: this works because draw head is called right before in MeasureView
-			this.stemDirection = this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
-			// draw the stem
-			if (type < 1) {
-				if (this.stemDirection === "up") {
-					// draw stem up
-					var rightPoint = this.noteHandles.segments[2].point;
-					if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) { // needs to be extracted. drawFlag also need to
-																				// know stem direction
-						var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
-					} else {
-						// draw stem to center line
-						var stem = new paper.Path.Line(this.noteHandles.segments[2].point, new paper.Point(this.noteHandles.segments[2].point.x, centerLine.y));
-					}
-					
+			if (stemDirection === "up") {
+				// draw stem up
+				var rightPoint = this.noteHandles.segments[2].point;
+				if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) { // needs to be extracted. drawFlag also need to
+																			// know stem direction
+					var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
 				} else {
-					// draw stem down
-					var leftPoint = this.noteHandles.segments[0].point;
-					if (Math.abs(leftPoint.y - centerLine.y) < octaveHeight) {
-						// draw octave length stem
-						var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, octaveHeight])); // draw octave length stem
-					} else {
-						// draw stem to center line
-						var stem = new paper.Path.Line(leftPoint, new paper.Point(this.noteHandles.segments[0].point.x, centerLine.y));
-					}
+					// draw stem to center line
+					var stem = new paper.Path.Line(this.noteHandles.segments[2].point, new paper.Point(this.noteHandles.segments[2].point.x, centerLine.y));
 				}
-
-				stem.strokeColor = 'black';
-				stem.strokeWidth = 2;
-				this.group.addChild(stem);
+				
+			} else {
+				// draw stem down
+				var leftPoint = this.noteHandles.segments[0].point;
+				if (Math.abs(leftPoint.y - centerLine.y) < octaveHeight) {
+					// draw octave length stem
+					var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, octaveHeight])); // draw octave length stem
+				} else {
+					// draw stem to center line
+					var stem = new paper.Path.Line(leftPoint, new paper.Point(this.noteHandles.segments[0].point.x, centerLine.y));
+				}
 			}
+
+			stem.strokeColor = 'black';
+			stem.strokeWidth = 2;
+			this.group.addChild(stem);
 
 			return this;
 		},
 
-		drawFlag: function () {
+		drawFlag: function (stemDirection) {
 			var type = this.model.get("type");
 
 			if (type === 1/8) {
 				var flagPoint; // point on flag not connected to the stem.
-				if (this.stemDirection === "up") {
+				if (stemDirection === "up") {
 					flagPoint = this.group.lastChild.segments[1].point.add(10, 20);
 				} else {
 					flagPoint = this.group.lastChild.segments[1].point.add(10, -20);
@@ -182,6 +188,19 @@ function (PaperBaseView, NoteModel) {
 				this.group.strokeColor = 'black';
 			}
 			return this
+		},
+
+		makeEnclosure: function (centerLine) {
+			var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
+			rectangle = new paper.Path.Rectangle(rectangle);
+			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+			rectangle.opacity = 0.0;
+			this.group.insertChild(0, rectangle);
+		},
+
+		getStemDirection: function (centerLine) {
+			// this.stemDirection = this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
+			return this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
 		},
 
 		/*

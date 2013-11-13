@@ -46,7 +46,7 @@ function (PaperBaseView, BaseModel, LineView, MeasureView, NoteView, HighlightTo
 		note.yPos = 40
 		note.render(new paper.Point(200, 150));
 
-		var highlightTool = new HighlightTool({views: [line, measure]});
+		var highlightTool = new HighlightTool({views: [line, measure, note]});
 	};
 
 	return expandableMeasure;

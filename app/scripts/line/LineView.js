@@ -54,23 +54,12 @@ function (PaperBaseView, LineModel, MeasureCollectionView) {
 				// the length (stored as a ratio of the line length) of each measure 
 				// should be stored in the line model or a view specific
 				// measure model, otherwise it should default to 1/measuresAllotted.
-				var previousBarLength = i ? (this.model.get("measurelength") || (1 / measuresAllotted) * this.lineWidth) : i;
-				
-				// if (i === 0) {
-				// 	previousBarLength = 0
-				// // } else if (previousBarLength = measure.model.get("measureLength")) { 
-				// } else if (previousBarLength = list[i-1].model.get("barlength")) {
-				// 	// assignment done in if
-				// } else {
-				// 	previousBarLength = (1 / measuresAllotted) * this.lineWidth;
-				// 	list[i-1].model.set({barLength: previousBarLength});
-				// }
-
-				// if (i == 0) {
-				// 	previousBarLength = 0;
-				// } else {
-				// 	previousBarLength = list[i-1].barLength;
-				// };
+				// var previousBarLength = i ? (this.model.get("measurelength") || (1 / measuresAllotted) * this.lineWidth) : i; // old version kep for reference
+				if (i == 0) {
+					previousBarLength = 0;
+				} else {
+					previousBarLength = list[i-1].barLength;
+				};
 
 				position = position.add(previousBarLength, 0);
 
