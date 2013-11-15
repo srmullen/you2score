@@ -21,9 +21,17 @@ function (PaperBaseView, NoteModel) {
 			// this.accidental = this.getAccidental(this.model);
 
 			this.length = this.calculateLength(this.model);
+			// Default values for x and y. Should be moved somewhere else.
+			// if these are kept as 0, then centerLine is just the position of the note head.
+			this.xPos = 0;
+			this.yPos = 0;
 
 		},
 
+		/*
+		 * Should have the option to render on a measure or just at any given position.
+		 * Here's another point where the RenderModel could come in handy.
+		 */
 		render: function (centerLine, lineSpacing) {
 			var octaveHeight = lineSpacing * 3.5;
 
@@ -45,19 +53,36 @@ function (PaperBaseView, NoteModel) {
 			// Make enclosing rectangle
 			// there should be a minimum width of the rectangle, which expands based on its duration and accidentals.
 			// can give a center point for the rectangle, possibly calculated by getting halving the stem hight.
-			var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
-			rectangle = new paper.Path.Rectangle(rectangle);
-			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
-			rectangle.opacity = 0.0;
-			this.group.insertChild(0, rectangle);
+			// var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
+			// rectangle = new paper.Path.Rectangle(rectangle);
+			// rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+			// rectangle.opacity = 0.0;
+			// this.group.insertChild(0, rectangle);
 
-			this.makeEnclosure(centerLine);
+			this.drawGroupBounds(centerLine);
 
 			return this;
 		},
 
-		// FIXME: baseNote feels kinda wrong. seems like it should just need the
-		// x position and y position
+		drawGroupBounds: function (centerLine) {
+			if (this.stemDirection === "up") {
+
+			} else if (this.stemDirection === "down") {
+
+			} else {
+				// just box the noteHead
+				// var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
+				var rectangle = new paper.Rectangle({
+					center: centerLine.add(this.xPos, this.yPos),
+					size: this.headSize
+				});
+				rectangle = new paper.Path.Rectangle(rectangle);
+				rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+				rectangle.opacity = 0.0;
+				this.group.insertChild(0, rectangle);
+			}
+		},
+
 		drawHead: function (centerLine, xPos, yPos) {
 			var type = this.model.get("type");
 
@@ -190,13 +215,9 @@ function (PaperBaseView, NoteModel) {
 			return this
 		},
 
-		makeEnclosure: function (centerLine) {
-			var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
-			rectangle = new paper.Path.Rectangle(rectangle);
-			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
-			rectangle.opacity = 0.0;
-			this.group.insertChild(0, rectangle);
-		},
+		// makeEnclosure: function (centerLine) {
+			
+		// },
 
 		getStemDirection: function (centerLine) {
 			// this.stemDirection = this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";

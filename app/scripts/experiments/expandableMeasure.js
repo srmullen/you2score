@@ -43,7 +43,7 @@ function (PaperBaseView, BaseModel, LineView, MeasureView, NoteView, HighlightTo
 		paper.project.activeLayer = noteLayer;
 		var note = context.addChildView(NoteView);
 		note.xPos = 30;
-		note.yPos = 40
+		note.yPos = 40;
 		note.render(new paper.Point(200, 150));
 
 		var highlightTool = new HighlightTool({views: [line, measure, note]});
