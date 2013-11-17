@@ -33,12 +33,19 @@ function (PaperBaseView, NoteModel) {
 		 * Here's another point where the RenderModel could come in handy.
 		 */
 		render: function (centerLine, lineSpacing) {
-			var octaveHeight = lineSpacing * 3.5;
+			var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
+				stemDirection;
 
 			this.drawHead(centerLine, this.xPos, this.yPos);
 
+			// if stemDirection isn't a default property on the model, then get it.
+			// stemDirection could be defaulted as part of the renderModel (if and when it ever exists)
 			if (this.model.get("type") < 1) {
-				var stemDirection = this.getStemDirection(centerLine);
+				if (!this.stemDirection) {
+					stemDirection = this.getStemDirection(centerLine);
+				} else {
+					stemDirection = this.stemDirection	
+				};
 			};
 
 			if (stemDirection) {
@@ -50,37 +57,30 @@ function (PaperBaseView, NoteModel) {
 
 			this.drawAccidental();
 
-			// Make enclosing rectangle
-			// there should be a minimum width of the rectangle, which expands based on its duration and accidentals.
-			// can give a center point for the rectangle, possibly calculated by getting halving the stem hight.
-			// var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
-			// rectangle = new paper.Path.Rectangle(rectangle);
-			// rectangle.fillColor = "white"; // create a fill so the center can be clicked 
-			// rectangle.opacity = 0.0;
-			// this.group.insertChild(0, rectangle);
-
-			this.drawGroupBounds(centerLine);
+			this.drawGroupBounds(centerLine, stemDirection);
 
 			return this;
 		},
 
-		drawGroupBounds: function (centerLine) {
-			if (this.stemDirection === "up") {
+		drawGroupBounds: function (centerLine, stemDirection) {
+			var yOffset = 0,
+				height = this.headSize[1];
 
-			} else if (this.stemDirection === "down") {
+			if (this.stem) {
+				yOffset = this.stem.length / 2;
+				yOffset = (stemDirection === "up") ? -yOffset : yOffset;
+				height = this.stem.length + this.headSize[0];
+			};
 
-			} else {
-				// just box the noteHead
-				// var rectangle = new paper.Rectangle(centerLine, centerLine.add(this.xPos, this.yPos));
-				var rectangle = new paper.Rectangle({
-					center: centerLine.add(this.xPos, this.yPos),
-					size: this.headSize
-				});
-				rectangle = new paper.Path.Rectangle(rectangle);
-				rectangle.fillColor = "white"; // create a fill so the center can be clicked 
-				rectangle.opacity = 0.0;
-				this.group.insertChild(0, rectangle);
-			}
+			var rectangle = new paper.Rectangle({
+				center: centerLine.add(this.xPos, this.yPos + yOffset),
+				size: [this.config.note.minWidth, height]
+			});
+
+			rectangle = new paper.Path.Rectangle(rectangle);
+			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
+			rectangle.opacity = 0.0;
+			this.group.insertChild(0, rectangle);
 		},
 
 		drawHead: function (centerLine, xPos, yPos) {
@@ -141,6 +141,7 @@ function (PaperBaseView, NoteModel) {
 			stem.strokeWidth = 2;
 			this.group.addChild(stem);
 
+			this.stem = stem; // maybe stem should be returned instead, but only if it's not going to be an expectation that all draw methods return this
 			return this;
 		},
 
@@ -215,13 +216,10 @@ function (PaperBaseView, NoteModel) {
 			return this
 		},
 
-		// makeEnclosure: function (centerLine) {
-			
-		// },
-
+		// this method makes the assumption that a note is always being drawn on a line.
 		getStemDirection: function (centerLine) {
 			// this.stemDirection = this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
-			return this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
+			return this.noteHandles.segments[2].point.y <= centerLine.y ? "down" : "up";
 		},
 
 		/*
@@ -241,10 +239,10 @@ function (PaperBaseView, NoteModel) {
 		},
 
 		// FIXME: This method is unused. I don't remember what it was for.
-		updatePosition: function (event) {
+		// updatePosition: function (event) {
 
-			this.circle.position = event.point;
-		},
+		// 	this.circle.position = event.point;
+		// },
 
 		getAccidentalWidth: function (acdl) {
 			// var acdl = model.get("pitch").accidental;

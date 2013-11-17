@@ -10,6 +10,7 @@ define([], function () {
 		lineSpacing: 10,
 
 		note: {
+			minWidth: 33,
 			head: {
 				width: 13,
 				height: 10
