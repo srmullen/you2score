@@ -13,15 +13,10 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 			this.meter = this.options.meter;
 			this.lineSpacing = this.options.lineSpacing;
 			this.clefBase = this.options.clefBase;
-			// this.barLength = this.options.barLength;
 
-			// this.measurePadding = this.barLength / 8; // Not really sure where measure padding should
-														// actually come from, or if it's really needed.
-														// Just calculating it where ever it's needed for the 
-														// time being.
-
-			var beatGroups = this.initBeatGroups(this.meter);
-			this.notesIntoBeatGroups(this.collection, beatGroups); // not sure where this belongs yet.
+			// measures have BeatGroups, not Note Collections in themselves
+			// var beatGroups = this.initBeatGroups(this.meter);
+			// this.notesIntoBeatGroups(this.collection, beatGroups); // not sure where this belongs yet.
 
 			this.childViews = this.initChildViews(this.collection);
 
@@ -33,10 +28,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 		initChildViews: function (collection) {
 			var noteView, xPos, yPos;
 			return collection.map(function (model) {
-				
-				// xPos = this.calculateNoteXpos(model);
-				// yPos = this.calculateNoteYpos(model, this.lineSpacing/2);
-				
+								
 				noteView = new NoteView({el: this.el, 
 					model: model, 
 					clefBase: this.clefBase
@@ -71,7 +63,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 				group.addChild(noteView.group); // I'm not sure if this is necessary
 
 				return group;
-			}, new paper.Group(), this);
+			}, this.group, this);
 		},
 
 		calculateNoteYpos: function (note, step) {

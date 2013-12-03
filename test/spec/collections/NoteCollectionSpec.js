@@ -1,4 +1,4 @@
-define(["chai", "scripts/collections/NoteCollection", "scripts/models/NoteModel"], 
+define(["chai", "note/NoteCollection", "note/NoteModel"], 
 function (chai, NoteCollection, NoteModel) {
 
 	var expect = chai.expect;

@@ -1,4 +1,4 @@
-define(["chai", "scripts/models/ScoreModel", "scripts/models/StaffModel"], 
+define(["chai", "score/ScoreModel", "staff/StaffModel"], 
 function (chai, ScoreModel, StaffModel) {
 
 	var expect = chai.expect;

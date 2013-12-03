@@ -1,4 +1,4 @@
-define(["chai", "scripts/helpers/Rational"], function (chai, Rational) {
+define(["chai", "helpers/Rational"], function (chai, Rational) {
 
 	var expect = chai.expect;
 

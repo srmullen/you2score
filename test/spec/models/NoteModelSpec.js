@@ -1,4 +1,4 @@
-define(["chai", "sinonChai", "scripts/models/NoteModel"], function (chai, sinonChai, NoteModel) {
+define(["chai", "sinonChai", "note/NoteModel"], function (chai, sinonChai, NoteModel) {
 
 	var expect = chai.expect;
 	var sinon = sinonChai;

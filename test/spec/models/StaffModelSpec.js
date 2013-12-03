@@ -1,9 +1,9 @@
 define(["chai",
-	"scripts/models/StaffModel", 
-	"scripts/collections/MeasureCollection", 
-	"scripts/collections/NoteCollection",
-	"scripts/models/MeasureModel",
-	"scripts/models/NoteModel"], 
+	"staff/StaffModel", 
+	"measure/MeasureCollection", 
+	"note/NoteCollection",
+	"measure/MeasureModel",
+	"note/NoteModel"], 
 function (chai, StaffModel, MeasureCollection, NoteCollection, MeasureModel, NoteModel) {
 
 	var expect = chai.expect;

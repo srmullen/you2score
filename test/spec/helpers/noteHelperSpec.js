@@ -1,4 +1,4 @@
-define(["chai", "scripts/helpers/NoteHelper"], function (chai, NoteHelper) {
+define(["chai", "helpers/NoteHelper"], function (chai, NoteHelper) {
 
 	var expect = chai.expect;
 

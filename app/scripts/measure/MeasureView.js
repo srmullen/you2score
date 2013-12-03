@@ -1,11 +1,14 @@
 define(["base/PaperBaseView", 
 		"./MeasureModel", 
 		"note/NoteCollectionView",
+		"note/NoteCollection",
+		"note/NoteModel",
 		"beat/BeatGroupView",
 		"note/NoteView",
 		"text!svg/treble.svg"], 
-function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
+function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteModel, BeatGroupView, NoteView, treble) {
 
+	// A measure should be able to be rendered without affecting structures outside of itself, as long as its width doesn't change.
 	var MeasureView = PaperBaseView.extend({
 
 		name: "MeasureView",
@@ -24,16 +27,17 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.clefBase = this.getClefBase(this.model.get("clef"));
 
-			// this.barLength = this.calculateMeasureLength(notes);
 			this.barLength = this.model.get("barLength");
 
-			this.childViews = this.initChildViews(notes);
+			this.noteCollection = this.initNoteCollectionView(notes);
+
+			this.beatGroups = this.initBeatGroups(notes, this.meter);
 
 			this.group = new paper.Group();
 		},
 
 		// this would be a good place to add 'voices'
-		initChildViews: function (notes) {
+		initNoteCollectionView: function (notes) {
 			var noteCollection = new NoteCollectionView({
 				el: this.el, 
 				collection: notes, 
@@ -42,7 +46,52 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 				meter: this.meter
 			});
 			return [noteCollection];
-		},	
+		},
+		
+		// it is unverified that this method works as it should
+		initBeatGroups: function (notes, meter) {
+			var beatGroups = [];
+
+			// A measure should always have the number of beatgroups specified by it meter
+			for (var i = 0, l = meter.upper; i < l; i++) {
+				beatGroups.push(new BeatGroupView({
+					meter: meter
+				}));
+			};
+			
+			// clone the notes so they can removed models without affecting this.collection
+			// reverse it so it can work with the end instead of the beginning.
+			var notesStack = new NoteCollection(notes.toArray().reverse());
+			var note;
+			_.each(beatGroups, function (beatGroup) {
+
+				while (!beatGroup.isFull()) { // keep adding notes until the beatGroup is full
+
+					note = notesStack.pop(); // get the next note to be added.
+
+					if (beatGroup.canAdd(note)) { // if the note  fits in the beatGroup just add it
+						beatGroup.add(note);
+					} else { // the note cant simply be added and needs to be broken up
+						var noteDurationOverflow = note.get("duration") - beatGroup.duration;
+
+						// make a new note that wont be rendered
+						var spacerNote = new NoteModel({duration: noteDurationOverflow}); // might need to set a flag on this to not render it
+
+						// push the spacerNote on the note stack to be dealt with next
+						notesStack.push(spacerNote);
+
+						// create a reference to the spacerNote so it can be destroyed if its real note is.
+						note.spacerNotes.push(spacerNote);
+
+						// add the note to the beatGroup so it can be rendered and the beatGroup is full
+						beatGroup.addNote(note);
+					}
+				};
+
+			}, this);
+
+			return beatGroups;
+		},
 
 		render: function (position) {
 			// var clef = this.model.get("clef");
@@ -60,7 +109,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 
 			this.drawMeter();
 
-			var notesGroup = this.drawNotes(centerLine, this.childViews);
+			var notesGroup = this.drawNotes(centerLine, this.noteCollection);
 
 			// var notesGroup = this.notesReduce();
 			// this.group.addChild(notesGroup);
@@ -68,13 +117,17 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 			this.group.strokeColor = 'black';
 
 			// make enclosing rectangle
+			this.drawGroupBounds(position);
+
+			return this; 
+		},
+
+		drawGroupBounds: function (position) {
 			var rectangle = new paper.Rectangle(position, position.add(this.barLength, this.lineSpacing * 4));
 			rectangle = new paper.Path.Rectangle(rectangle);
 			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
 			rectangle.opacity = 0.0;
 			this.group.insertChild(0, rectangle);
-
-			return this; 
 		},
 
 		drawBars: function (position, width) {
@@ -151,17 +204,17 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteView, treble) {
 			}[clef];
 		},
 
-		/*
+		/* NOT CURRENTLY USED
 		 * @param notes {NoteCollection} 
 		 * @param first {boolean} optional true if the measure is the first on the line
 		 *						  so clef and signature can be calculated in.
 		 */
-		calculateMeasureLength: function (notes, first) {
-			var length = 200; // arbitrary
-			if (notes.isEmpty()) return length;
+		// calculateMeasureLength: function (notes, first) {
+		// 	var length = 200; // arbitrary
+		// 	if (notes.isEmpty()) return length;
 
-			return length;
-		}
+		// 	return length;
+		// }
 
 	});
 	return MeasureView;

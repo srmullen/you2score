@@ -1,7 +1,7 @@
 define(["chai", "sinonChai", 
-	"scripts/models/MeasureModel", 
-	"scripts/collections/NoteCollection", 
-	"scripts/models/NoteModel"], 
+	"measure/MeasureModel", 
+	"note/NoteCollection", 
+	"note/NoteModel"], 
 function (chai, sinonChai, MeasureModel, NoteCollection, NoteModel) {
 
 	var expect = chai.expect;

@@ -4,8 +4,9 @@ define(["base/PaperBaseView",
 		"measure/MeasureView",
 		"note/NoteView",
 		"note/NoteModel",
+		"beat/BeatGroupView",
 		"tools/HighlightTool"], 
-function (PaperBaseView, BaseModel, LineView, MeasureView, NoteView, NoteModel, HighlightTool) {
+function (PaperBaseView, BaseModel, LineView, MeasureView, NoteView, NoteModel, BeatGroupView, HighlightTool) {
 
 	var expandableMeasure = function (context) {
 		console.log("Here's the expanding measure!");
@@ -44,10 +45,13 @@ function (PaperBaseView, BaseModel, LineView, MeasureView, NoteView, NoteModel, 
 		paper.project.activeLayer = noteLayer;
 		var noteModel = new NoteModel({type: 1/4});
 		var note = context.addChildView(NoteView, noteModel);
-		// note.xPos = 30;
-		// note.yPos = 40;
+		note.xPos = 30;
+		note.yPos = 40;
 		note.stemDirection = "up";
 		note.render(new paper.Point(200, 150));
+
+		paper.project.activeLayer = beatLayer;
+		var beat = context.addChildView(BeatGroupView);
 
 		var highlightTool = new HighlightTool({views: [line, measure, note]});
 	};

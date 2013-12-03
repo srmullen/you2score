@@ -1,4 +1,7 @@
-define(["chai", "scripts/views/MeasureView"], function () {
+define(["chai", 
+		"measure/MeasureView",
+		"beat/BeatGroupView"
+		], function (chai, MeasureView, BeatGroupView) {
 
 	var expect = chai.expect;
 
@@ -24,6 +27,13 @@ define(["chai", "scripts/views/MeasureView"], function () {
 			afterEach(function () {
 				measureView.nuke();
 			});
+		});
+
+		describe("initBeatGroups Method", function () {
+			it("should be defined", function () {
+				measureView = new MeasureView();
+				expect(measureView.initBeatGroups).to.be.defined();
+			})
 		});
 	});
 });

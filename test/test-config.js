@@ -15,9 +15,24 @@ require.config({
         text: '../app/scripts/vendor/text',
         paper: '../app/bower_components/paper/dist/paper',
 
-		base: "../app/scripts/base",
-		scripts: "../app/scripts",
-		svg: "../app/images/svg"
+		// base: "../app/scripts/base",
+		// scripts: "../app/scripts",
+		// svg: "../app/images/svg"
+
+		base: '../app/scripts/base',
+        svg: '../images/svg',
+
+        config: "../app/scripts/config",
+        
+        score: '../app/scripts/score',
+        sheet: '../app/scripts/sheet',
+        staff: '../app/scripts/staff',
+        line: '../app/scripts/line',
+        measure: '../app/scripts/measure',
+        beat: '../app/scripts/beat',
+        note: '../app/scripts/note',
+        tools: '../app/scripts/tools',
+        helpers: '../app/scripts/helpers'
 	},
 	shim: {
         bootstrap: {
@@ -43,15 +58,15 @@ require(["require", "mocha"], function (require) {
 	require([
 		// "spec/base/BaseModelSpec",
 		// "spec/base/BaseCollectionSpec",
-		"spec/models/ScoreModelSpec", 
-		"spec/models/StaffModelSpec",
-		"spec/collections/MeasureCollectionSpec",
-		"spec/models/MeasureModelSpec",
-		"spec/collections/NoteCollectionSpec",
-		"spec/models/NoteModelSpec",
-		"spec/helpers/RationalSpec"
+		// "spec/models/ScoreModelSpec", 
+		// "spec/models/StaffModelSpec",
+		// "spec/collections/MeasureCollectionSpec",
+		// "spec/models/MeasureModelSpec",
+		// "spec/collections/NoteCollectionSpec",
+		// "spec/models/NoteModelSpec",
+		// "spec/helpers/RationalSpec",
 		// "spec/helpers/NoteHelperSpec",
-		// "spec/views/MeasureViewSpec" // needs and http server to run
+		"spec/views/MeasureViewSpec" // needs and http server to run
 	], function () {
 		mocha.run();
 	});
