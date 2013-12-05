@@ -1,6 +1,7 @@
 define(["base/PaperBaseView",
+		"note/NoteCollectionView",
 		"note/NoteCollection"], 
-function (PaperBaseView, NoteCollection) {
+function (PaperBaseView, NoteCollectionView, NoteCollection) {
 
 	/*
 	 * Notes should be added to beatGroup one at a time, not when it is initialized.
@@ -13,7 +14,7 @@ function (PaperBaseView, NoteCollection) {
 
 		name: "BeatGroupView",
 
-		initialize: function () {
+		initialize: function (options) {
 			this.collection =  this.collection || new NoteCollection();
 
 			this.duration = this.sumDurations(this.collection);
@@ -25,18 +26,44 @@ function (PaperBaseView, NoteCollection) {
 
 			// The percentage of the measure the beatGroup occupies.
 			this.barPercentage = this.options.barPercentage || 1 / this.type;
+
+			this.notes = this.initNoteCollectionView(this.collection);
 		},
 
-		render: function () {
+		// DUPLICATED IN MEASUREVIEW
+		// this would be a good place to add 'voices'
+		initNoteCollectionView: function (notes) {
+			var noteCollection = new NoteCollectionView({
+				el: this.el, 
+				collection: notes, 
+				clefBase: this.options.clefBase,
+				lineSpacing: this.options.lineSpacing,
+				meter: this.meter
+			});
+			return noteCollection;
+		},
+
+		render: function (centerLine) {
 			this.drawGroupBounds();
+
+			this.drawNotes(centerLine, this.notes);
 		},
 
 		drawGroupBounds: function () {
 
 		},
 
+		drawNotes: function (centerLine, notes) {
+			// These types of properties that are needed before rendering could be in their own rendering models
+			notes.barLength = this.barLength;
+			notes.measurePadding = this.barLength / 8;
+
+			notes.render(centerLine);
+		},
+
 		canAdd: function (note) {
-			var remainingDur = this.barPercentage - this.duration;
+			// var remainingDur = this.barPercentage - this.duration;
+			var remainingDur = this.maxDuration - this.duration;
 			if (note.get("duration") <= remainingDur) return true;
 
 			// else

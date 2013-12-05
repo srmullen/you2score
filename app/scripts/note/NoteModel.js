@@ -34,6 +34,7 @@ function (BaseModel, noteHelper) {
 				console.log("Initializeing NoteModel");
 
 				this.spacerNotes = []; // I dont like this name but it's all i can think of right now
+				
 				/* Ignore for now, will use later */
 				// if (attributes) {
 				// 	if (attributes.pitch) {

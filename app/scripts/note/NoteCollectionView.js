@@ -1,7 +1,7 @@
 define(["base/PaperBaseView",
-		"beat/BeatGroupView",
+		// "beat/BeatGroupView",
 		"./NoteView"], 
-function (PaperBaseView, BeatGroupView, NoteView) {
+function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 
 	var NoteCollectionView = PaperBaseView.extend({
 
@@ -14,11 +14,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 			this.lineSpacing = this.options.lineSpacing;
 			this.clefBase = this.options.clefBase;
 
-			// measures have BeatGroups, not Note Collections in themselves
-			// var beatGroups = this.initBeatGroups(this.meter);
-			// this.notesIntoBeatGroups(this.collection, beatGroups); // not sure where this belongs yet.
-
-			this.childViews = this.initChildViews(this.collection);
+			// this.childViews = this.initChildViews(this.collection); // Notes are not yet added at this point
 
 			this.height = this.calculateHeight(this.childViews);
 
@@ -44,6 +40,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 		},
 
 		render: function (centerLine, barLength) {
+			this.childViews = this.initChildViews(this.collection);
 
 			this.drawNotes(centerLine, this.childViews);
 
@@ -58,7 +55,7 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 				noteView.xPos = xPos;
 				noteView.yPos = yPos;
 
-				noteView.render( centerLine, this.lineSpacing);
+				noteView.render(centerLine, this.lineSpacing);
 
 				group.addChild(noteView.group); // I'm not sure if this is necessary
 
@@ -90,30 +87,6 @@ function (PaperBaseView, BeatGroupView, NoteView) {
 			xPos += (this.measurePadding / 2); // divide by 2 to account for padding on each side
 
 			return xPos;
-		},
-
-		// BeatGroup should be its own view.
-		notesIntoBeatGroups: function (notes, beatGroups) {
-			// meters to consider (most common)
-			// 2 - 6/4
-			// 3/8, 5/8, 6/8, 7/8, 12/8
-			// 
-			// The user should be able to regroup their notes globally and locally.
-
-			_.each(beatGroups, function (group) {
-				// while (!group.is)
-			});
-		},
-
-		initBeatGroups: function (meter) {
-			var beatGroups = []; // an array to hold the beatGroups
-			if (meter.lower === 4) { // if the meter is based on quarter notes, the grouping is most likely for each note.
-				for (var i = 0, l = meter.upper; i < l; i++) {
-					beatGroups.push(new BeatGroupView());
-				}
-			} // I'll think about eigth note meters later.
-
-			return beatGroups;
 		},
 
 		/*

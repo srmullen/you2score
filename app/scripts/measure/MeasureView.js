@@ -36,6 +36,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			this.group = new paper.Group();
 		},
 
+		// DUPLICATED IN BEATGROUPVIEW
 		// this would be a good place to add 'voices'
 		initNoteCollectionView: function (notes) {
 			var noteCollection = new NoteCollectionView({
@@ -55,6 +56,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			// A measure should always have the number of beatgroups specified by it meter
 			for (var i = 0, l = meter.upper; i < l; i++) {
 				beatGroups.push(new BeatGroupView({
+					clefBase: this.clefBase,
+					lineSpacing: this.lineSpacing,
 					meter: meter
 				}));
 			};
@@ -70,7 +73,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 					note = notesStack.pop(); // get the next note to be added.
 
 					if (beatGroup.canAdd(note)) { // if the note  fits in the beatGroup just add it
-						beatGroup.add(note);
+						beatGroup.addNote(note);
 					} else { // the note cant simply be added and needs to be broken up
 						var noteDurationOverflow = note.get("duration") - beatGroup.duration;
 
@@ -109,7 +112,10 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 			this.drawMeter();
 
-			var notesGroup = this.drawNotes(centerLine, this.noteCollection);
+			var notesGroup = this.drawNotes(centerLine, this.beatGroups);
+			// var notesGroup = this.drawNotes(centerLine, this.noteCollection);
+
+			// this.drawBeatGroups(this.beatGroups);
 
 			// var notesGroup = this.notesReduce();
 			// this.group.addChild(notesGroup);
@@ -121,6 +127,12 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 			return this; 
 		},
+
+		// drawBeatGroups: function (beatGroups) {
+		// 	_.each(beatGroups, function (beatGroup) {
+		// 		beatGroup.render();
+		// 	}, this);
+		// },
 
 		drawGroupBounds: function (position) {
 			var rectangle = new paper.Rectangle(position, position.add(this.barLength, this.lineSpacing * 4));
