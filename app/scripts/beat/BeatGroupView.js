@@ -25,9 +25,19 @@ function (PaperBaseView, NoteCollectionView, NoteCollection) {
 			this.maxDuration = 1 / this.meter.lower;
 
 			// The percentage of the measure the beatGroup occupies.
-			this.barPercentage = this.options.barPercentage || 1 / this.type;
+			this.barPercentage = this.options.barPercentage || this.maxDuration;
+			this.barLength = this.options.barLength;
 
 			this.notes = this.initNoteCollectionView(this.collection);
+		},
+
+		setBarLength: function (length) {
+			this.barLength = length;
+			this.length = this.calculateLength();
+		},
+
+		calculateLength: function () {
+			return this.barPercentage * this.barLength;
 		},
 
 		// DUPLICATED IN MEASUREVIEW
@@ -44,16 +54,48 @@ function (PaperBaseView, NoteCollectionView, NoteCollection) {
 		},
 
 		render: function (centerLine) {
+			// var barredNotes = this.linkBarredNotes(this.notes);
+
+			// var stemDirection = this.calculateNoteGroupStemDirection(barredNotes);
+
 			this.drawGroupBounds();
 
-			this.drawNotes(centerLine, this.notes);
+			this.drawNotes(this.notes, centerLine);
 		},
 
+		/*
+		 * Returns an array of arrays. Inner arrays contain notes that are barred together.
+		 * From these grouping the stem direction can also be determined.
+		 */
+		// linkBarredNotes:function (notes) {
+		// 	var barredNotes = [],
+		// 		innerGroup = [];
+
+		// 	_.each(notes, function (note, i, list) {
+		// 		if (note.model.get("type") <= 1/8) { // note needs to be grouped if it has a flag
+		// 			innerGroup.push(note);
+		// 		} else { // the note doesn't have a flag so the groups are separated.
+		// 			if (innerGroup.length > 1) barredNotes.push(innerGroup); // only add the group if there is more than one note in it
+		// 			innerGroup = [];
+		// 		}
+		// 	});
+
+		// 	// push the inner group if any remain
+		// 	if (innerGroup.length) barredNotes.push(innerGroup);
+
+		// 	return barredNotes;
+		// },
+
+		calculateNoteGroupStemDirection: function (notes) {
+
+		},
+
+		// I'm not sure if beatGroups needs bounds
 		drawGroupBounds: function () {
 
 		},
 
-		drawNotes: function (centerLine, notes) {
+		drawNotes: function (notes, centerLine, barredNotes) {
 			// These types of properties that are needed before rendering could be in their own rendering models
 			notes.barLength = this.barLength;
 			notes.measurePadding = this.barLength / 8;

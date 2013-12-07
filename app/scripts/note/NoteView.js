@@ -31,6 +31,8 @@ function (PaperBaseView, NoteModel) {
 		/*
 		 * Should have the option to render on a measure or just at any given position.
 		 * Here's another point where the RenderModel could come in handy.
+		 *
+		 * This method is for a note to render itself. It can also be rendered by NoteCollectionView.
 		 */
 		render: function (centerLine, lineSpacing) {
 			var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
@@ -218,8 +220,8 @@ function (PaperBaseView, NoteModel) {
 
 		// this method makes the assumption that a note is always being drawn on a line.
 		getStemDirection: function (centerLine) {
-			// this.stemDirection = this.noteHandles.segments[2].point.y > centerLine.y ? "up" : "down";
-			return this.noteHandles.segments[2].point.y <= centerLine.y ? "down" : "up";
+			// return this.noteHandles.segments[2].point.y <= centerLine.y ? "down" : "up";
+			return this.stemDirection || (this.yPos <= 0 ? "down" : "up"); // if stemDirection is already set on the view just return it
 		},
 
 		/*

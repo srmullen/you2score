@@ -58,6 +58,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 				beatGroups.push(new BeatGroupView({
 					clefBase: this.clefBase,
 					lineSpacing: this.lineSpacing,
+					barLength: this.barLength, // barLenth is undefined at this point
 					meter: meter
 				}));
 			};
@@ -68,7 +69,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			var note;
 			_.each(beatGroups, function (beatGroup) {
 
-				while (!beatGroup.isFull()) { // keep adding notes until the beatGroup is full
+				while (!beatGroup.isFull() && notesStack.length) { // keep adding notes until the beatGroup is full
 
 					note = notesStack.pop(); // get the next note to be added.
 
@@ -112,10 +113,10 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 			this.drawMeter();
 
-			var notesGroup = this.drawNotes(centerLine, this.beatGroups);
-			// var notesGroup = this.drawNotes(centerLine, this.noteCollection);
+			// var notesGroup = this.drawNotes(centerLine, this.beatGroups);
+			// var notesGroup = this.drawNotes(centerLine, this.noteCollection); // done with drawBeatGroups now,=
 
-			// this.drawBeatGroups(this.beatGroups);
+			this.drawBeatGroups(this.beatGroups, centerLine);
 
 			// var notesGroup = this.notesReduce();
 			// this.group.addChild(notesGroup);
@@ -128,11 +129,24 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			return this; 
 		},
 
-		// drawBeatGroups: function (beatGroups) {
-		// 	_.each(beatGroups, function (beatGroup) {
-		// 		beatGroup.render();
-		// 	}, this);
-		// },
+		drawBeatGroups: function (beatGroups, centerLine) {
+			var xPos;
+			_.each(beatGroups, function (beatGroup, i, list) {
+				// beatGroup.barLength = this.barLength;
+				// beatGroup.measurePadding = this.barLength / 8;
+
+				beatGroup.setBarLength(this.barLength);
+
+				if (i == 0) {
+					xPos = 0;
+				} else {
+					xPos = list[i-1].length;
+				};
+
+				centerLine = centerLine.add(xPos, 0);
+				beatGroup.render(centerLine);
+			}, this);
+		},
 
 		drawGroupBounds: function (position) {
 			var rectangle = new paper.Rectangle(position, position.add(this.barLength, this.lineSpacing * 4));
@@ -161,6 +175,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 		/**
 		 *	Iterates over the NoteCollection and draws the notes.
+		 *	Not Currently used, but may still be useful.
 		 *	@return group of notes
 		 */
 		drawNotes: function (centerLine, childViews) {

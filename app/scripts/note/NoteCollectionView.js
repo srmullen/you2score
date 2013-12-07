@@ -42,25 +42,98 @@ function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 		render: function (centerLine, barLength) {
 			this.childViews = this.initChildViews(this.collection);
 
-			this.drawNotes(centerLine, this.childViews);
+			this.drawNotes(this.childViews, centerLine);
 
 			return this;
 		},
 
-		drawNotes: function (centerLine, childViews) {
+		drawNotes: function (childViews, centerLine) {
+			// Create the barred notes and add x and y position to notes.
+			// They are combined here because they can be performed with just one each loop.
+			var barredNotes = [],
+				innerGroup = [];
+
+			// set the x and y position on each note
+			_.each(childViews, function (noteView) {
+				this.calculateAndSetXandYPos(noteView);
+				innerGroup = this.addToBarredNotes(noteView, innerGroup);
+			}, this);
+
+			// push the inner group if any remain
+			if (innerGroup.length > 1) barredNotes.push(innerGroup);
+
+			// this needs to be called after the head is drawn
+			_.each(barredNotes, function (noteArr) {
+				var greatestDistance = 0,
+					greatestNote, // keep track of the note that is the greatest distance from the centerLine
+					currentNoteDistance;
+
+				_.each(noteArr, function (note) {
+					currentNoteDistance = Math.abs(note.yPos);
+					if (currentNoteDistance > greatestDistance) {
+						greatestDistance = currentNoteDistance;
+						greatestNote = note;
+					}
+				}, this);
+
+				var stemDirection = greatestNote.getStemDirection();
+
+				_.each(noteArr, function (note) {
+					note.stemDirection = stemDirection;
+				}, this);
+			}, this);
+
 			return _.reduce(childViews, function (group, noteView) {
 
-				var xPos = this.calculateNoteXpos(noteView.model),
-					yPos = this.calculateNoteYpos(noteView.model, this.lineSpacing/2);
-				noteView.xPos = xPos;
-				noteView.yPos = yPos;
-
-				noteView.render(centerLine, this.lineSpacing);
+				// noteView.render(centerLine, this.lineSpacing);
+				this.drawNote(noteView, centerLine, this.lineSpacing, noteView.xPos, noteView.yPos, noteView.stemDirection);
 
 				group.addChild(noteView.group); // I'm not sure if this is necessary
 
 				return group;
 			}, this.group, this);
+		},
+
+		calculateAndSetXandYPos: function (note) {
+			var xPos = this.calculateNoteXpos(note.model),
+				yPos = this.calculateNoteYpos(note.model, this.lineSpacing/2);
+			note.xPos = xPos;
+			note.yPos = yPos;
+		},
+
+		addToBarredNotes: function (note, innerGroup) {
+			if (note.model.get("type") <= 1/8) { // note needs to be grouped if it has a flag
+				innerGroup.push(note);
+			} else { // the note doesn't have a flag so the groups are separated.
+				if (innerGroup.length > 1) barredNotes.push(innerGroup); // only add the group if there is more than one note in it
+				innerGroup = [];
+			}
+			return innerGroup;
+		},
+
+		// Similar to NoteView.render
+		drawNote: function (note, centerLine, lineSpacing, xPos, yPos, stemDirection) {
+			var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
+				stemDirection;
+
+			note.drawHead(centerLine, xPos, yPos);
+
+			if (note.model.get("type") < 1) {
+				if (!stemDirection) stemDirection = note.getStemDirection();
+			}
+
+			if (stemDirection) {
+				note.drawStem(centerLine, octaveHeight, stemDirection);
+				note.drawFlag(stemDirection);
+			}
+
+			note.drawLegerLines(centerLine, lineSpacing);
+
+			note.drawAccidental();
+
+			note.drawGroupBounds(centerLine, stemDirection);
+
+			return this;
 		},
 
 		calculateNoteYpos: function (note, step) {
