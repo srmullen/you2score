@@ -15,6 +15,7 @@ function (PaperBaseView, LineModel, MeasureCollectionView) {
 			this.measures = [];
 			// this.measures = new MeasureCollectionView();
 			
+			this.activateLayer("line");
 			this.group = new paper.Group();
 		},
 

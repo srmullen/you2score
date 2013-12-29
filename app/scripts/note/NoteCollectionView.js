@@ -1,7 +1,6 @@
 define(["base/PaperBaseView",
-		// "beat/BeatGroupView",
 		"./NoteView"], 
-function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
+function (PaperBaseView, NoteView) {
 
 	var NoteCollectionView = PaperBaseView.extend({
 
@@ -14,19 +13,24 @@ function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 			this.lineSpacing = this.options.lineSpacing;
 			this.clefBase = this.options.clefBase;
 
-			// this.childViews = this.initChildViews(this.collection); // Notes are not yet added at this point
-
 			this.height = this.calculateHeight(this.childViews);
 
 			this.group = new paper.Group();
 		},
 
 		initChildViews: function (collection) {
-			var noteView, xPos, yPos;
-			return collection.map(function (model) {
+			var noteView, viewModels;
+
+			// spacerNotes don't need views, so remove them
+			viewModels = collection.reject(function (model) {
+				return model.get("spacerNote");
+			});
+
+			return _.map(viewModels, function (model) {
 								
 				noteView = new NoteView({el: this.el, 
-					model: model, 
+					model: model,
+					context: this.options.context,
 					clefBase: this.clefBase
 				});
 
@@ -47,22 +51,22 @@ function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 			return this;
 		},
 
-		drawNotes: function (childViews, centerLine) {
-			// Create the barred notes and add x and y position to notes.
-			// They are combined here because they can be performed with just one each loop.
-			var barredNotes = [],
-				innerGroup = [];
+		// FIXME: this method is a mess
+		drawNotes: function (notesToDraw, centerLine) {
+			var octaveHeight = this.lineSpacing ? this.lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
+				stemDirection, barredNotes, notesToDraw;
 
-			// set the x and y position on each note
-			_.each(childViews, function (noteView) {
+			barredNotes = this.groupBarredNotes(notesToDraw);
+
+			// draw the head of each note (removed from the drawNote method)
+			// I dont think the note head changes regarless of any other characteristics of the note.
+			// It can be drawn separate from any groups it belongs to.
+			_.each(notesToDraw, function (noteView) {
 				this.calculateAndSetXandYPos(noteView);
-				innerGroup = this.addToBarredNotes(noteView, innerGroup);
+				noteView.drawHead(centerLine, noteView.xPos, noteView.yPos);
 			}, this);
 
-			// push the inner group if any remain
-			if (innerGroup.length > 1) barredNotes.push(innerGroup);
-
-			// this needs to be called after the head is drawn
+			// set the stemDirection on the barredNotes
 			_.each(barredNotes, function (noteArr) {
 				var greatestDistance = 0,
 					greatestNote, // keep track of the note that is the greatest distance from the centerLine
@@ -81,18 +85,69 @@ function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 				_.each(noteArr, function (note) {
 					note.stemDirection = stemDirection;
 				}, this);
+
+				this.drawBarredStems(noteArr, stemDirection, centerLine, octaveHeight);
+
 			}, this);
 
-			return _.reduce(childViews, function (group, noteView) {
+			// draw everything else and add it to the group
+			_.reduce(notesToDraw, function (group, noteView) {
 
-				// noteView.render(centerLine, this.lineSpacing);
-				this.drawNote(noteView, centerLine, this.lineSpacing, noteView.xPos, noteView.yPos, noteView.stemDirection);
+				this.drawNote(noteView, centerLine, this.lineSpacing, noteView.xPos, noteView.yPos, noteView.stemDirection, octaveHeight);
 
 				group.addChild(noteView.group); // I'm not sure if this is necessary
 
 				return group;
 			}, this.group, this);
 		},
+
+		drawBarredStems: function (noteArr, stemDirection, centerLine, octaveHeight) {
+			var note1 = noteArr[0],
+				note2 = noteArr[noteArr.length-1]
+
+			// Draw the stem on the first and last note in the barred group
+			note1.drawStem(centerLine, octaveHeight, stemDirection);
+			note2.drawStem(centerLine, octaveHeight, stemDirection);
+
+			// draw the bar between the outer stems
+			var bar = new paper.Path.Line(note1.stem.segments[1].point, note2.stem.segments[1].point)
+			bar.strokeColor = "black"; // bar will need to be tracked by all notes that are connected to it
+			bar.strokeWidth = 4;
+
+			// TODO: The bar needs to be added to at least one group, probably to all the groups of the notes that touch it.
+			// 		 Does paper allow something to belong to more than one group?
+		},
+
+		/*
+		 * Groups notes that are connected by a flag/bar
+		 */
+		groupBarredNotes: function (notes) {
+			// Create the barred notes and add x and y position to notes.
+			// They are combined here because they can be performed with just one each loop.
+			var barredNotes = [],
+				innerGroup = [];
+
+			// set the x and y position on each note
+			_.each(notes, function (noteView) {
+				innerGroup = this.addToBarredNotes(noteView, innerGroup);
+			}, this);
+
+			// push the inner group if any remain
+			if (innerGroup.length > 1) barredNotes.push(innerGroup);
+
+			return barredNotes;
+		},
+
+		// drawStemAndFlag: function (note, stemDirection, centerLine, octaveHeight) {
+		// 	if (note.model.get("type") < 1) {
+		// 		if (!stemDirection) stemDirection = note.getStemDirection();
+		// 	}
+
+		// 	if (stemDirection) {
+		// 		note.drawStem(centerLine, octaveHeight, stemDirection);
+		// 		note.drawFlag(stemDirection);
+		// 	}
+		// },
 
 		calculateAndSetXandYPos: function (note) {
 			var xPos = this.calculateNoteXpos(note.model),
@@ -112,19 +167,19 @@ function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 		},
 
 		// Similar to NoteView.render
-		drawNote: function (note, centerLine, lineSpacing, xPos, yPos, stemDirection) {
-			var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
-				stemDirection;
-
-			note.drawHead(centerLine, xPos, yPos);
+		drawNote: function (note, centerLine, lineSpacing, xPos, yPos, stemDirection, octaveHeight) {
+			// var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
+			// 	stemDirection;
 
 			if (note.model.get("type") < 1) {
 				if (!stemDirection) stemDirection = note.getStemDirection();
 			}
 
 			if (stemDirection) {
-				note.drawStem(centerLine, octaveHeight, stemDirection);
-				note.drawFlag(stemDirection);
+				if (!note.stem) { // check that the stem hasn't already been drawn in a barred group.
+					note.drawStem(centerLine, octaveHeight, stemDirection);
+					note.drawFlag(stemDirection);
+				}
 			}
 
 			note.drawLegerLines(centerLine, lineSpacing);
@@ -160,16 +215,16 @@ function (PaperBaseView, /*BeatGroupView,*/ NoteView) {
 			xPos += (this.measurePadding / 2); // divide by 2 to account for padding on each side
 
 			return xPos;
-		},
+		}
 
 		/*
 		 * returns the sum of all durations of notes in a beatGroup.
 		 */
-		sumBeatGroup: function (group) {
-			return _.reduce(group, function (sum, note) {
-				return sum + note.get("duration");
-			}, 0);
-		}
+		// sumBeatGroup: function (group) {
+		// 	return _.reduce(group, function (sum, note) {
+		// 		return sum + note.get("duration");
+		// 	}, 0);
+		// }
 	});
 	return NoteCollectionView;
 });

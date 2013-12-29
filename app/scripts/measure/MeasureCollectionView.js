@@ -32,6 +32,7 @@ function (PaperBaseView, MeasureView) {
 			return collection.map(function (model) {
 				measureView = new MeasureView({
 					el: this.el,
+					context: this.options.context,
 					model: model,
 					meter: this.meter
 				});

@@ -24,7 +24,8 @@ function (PaperBaseView, MeasureCollectionView, SectionView) {
 			var measures;
 			return _.map(systems, function (measureCollection, i) {
 				measures = new MeasureCollectionView({
-					el: this.el, 
+					el: this.el,
+					context: this.options.context, 
 					collection: measureCollection,
 					meter: this.model.get("meter")
 				});

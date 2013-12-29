@@ -22,7 +22,8 @@ function (PaperBaseView, StaffView) {
 			var staffView;
 			return staffCollection.map(function (staffModel) {
 				staffView = new StaffView({
-					el: this.el, 
+					el: this.el,
+					context: this.options.context,
 					model: staffModel
 				});
 				return staffView;

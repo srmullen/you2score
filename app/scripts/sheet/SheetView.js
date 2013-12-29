@@ -33,7 +33,7 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 
 			for (var i = 0, n = 10; i < n; i++) {
 				lineModel = new LineModel();
-				line = new LineView({el: this.el, model: lineModel});
+				line = new LineView({el: this.el, context: this.options.context, model: lineModel});
 				lines.push(line);
 			}
 
@@ -41,6 +41,8 @@ function (PaperBaseView, SheetModel, LineView, LineModel) {
 		},
 
 		render: function () {
+			this.activateLayer(this.constants.SHEET);
+
 			this.drawLines();
 		},
 

@@ -12,8 +12,11 @@ function (PaperBaseView, NoteModel) {
 		initialize: function () {
 			console.log("Initializing NoteView");
 
-			this.model = this.model || new NoteModel();
+			this.activateLayer("note");
 			this.group = new paper.Group();
+
+			this.model = this.model || new NoteModel();
+			
 
 			this.pitch = this.model.get('pitch');
 
@@ -26,6 +29,8 @@ function (PaperBaseView, NoteModel) {
 			this.xPos = 0;
 			this.yPos = 0;
 
+			this.options.context.highlighter.addView(this);
+
 		},
 
 		/*
@@ -35,6 +40,7 @@ function (PaperBaseView, NoteModel) {
 		 * This method is for a note to render itself. It can also be rendered by NoteCollectionView.
 		 */
 		render: function (centerLine, lineSpacing) {
+			this.activateLayer(this.constants.layers.NOTE);
 			var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
 				stemDirection;
 
@@ -65,6 +71,8 @@ function (PaperBaseView, NoteModel) {
 		},
 
 		drawGroupBounds: function (centerLine, stemDirection) {
+			this.activateLayer(this.constants.layers.NOTE);
+
 			var yOffset = 0,
 				height = this.headSize[1];
 
@@ -86,6 +94,8 @@ function (PaperBaseView, NoteModel) {
 		},
 
 		drawHead: function (centerLine, xPos, yPos) {
+			this.activateLayer(this.constants.layers.NOTE);
+
 			var type = this.model.get("type");
 
 			var outerRect = new paper.Rectangle({
@@ -105,6 +115,7 @@ function (PaperBaseView, NoteModel) {
 			}
 			head.fillColor = 'black';
 
+			this.head = head;
 			this.group.addChild(head);
 			this.group.position = centerLine.add([xPos, yPos]);
 
@@ -115,7 +126,9 @@ function (PaperBaseView, NoteModel) {
 		 * @centerLine - {Point} B line on treble clef, left-most point in the measure.
 		 */
 		drawStem: function (centerLine, octaveHeight, stemDirection) {
-			var head = this.group.lastChild; // FIXME: this works because draw head is called right before in MeasureView
+			this.activateLayer(this.constants.layers.NOTE);
+
+			var head = this.head;
 			if (stemDirection === "up") {
 				// draw stem up
 				var rightPoint = this.noteHandles.segments[2].point;
@@ -148,6 +161,8 @@ function (PaperBaseView, NoteModel) {
 		},
 
 		drawFlag: function (stemDirection) {
+			this.activateLayer(this.constants.layers.NOTE);
+
 			var type = this.model.get("type");
 
 			if (type === 1/8) {
@@ -168,6 +183,8 @@ function (PaperBaseView, NoteModel) {
 
 		// FIXME: should be able to draw more than one accidental
 		drawAccidental: function () {
+			this.activateLayer(this.constants.layers.NOTE);
+
 			var accidental = this.model.get("pitch").accidental;
 			if (accidental === "#") {
 				this.drawSharp();
@@ -197,6 +214,9 @@ function (PaperBaseView, NoteModel) {
 		 * @lineSpaceing {Integer} distance between lines in a measure.
 		 */
 		drawLegerLines: function (centerLine, lineSpacing) {
+			// should this be drawn on the note or line layer?
+			this.activateLayer(this.constants.layers.NOTE);
+
 			// get the distance from the center line.
 			var distance = this.noteHandles.segments[2].point.y - centerLine.y;
 			var legerLines = [];

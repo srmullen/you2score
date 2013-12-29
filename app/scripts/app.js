@@ -1,6 +1,7 @@
 /*global define */
 define(["base/HandlebarsBaseView", 
         "base/Context",
+        "base/BaseModel",
 
         "score/ScoreView",
         "score/ScoreModel",
@@ -8,12 +9,15 @@ define(["base/HandlebarsBaseView",
         "handlebarViews/PalateView",
         "text!../examples/cmajScale.json",
         "text!../examples/eigthsAndQuarters.json",
+        "text!../examples/render/eigthsAndQuarters.json",
+        "text!../examples/eigthPatterns.json",
 
         "helpers/svgLoader",
 
         "./experiments/expandableMeasure"], 
 function (HandlebarsBaseView, 
           Context, 
+          BaseModel,
 
           ScoreView, 
           ScoreModel, 
@@ -21,6 +25,8 @@ function (HandlebarsBaseView,
           PalateView,
           cmaj,
           eigthsAndQuarters,
+          eigthsAndQuartersRndr,
+          eigthPatterns,
 
           svgLoader,
 
@@ -29,6 +35,7 @@ function (HandlebarsBaseView,
   	var App = HandlebarsBaseView.extend({
 
   		construct: function () {
+          var eigthJson;
   				console.log("app construct");
   				
           // load the svgs
@@ -36,9 +43,15 @@ function (HandlebarsBaseView,
 
           var context = new Context(document.getElementById("score"));
 
+          // Music Models
           // var cMaJson = JSON.parse(cmaj);
-          var eigthJson = JSON.parse(eigthsAndQuarters);
+          // eigthJson = JSON.parse(eigthsAndQuarters);
+          eigthJson = JSON.parse(eigthPatterns);
           var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
+
+          // Render Models // FIXME: note currently used
+          var eigthRenderJson = JSON.parse(eigthsAndQuartersRndr);
+          var renderModel = new BaseModel(eigthRenderJson);
 
           // Initialize a blank score.
           var position = new paper.Point(50, 150);
@@ -47,7 +60,7 @@ function (HandlebarsBaseView,
 
           // expandableMeasure(context);
 
-          
+
   		}
   	});
   	return App;

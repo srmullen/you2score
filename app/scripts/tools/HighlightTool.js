@@ -1,7 +1,6 @@
 define(["base/PaperBaseView"], function (PaperBaseView) {
 
 	var HighlightTool = PaperBaseView.extend({
-	// var HighlightTool = _.extend(paper.Tool, {
 
 		name: "HighlightTool",
 
@@ -9,7 +8,9 @@ define(["base/PaperBaseView"], function (PaperBaseView) {
 			_.each(this.options.views, this.addView, this);
 
 			HighlightTool.tool.onMouseMove = $.proxy(function (event) {
+
 				var toHighlight = this.getViewToHighlight(event.item);
+				// console.log(event.item);
 				if (toHighlight) {
 					this.highlight(toHighlight);
 				};

@@ -33,6 +33,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 			this.beatGroups = this.initBeatGroups(notes, this.meter);
 
+			this.activateLayer("measure");
 			this.group = new paper.Group();
 		},
 
@@ -40,7 +41,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 		// this would be a good place to add 'voices'
 		initNoteCollectionView: function (notes) {
 			var noteCollection = new NoteCollectionView({
-				el: this.el, 
+				el: this.el,
+				context: this.options.context,
 				collection: notes, 
 				clefBase: this.clefBase,
 				lineSpacing: this.lineSpacing,
@@ -56,6 +58,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			// A measure should always have the number of beatgroups specified by it meter
 			for (var i = 0, l = meter.upper; i < l; i++) {
 				beatGroups.push(new BeatGroupView({
+					el: this.el,
+					context: this.options.context,
 					clefBase: this.clefBase,
 					lineSpacing: this.lineSpacing,
 					barLength: this.barLength, // barLenth is undefined at this point
@@ -67,7 +71,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			// reverse it so it can work with the end instead of the beginning.
 			var notesStack = new NoteCollection(notes.toArray().reverse());
 			var note;
-			_.each(beatGroups, function (beatGroup) {
+			_.each(beatGroups, function (beatGroup, i, list) {
 
 				while (!beatGroup.isFull() && notesStack.length) { // keep adding notes until the beatGroup is full
 
@@ -78,8 +82,8 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 					} else { // the note cant simply be added and needs to be broken up
 						var noteDurationOverflow = note.get("duration") - beatGroup.duration;
 
-						// make a new note that wont be rendered
-						var spacerNote = new NoteModel({duration: noteDurationOverflow}); // might need to set a flag on this to not render it
+						// Might want to make spaceNote its own class
+						var spacerNote = new NoteModel({type: noteDurationOverflow, spacerNote: true}); 
 
 						// push the spacerNote on the note stack to be dealt with next
 						notesStack.push(spacerNote);
@@ -149,6 +153,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 		},
 
 		drawGroupBounds: function (position) {
+			this.options.context.activateLayer("measure");
 			var rectangle = new paper.Rectangle(position, position.add(this.barLength, this.lineSpacing * 4));
 			rectangle = new paper.Path.Rectangle(rectangle);
 			rectangle.fillColor = "white"; // create a fill so the center can be clicked 
@@ -178,15 +183,15 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 		 *	Not Currently used, but may still be useful.
 		 *	@return group of notes
 		 */
-		drawNotes: function (centerLine, childViews) {
-			_.each(childViews, function (view) {
-				// These types of properties that are needed before rendering could be in their own rendering models
-				view.barLength = this.barLength;
-				view.measurePadding = this.barLength / 8;
+		// drawNotes: function (centerLine, childViews) {
+		// 	_.each(childViews, function (view) {
+		// 		// These types of properties that are needed before rendering could be in their own rendering models
+		// 		view.barLength = this.barLength;
+		// 		view.measurePadding = this.barLength / 8;
 
-				view.render(centerLine);
-			}, this);
-		},
+		// 		view.render(centerLine);
+		// 	}, this);
+		// },
 
 		drawClef: function (centerLine) {
 			var svgItem

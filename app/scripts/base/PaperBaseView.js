@@ -2,7 +2,7 @@
  * Module to handle rendering to a canvas.
  * The 'el' must be a canvas element.
  */
-define(["backbone", "config", "paper"], function (Backbone, config) {
+define(["backbone", "config", "base/constants", "base/Layer", "paper"], function (Backbone, config, constants, Layer) {
 
 	// PaperBaseView should install event handlers on 
 	var PaperBaseView = Backbone.View.extend({
@@ -24,6 +24,16 @@ define(["backbone", "config", "paper"], function (Backbone, config) {
 		// },
 
 		config: config,
+
+		constants: constants,
+
+		// activateLayer: new Layer().activateLayer,
+		activateLayer: function (name) {
+			if (this.options.context) {
+				this.options.context.activateLayer(name);
+				// paper.project.activeLayer = name;
+			}
+		},
 
 		// The render method will likely need to be 
 		// re-implemented for each type of element drawn.

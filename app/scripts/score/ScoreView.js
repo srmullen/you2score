@@ -20,12 +20,15 @@ function (PaperBaseView, StavesView, SheetView) {
 			// Create all the connections between the sheet views and music views
 			this.staves.partitionLines(this.mergeLines(this.pages));
 
+			this.activateLayer(this.constants.layers.SCORE);
 			this.group = new paper.Group();
 		},
 
 		initStaves: function (staves, pages) {
+
 			var stavesView = new StavesView({
-				el: this.el, 
+				el: this.el,
+				context: this.options.context,
 				collection: staves
 				// lines: this.mergeLines(pages)
 			});
@@ -37,13 +40,15 @@ function (PaperBaseView, StavesView, SheetView) {
 			var pages = [];
 
 			for (var i = 0; i < num; i++) {
-				pages.push(new SheetView({el: this.el}));
+				pages.push(new SheetView({el: this.el, context: this.options.context}));
 			};
 
 			return pages;
 		},
 
 		render: function () {
+			this.activateLayer(this.constants.layers.SCORE);
+
 			this.drawTitle(this.model.get("title"));
 			this.drawTempoMarking(this.model.get("tempo"));
 			this.drawComposer(this.model.get("composer"));
