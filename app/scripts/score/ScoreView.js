@@ -61,6 +61,7 @@ function (PaperBaseView, StavesView, SheetView) {
 		drawTitle: function (title) {
 			var title = new paper.PointText({
 				content: title,
+				fontFamily: "Emmentaler-11",
 				point: new paper.Point([paper.view.center.x, 50]),
 				justification: 'center',
 				fontSize: 40,

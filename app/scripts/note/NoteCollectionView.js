@@ -61,9 +61,15 @@ function (PaperBaseView, NoteView) {
 			// draw the head of each note (removed from the drawNote method)
 			// I dont think the note head changes regarless of any other characteristics of the note.
 			// It can be drawn separate from any groups it belongs to.
+			// Dots, accidentals, and ledger lines can probably be drawn here as well.
 			_.each(notesToDraw, function (noteView) {
 				this.calculateAndSetXandYPos(noteView);
 				noteView.drawHead(centerLine, noteView.xPos, noteView.yPos);
+				noteView.drawLegerLines(centerLine, this.lineSpacing);
+				noteView.drawDots();
+				noteView.drawStacatoLegato();
+				noteView.drawAccidental();
+				noteView.drawGroupBounds(centerLine, stemDirection);
 			}, this);
 
 			// set the stemDirection on the barredNotes
@@ -182,11 +188,11 @@ function (PaperBaseView, NoteView) {
 				}
 			}
 
-			note.drawLegerLines(centerLine, lineSpacing);
+			// note.drawLegerLines(centerLine, lineSpacing);
 
-			note.drawAccidental();
+			// note.drawAccidental();
 
-			note.drawGroupBounds(centerLine, stemDirection);
+			// note.drawGroupBounds(centerLine, stemDirection);
 
 			return this;
 		},

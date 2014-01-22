@@ -80,7 +80,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 					if (beatGroup.canAdd(note)) { // if the note  fits in the beatGroup just add it
 						beatGroup.addNote(note);
 					} else { // the note cant simply be added and needs to be broken up
-						var noteDurationOverflow = note.get("duration") - beatGroup.duration;
+						var noteDurationOverflow = note.get("duration") - (beatGroup.maxDuration - beatGroup.duration);
 
 						// Might want to make spaceNote its own class
 						var spacerNote = new NoteModel({type: noteDurationOverflow, spacerNote: true}); 
@@ -102,7 +102,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 		},
 
 		render: function (position) {
-			// var clef = this.model.get("clef");
+			var clef = this.model.get("clef");
 			var centerLine = position.add(0, this.lineSpacing * 2);
 
 			this.drawBars(position, this.barLength);
@@ -111,7 +111,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			
 			// this.drawMeasure(lines); // can probably be removed.
 
-			// this.drawClef(centerLine, clef);
+			this.drawClef(centerLine, clef);
 
 			this.drawKeySignature();
 
@@ -178,27 +178,19 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			this.model.addNote(note);
 		},
 
-		/**
-		 *	Iterates over the NoteCollection and draws the notes.
-		 *	Not Currently used, but may still be useful.
-		 *	@return group of notes
-		 */
-		// drawNotes: function (centerLine, childViews) {
-		// 	_.each(childViews, function (view) {
-		// 		// These types of properties that are needed before rendering could be in their own rendering models
-		// 		view.barLength = this.barLength;
-		// 		view.measurePadding = this.barLength / 8;
-
-		// 		view.render(centerLine);
-		// 	}, this);
-		// },
-
 		drawClef: function (centerLine) {
 			var svgItem
 			switch (this.model.get("clef")) {
 				case "treble":
 					svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
 					svgItem.scale(0.05); //FIXME: shouldn't have to scale svg's individually
+
+					// svgItem = new paper.PointText({
+					// 	content: "9",
+					// 	fontFamily: 'gonville',
+					// 	fontSize: 15,
+					// 	fillColor: 'black'
+					// });
 					break;
 				case "bass":
 					svgItem = paper.project.importSVG(document.getElementById('bassSVG'));

@@ -1,0 +1,14 @@
+/*@font-face {
+  font-family: 'aybabtu';
+  src: url('aybabtu.svg');
+}*/
+
+@font-face {
+	font-family: 'gonville';
+	src: url('fonts/gonville.svg') format('svg');
+}
+
+p {
+	font-family: 'gonville';
+	font-size: 2em;
+}

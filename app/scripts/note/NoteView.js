@@ -160,30 +160,85 @@ function (PaperBaseView, NoteModel) {
 			return this;
 		},
 
+		// drawFlag: function (stemDirection) {
+
+		// 	var type = this.model.get("type");
+
+		// 	if (type === 1/8) {
+		// 		var flagPoint; // point on flag not connected to the stem.
+		// 		if (stemDirection === "up") {
+		// 			flagPoint = this.stem.segments[1].point.add(10, 20);
+		// 		} else {
+		// 			flagPoint = this.stem.segments[1].point.add(10, -20);
+		// 		}
+		// 		var flag = new paper.Path(this.stem.segments[1].point, flagPoint);
+		// 		flag.strokeColor = 'black';
+		// 		flag.strokeWidth = 2;
+		// 		this.group.addChild(flag);
+		// 	}
+
+		// 	return this;
+		// },
+
 		drawFlag: function (stemDirection) {
-			this.activateLayer(this.constants.layers.NOTE);
 
 			var type = this.model.get("type");
 
 			if (type === 1/8) {
-				var flagPoint; // point on flag not connected to the stem.
+				var flagSvg = paper.project.importSVG(document.getElementById('eigthFlagSVG')), flagPoint;
+					flagSvg.scale(0.5);
+
 				if (stemDirection === "up") {
-					flagPoint = this.group.lastChild.segments[1].point.add(10, 20);
+					// flagPoint = this.stem.segments[1].point.add(10, 20);
+					flagPoint = this.stem.segments[1].point.add(-2, 25);
 				} else {
-					flagPoint = this.group.lastChild.segments[1].point.add(10, -20);
+					flagPoint = this.stem.segments[1].point.add(10, -20);
 				}
-				var flag = new paper.Path(this.group.lastChild.segments[1].point, flagPoint);
-				flag.strokeColor = 'black';
-				flag.strokeWidth = 2;
-				this.group.addChild(flag);
+				flagSvg.position = flagPoint;
+				
+				this.group.addChild(flagSvg);
 			}
 
 			return this;
 		},
 
+		/*
+		 * Draw the duration dots on the note
+		 */
+		drawDots: function () {
+			var dots = this.model.get("dotted");
+
+			if (dots) {
+				var distance = this.headSize[0] / 2, // how far away to draw the dot from the head
+					point = this.head.segments[2].point,
+					dot;
+
+				for (var i = 0; i < dots; i++) {
+					point = point.add(distance, 0);
+					dot = new paper.Path.Circle(point, 2);
+					dot.fillColor = 'black';
+					this.group.addChild(dot); // TODO: might need a way to refer to the dots later
+				}
+			}
+		},
+
+		/*
+		 * Draw the stacato and legato marks
+		 */
+		drawStacatoLegato: function () {
+			var stacato, legato;
+
+			if (this.model.get("legato")) {
+				legato = new paper.Path.Line();
+			}
+
+			if (this.model.get("stacato")) {
+				stacato = new paper.Path.Circle();
+			}
+		},
+
 		// FIXME: should be able to draw more than one accidental
 		drawAccidental: function () {
-			this.activateLayer(this.constants.layers.NOTE);
 
 			var accidental = this.model.get("pitch").accidental;
 			if (accidental === "#") {

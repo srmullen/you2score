@@ -42,12 +42,17 @@ function (HandlebarsBaseView,
           svgLoader();
 
           var context = new Context(document.getElementById("score"));
-
-          // Music Models
+          
           // var cMaJson = JSON.parse(cmaj);
+          // var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
+
+
           // eigthJson = JSON.parse(eigthsAndQuarters);
+          // var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
+
           eigthJson = JSON.parse(eigthPatterns);
           var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
+
 
           // Render Models // FIXME: note currently used
           var eigthRenderJson = JSON.parse(eigthsAndQuartersRndr);
