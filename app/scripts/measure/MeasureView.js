@@ -111,7 +111,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			
 			// this.drawMeasure(lines); // can probably be removed.
 
-			this.drawClef(centerLine, clef);
+			// this.drawClef(centerLine, clef);
 
 			this.drawKeySignature();
 
@@ -182,25 +182,34 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			var svgItem
 			switch (this.model.get("clef")) {
 				case "treble":
-					svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
-					svgItem.scale(0.05); //FIXME: shouldn't have to scale svg's individually
+					// svgItem = paper.project.importSVG(document.getElementById('trebleSVG'));
+					// svgItem.scale(0.23); //FIXME: shouldn't have to scale svg's individually
 
-					// svgItem = new paper.PointText({
-					// 	content: "9",
-					// 	fontFamily: 'gonville',
-					// 	fontSize: 15,
-					// 	fillColor: 'black'
-					// });
+					svgItem = new paper.PointText({
+						content: '9',
+						fontFamily: 'gonville',
+						fontSize: 32,
+						fillColor: 'black'
+					});
+					svgItem.position = centerLine;
 					break;
 				case "bass":
-					svgItem = paper.project.importSVG(document.getElementById('bassSVG'));
-					svgItem.scale(0.1);
+					// svgItem = paper.project.importSVG(document.getElementById('bassSVG'));
+					// svgItem.scale(0.1);
+
+					svgItem = new paper.PointText({
+						content: '8',
+						fontFamily: 'gonville',
+						fontSize: 32,
+						fillColor: 'black'
+					});
+					svgItem.position = centerLine.subtract([0, 10]); // FIXME: hard coded values
 					break;
 			}
 
 			// the position should probably be a percentage of the barLength
 			// svgItem.position = this.lines[2].firstSegment.point.add([120, 0]);
-			svgItem.position = centerLine;
+			// svgItem.position = centerLine;
 			this.group.addChild(svgItem);
 
 			// Flag indicating that a clef has been drawn on this measure

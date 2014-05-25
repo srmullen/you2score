@@ -50,6 +50,8 @@ define(["backbone", "config", "base/constants", "base/Layer", "paper"], function
 
 		// Needs implementation upon further study of paper.js
 		nuke: function () {}
+	}, {
+		constants: constants
 	});
 	return PaperBaseView;
 });

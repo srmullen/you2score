@@ -63,13 +63,11 @@ function (PaperBaseView, NoteView) {
 			// It can be drawn separate from any groups it belongs to.
 			// Dots, accidentals, and ledger lines can probably be drawn here as well.
 			_.each(notesToDraw, function (noteView) {
+	
 				this.calculateAndSetXandYPos(noteView);
-				noteView.drawHead(centerLine, noteView.xPos, noteView.yPos);
-				noteView.drawLegerLines(centerLine, this.lineSpacing);
-				noteView.drawDots();
-				noteView.drawStacatoLegato();
-				noteView.drawAccidental();
-				noteView.drawGroupBounds(centerLine, stemDirection);
+	
+				noteView.render(centerLine, this.lineSpacing);
+	
 			}, this);
 
 			// set the stemDirection on the barredNotes
@@ -197,6 +195,9 @@ function (PaperBaseView, NoteView) {
 			return this;
 		},
 
+		/*
+		 * Returns the y position of the center of the note head
+		 */
 		calculateNoteYpos: function (note, step) {
 			var octave = note.get('pitch').octave;
 			var degree = note.get('pitch').degree;
@@ -206,6 +207,9 @@ function (PaperBaseView, NoteView) {
 			return diffY * step;
 		},
 
+		/*
+		 * Returns the x position of the center of the note head
+		 */
 		calculateNoteXpos: function (note) {
 			// Get the position of the note in the NoteCollection
 			var noteIndex = this.collection.indexOf(note),

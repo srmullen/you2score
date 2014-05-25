@@ -1,6 +1,8 @@
 define(["base/PaperBaseView", 
-		"./NoteModel"], 
-function (PaperBaseView, NoteModel) {
+		"./NoteModel",
+		"engraver/NoteEngraver",
+		"engraver/MeasureEngraver"], 
+function (PaperBaseView, NoteModel, NoteEngraver, MeasureEngraver) {
 
 	// May want to make NoteView only responsible for drawing the Note Head (and accidentals).
 	// Stems and flags are dependent on the notes they are grouped with as well, so that should
@@ -33,41 +35,25 @@ function (PaperBaseView, NoteModel) {
 
 		},
 
-		/*
-		 * Should have the option to render on a measure or just at any given position.
-		 * Here's another point where the RenderModel could come in handy.
-		 *
-		 * This method is for a note to render itself. It can also be rendered by NoteCollectionView.
-		 */
 		render: function (centerLine, lineSpacing) {
-			this.activateLayer(this.constants.layers.NOTE);
-			var octaveHeight = lineSpacing ? lineSpacing * 3.5 : this.config.lineSpacing * 3.5,
-				stemDirection;
+			// xPos and yPos are the center of the font item, not the noteHead. NoteEngraver will take care of handling the offset for now.
+			var position = centerLine.add([this.xPos, this.yPos]);
 
-			this.drawHead(centerLine, this.xPos, this.yPos);
+			var noteHead = this.noteHead = NoteEngraver.drawHead(this.model.get("type"), position);
 
-			// if stemDirection isn't a default property on the model, then get it.
-			// stemDirection could be defaulted as part of the renderModel (if and when it ever exists)
-			if (this.model.get("type") < 1) {
-				if (!this.stemDirection) {
-					stemDirection = this.getStemDirection(centerLine);
-				} else {
-					stemDirection = this.stemDirection	
-				};
-			};
+			this.group.addChild(noteHead);
 
-			if (stemDirection) {
-				this.drawStem(centerLine, octaveHeight, stemDirection);
-				this.drawFlag(stemDirection);
-			};
+			this.group.addChildren(MeasureEngraver.drawLegerLines(noteHead, centerLine, lineSpacing));
+			
+			this.group.addChildren(NoteEngraver.drawDots(noteHead, this.model.get("dotted")));
+			
+			this.group.addChildren(NoteEngraver.drawStacatoLegato(noteHead, this.model));
+			
+			this.group.addChildren(NoteEngraver.drawAccidental(noteHead, this.model.get("pitch").accidental));
+			
+			// this.drawGroupBounds(centerLine, stemDirection);
 
-			this.drawLegerLines(centerLine, lineSpacing);
-
-			this.drawAccidental();
-
-			this.drawGroupBounds(centerLine, stemDirection);
-
-			return this;
+			return noteHead;
 		},
 
 		drawGroupBounds: function (centerLine, stemDirection) {
@@ -93,34 +79,33 @@ function (PaperBaseView, NoteModel) {
 			this.group.insertChild(0, rectangle);
 		},
 
-		drawHead: function (centerLine, xPos, yPos) {
-			this.activateLayer(this.constants.layers.NOTE);
+		// TextItem version
+		// drawHead: function (centerLine, xPos, yPos) {
+		// 	this.activateLayer(this.constants.layers.NOTE);
 
-			var type = this.model.get("type");
+		// 	var type = this.model.get("type"), head, noteheadSymbol;
 
-			var outerRect = new paper.Rectangle({
-				size: this.headSize
-			});
-			var head = new paper.Path.Ellipse(outerRect);
-			this.noteHandles = head;
+		// 	if (type >= 1) {
+		// 		noteheadSymbol = PaperBaseView.constants.font.noteheads.whole;
+		// 	} else if (type >= 1/2) {
+		// 		noteheadSymbol = PaperBaseView.constants.font.noteheads.hollow;
+		// 	} else {
+		// 		noteheadSymbol = PaperBaseView.constants.font.noteheads.solid;
+		// 	}
 
-			// draw the hole in the note head
-			if (type >= 1/2) {
-				var innerRect = new paper.Rectangle({
-					point: outerRect.point.add(2.5, 2),
-					size: [8, 6] // FIXME: Arbitrary numbers. Should be based on outerRect size.
-				});
-				var hole = new paper.Path.Ellipse(innerRect);
-				head = new paper.CompoundPath([head, hole]);
-			}
-			head.fillColor = 'black';
+		// 	head = new paper.PointText({
+		// 		content: noteheadSymbol,
+		// 		fontFamily: 'gonville',
+		// 		fontSize: 32,
+		// 		fillColor: 'black'
+		// 	});
 
-			this.head = head;
-			this.group.addChild(head);
-			this.group.position = centerLine.add([xPos, yPos]);
-
-			return this;
-		},
+		// 	this.head = head;
+		// 	this.noteHandles = head;
+		// 	this.group.addChild(head);
+		// 	this.group.position = centerLine.add([xPos, yPos]);
+		// 	head.selected = true;
+		// },
 
 		/*
 		 * @centerLine - {Point} B line on treble clef, left-most point in the measure.
@@ -128,29 +113,34 @@ function (PaperBaseView, NoteModel) {
 		drawStem: function (centerLine, octaveHeight, stemDirection) {
 			this.activateLayer(this.constants.layers.NOTE);
 
-			var head = this.head;
+			var head = this.noteHead;
 			if (stemDirection === "up") {
 				// draw stem up
-				var rightPoint = this.noteHandles.segments[2].point;
+				var rightPoint = this.noteHead.bounds.rightCenter;
 				if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) { // needs to be extracted. drawFlag also need to
 																			// know stem direction
 					var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
 				} else {
 					// draw stem to center line
-					var stem = new paper.Path.Line(this.noteHandles.segments[2].point, new paper.Point(this.noteHandles.segments[2].point.x, centerLine.y));
+					var stem = new paper.Path.Line(this.noteHead.bounds.rightCenter, new paper.Point(this.noteHead.bounds.rightCenter.x, centerLine.y));
 				}
 				
 			} else {
 				// draw stem down
-				var leftPoint = this.noteHandles.segments[0].point;
+				// var leftPoint = this.noteHandles.segments[0].point;
+				var leftPoint = this.noteHead.bounds.leftCenter;
 				if (Math.abs(leftPoint.y - centerLine.y) < octaveHeight) {
 					// draw octave length stem
 					var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, octaveHeight])); // draw octave length stem
 				} else {
 					// draw stem to center line
-					var stem = new paper.Path.Line(leftPoint, new paper.Point(this.noteHandles.segments[0].point.x, centerLine.y));
-				}
+					var stem = new paper.Path.Line(leftPoint, new paper.Point(this.noteHead.bounds.leftCenter.x, centerLine.y));
+				}				
 			}
+
+			// var circ = new paper.Shape.Circle(leftPoint || rightPoint, 5);
+			// circ.strokeColor = 'red';
+			// this.group.addChild(circ);
 
 			stem.strokeColor = 'black';
 			stem.strokeWidth = 2;
@@ -202,117 +192,10 @@ function (PaperBaseView, NoteModel) {
 			return this;
 		},
 
-		/*
-		 * Draw the duration dots on the note
-		 */
-		drawDots: function () {
-			var dots = this.model.get("dotted");
-
-			if (dots) {
-				var distance = this.headSize[0] / 2, // how far away to draw the dot from the head
-					point = this.head.segments[2].point,
-					dot;
-
-				for (var i = 0; i < dots; i++) {
-					point = point.add(distance, 0);
-					dot = new paper.Path.Circle(point, 2);
-					dot.fillColor = 'black';
-					this.group.addChild(dot); // TODO: might need a way to refer to the dots later
-				}
-			}
-		},
-
-		/*
-		 * Draw the stacato and legato marks
-		 */
-		drawStacatoLegato: function () {
-			var stacato, legato;
-
-			if (this.model.get("legato")) {
-				legato = new paper.Path.Line();
-			}
-
-			if (this.model.get("stacato")) {
-				stacato = new paper.Path.Circle();
-			}
-		},
-
-		// FIXME: should be able to draw more than one accidental
-		drawAccidental: function () {
-
-			var accidental = this.model.get("pitch").accidental;
-			if (accidental === "#") {
-				this.drawSharp();
-			} else if (accidental === "b") {
-				this.drawFlat();
-			}
-
-			return this;
-		},
-
-		drawSharp: function () {
-			var sharpSvg = paper.project.importSVG(document.getElementById('sharpSvg'));
-			sharpSvg.scale(0.07);
-			sharpSvg.position = this.noteHandles.segments[2].point.add(10, 0);
-			this.group.addChild(sharpSvg);
-		},
-
-		drawFlat: function () {
-			var flatSvg = paper.project.importSVG(document.getElementById('flatSvg'));
-			flatSvg.scale(0.05);
-			flatSvg.position = this.noteHandles.segments[2].point.add(10, -5);
-			this.group.addChild(flatSvg);
-		},
-
-		/*
-		 * @centerLine {Point} the leftmost point of the center line in the measure.
-		 * @lineSpaceing {Integer} distance between lines in a measure.
-		 */
-		drawLegerLines: function (centerLine, lineSpacing) {
-			// should this be drawn on the note or line layer?
-			this.activateLayer(this.constants.layers.NOTE);
-
-			// get the distance from the center line.
-			var distance = this.noteHandles.segments[2].point.y - centerLine.y;
-			var legerLines = [];
-			var yPositionFunc = this.getYpositionFunc(distance, centerLine.y, lineSpacing);
-
-			if (Math.abs(distance) >= lineSpacing * 3) {
-				for (var i = 0; i <= (Math.abs(distance) - (lineSpacing * 3)) / lineSpacing; i++) {
-					var yPos = yPositionFunc(i);
-					var point1 = new paper.Point(this.noteHandles.segments[0].point.x - 10, yPos);
-					var point2 = new paper.Point(this.noteHandles.segments[2].point.x + 10, yPos);
-					legerLines.push(new paper.Path.Line(point1, point2));
-				}
-			}
-
-			if (legerLines.length) {
-				this.group.addChildren(legerLines);
-				this.group.strokeColor = 'black';
-			}
-			return this
-		},
-
 		// this method makes the assumption that a note is always being drawn on a line.
 		getStemDirection: function (centerLine) {
 			// return this.noteHandles.segments[2].point.y <= centerLine.y ? "down" : "up";
 			return this.stemDirection || (this.yPos <= 0 ? "down" : "up"); // if stemDirection is already set on the view just return it
-		},
-
-		/*
-		 * Given a number, returns a function that returns the y position of a leger line
-		 * given which leger, the center y position, and the line spacing.
-		 */
-		getYpositionFunc: function (num, centerY, lineSpacing) {
-			if (num >= 0) {
-				return function (i) {
-					return centerY + (lineSpacing * (3 + i))
-				}
-			} else {
-				return function (i) {
-					return centerY - (lineSpacing * (3 + i))
-				}
-			}
 		},
 
 		// FIXME: This method is unused. I don't remember what it was for.

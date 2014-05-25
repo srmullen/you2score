@@ -1,11 +1,11 @@
 /*@font-face {
-  font-family: 'aybabtu';
-  src: url('aybabtu.svg');
+	font-family: 'gonville';
+	src: url('fonts/Gonville-Part1.ttf') format('truetype');
 }*/
 
 @font-face {
 	font-family: 'gonville';
-	src: url('fonts/gonville.svg') format('svg');
+	src: url('fonts/gonvillepart1.ttf') format('truetype');
 }
 
 p {

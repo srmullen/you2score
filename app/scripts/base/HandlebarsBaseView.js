@@ -1,4 +1,4 @@
-define(["backbone", "handlebars"], function (Backbone, Handlebars) {
+define(["backbone", "handlebars", "base/constants"], function (Backbone, Handlebars, constants) {
 
 	var HandlebarsBaseView = Backbone.View.extend({
 
@@ -103,6 +103,8 @@ define(["backbone", "handlebars"], function (Backbone, Handlebars) {
 			this.undelegateEvents();
 			this.remove();
 		}
+	}, {
+		constants: constants
 	});
 	return HandlebarsBaseView;
 });

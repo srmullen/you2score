@@ -1,9 +1,8 @@
-define(["text!svg/treble.svg",
-	"text!svg/sharp.svg",
-	"text!svg/flat.svg",
-	"text!svg/bass.svg",
-	"text!svg/8th_flag.svg"
-	// "text!svg/gonville/svg/emmentaler-11.svg"
+define(["text!svg/gonvilleSVG/treble_clef.svg",
+		"text!svg/sharp.svg",
+		"text!svg/flat.svg",
+		"text!svg/bass.svg",
+		"text!svg/8th_flag.svg"
 	],
 function (treble, sharp, flat, bass, eigthFlag, gonville) {
 
@@ -13,7 +12,6 @@ function (treble, sharp, flat, bass, eigthFlag, gonville) {
 		$("#svgContainer").append(flat);
 		$("#svgContainer").append(bass);
 		$("#svgContainer").append(eigthFlag);
-		// $("#svgContainer").append(gonville);
 	}
 
 	return svgLoader;

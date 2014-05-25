@@ -35,6 +35,7 @@ function (HandlebarsBaseView,
   	var App = HandlebarsBaseView.extend({
 
   		construct: function () {
+          // $("#fontTest").html(HandlebarsBaseView.constants.font.noteheads.whole);
           var eigthJson;
   				console.log("app construct");
   				
@@ -43,15 +44,15 @@ function (HandlebarsBaseView,
 
           var context = new Context(document.getElementById("score"));
           
-          // var cMaJson = JSON.parse(cmaj);
-          // var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
+          var cMaJson = JSON.parse(cmaj);
+          var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
 
 
           // eigthJson = JSON.parse(eigthsAndQuarters);
           // var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
 
-          eigthJson = JSON.parse(eigthPatterns);
-          var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
+          // eigthJson = JSON.parse(eigthPatterns);
+          // var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
 
 
           // Render Models // FIXME: note currently used

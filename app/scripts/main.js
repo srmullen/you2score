@@ -9,7 +9,7 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         handlebars: '../bower_components/handlebars/handlebars',
         text: 'vendor/text',
-        paper: '../bower_components/paper/dist/paper',
+        paper: '../bower_components/paper/dist/paper-full.min',
 
         // Application Specific
         base: 'base',
@@ -24,7 +24,8 @@ require.config({
         measure: 'measure',
         beat: 'beat',
         note: 'note',
-        tools: 'tools'
+        tools: 'tools',
+        engraver: 'engraver'
 
     },
     shim: {
@@ -60,24 +61,6 @@ require.config({
 require(["app", 'jquery', 'handlebars', 'foundation', 'topbar', 'sticky'], function (App, $, Handlebars) {
     'use strict';
 
-    // Handlebars helper to iterate over the models in a collection and 
-    // use its attributes as the template context
-    // FIXME: Should be in a handlebars helper file.
-    // Handlebars.registerHelper("eachModel", function (context, options) {
-    //     var ret = "", data;
-
-    //     for (var i = 0, l = context.models.length; i < l; i++) {
-    //         if (options.data) {
-    //             data = Handlebars.createFrame(options.data || {});
-    //             data.index = i; // inject private index variable
-    //         }
-
-    //         ret += options.fn(context.models[i].toJSON(), {data: data});
-            
-    //     }
-
-    //     return ret;
-    // });
-
     var app = new App();
+
 });
