@@ -35,7 +35,6 @@ function (HandlebarsBaseView,
   	var App = HandlebarsBaseView.extend({
 
   		construct: function () {
-          // $("#fontTest").html(HandlebarsBaseView.constants.font.noteheads.whole);
           var eigthJson;
   				console.log("app construct");
   				

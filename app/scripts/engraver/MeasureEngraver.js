@@ -11,12 +11,14 @@ define(["base/Engraver"], function (Engraver) {
 		drawLegerLines: function (noteHead, centerLine, lineSpacing) {
 
 			// get the distance from the center line.
-			var distance = noteHead.bounds.center.y - centerLine.y;
-			var legerLines = [];
-			var yPositionFunc = MeasureEngraver.getYpositionFunc(distance, centerLine.y, lineSpacing);
+			// var distance = noteHead.bounds.center.y - centerLine.y,
+			var distance = Engraver.getNoteHeadCenter(noteHead.bounds.center).y - centerLine.y,
+				legerLines = [];
+			var yPositionFunc = getYpositionFunc(distance, centerLine.y, lineSpacing);
 
 			if (Math.abs(distance) >= lineSpacing * 3) {
-				for (var i = 0; i <= (Math.abs(distance) - (lineSpacing * 3)) / lineSpacing; i++) {
+				// Added Math.ceil to help with issues doing floating point math. Not sure if it's the perfect solution.
+				for (var i = 0; i <= Math.ceil(Math.abs(distance) - (lineSpacing * 3)) / lineSpacing; i++) {
 					var yPos = yPositionFunc(i);
 					var point1 = new paper.Point(noteHead.bounds.leftCenter.x - 10, yPos);
 					var point2 = new paper.Point(noteHead.bounds.rightCenter.x + 10, yPos);
@@ -29,23 +31,23 @@ define(["base/Engraver"], function (Engraver) {
 				strokeColor: "black"
 			});
 		},
-
-		/*
-		 * Given a number, returns a function that returns the y position of a leger line
-		 * given which leger, the center y position, and the line spacing.
-		 */
-		getYpositionFunc: function (num, centerY, lineSpacing) {
-			if (num >= 0) {
-				return function (i) {
-					return centerY + (lineSpacing * (3 + i))
-				}
-			} else {
-				return function (i) {
-					return centerY - (lineSpacing * (3 + i))
-				}
-			}
-		},
 	});
+	
+	/*
+	 * Given a number, returns a function that returns the y position of a leger line
+	 * given which leger, the center y position, and the line spacing.
+	 */
+	function getYpositionFunc (num, centerY, lineSpacing) {
+		if (num >= 0) {
+			return function (i) {
+				return centerY + (lineSpacing * (3 + i))
+			}
+		} else {
+			return function (i) {
+				return centerY - (lineSpacing * (3 + i))
+			}
+		}
+	}
 
 	return MeasureEngraver;
 });

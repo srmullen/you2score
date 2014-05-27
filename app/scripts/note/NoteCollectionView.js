@@ -196,13 +196,13 @@ function (PaperBaseView, NoteView) {
 		},
 
 		/*
-		 * Returns the y position of the center of the note head
+		 * Returns the y position where the center of the note head should be drawn.
 		 */
 		calculateNoteYpos: function (note, step) {
 			var octave = note.get('pitch').octave;
 			var degree = note.get('pitch').degree;
-			// 4 is the offset of the center line.
-			// the clefBase offset it subtracted to normalize to the centerline.
+			// 4 is the offset (number of steps) of the center line.
+			// the clefBase offset it subtracted to normalize to the centerline, since the note is rendered from the centerLine.
 			var diffY = (this.clefBase.degree + (this.clefBase.octave * 7)) - (degree + (octave * 7)) - (4 - this.clefBase.offset);
 			return diffY * step;
 		},

@@ -4,11 +4,11 @@ define(["base/Engraver"], function (Engraver) {
 
 	var LineEngraver = _.extend({}, Engraver, {
 
-		drawLine: function (width, spacing) {
+		drawLine: function (width) {
 			var line,
 				lineArray = [];
 			for (var i = 0; i < 5; i++) {
-				line = new paper.Path.Line(new paper.Point(0, i * spacing), new paper.Point(width, i * spacing));
+				line = new paper.Path.Line(new paper.Point(0, i * Engraver.config.lineSpacing), new paper.Point(width, i * Engraver.config.lineSpacing));
 				lineArray.push(line);
 			}
 

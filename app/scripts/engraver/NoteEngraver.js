@@ -17,7 +17,7 @@ define(["base/Engraver"], function (Engraver) {
 				noteheadSymbol = Engraver.constants.font.noteheads.solid;
 			}
 
-			var offset = position.subtract(0, 10);
+			var offset = NoteEngraver.getNoteHeadOffset(position);
 
 			noteHead = new paper.PointText({
 				content: noteheadSymbol,
@@ -30,6 +30,13 @@ define(["base/Engraver"], function (Engraver) {
 			// noteHead.selected = true;
 
 			return noteHead;
+		},
+
+		/*
+		 * @return {Point} the position to draw the font so the center of the noteHead is at the given position.
+		 */
+		getNoteHeadOffset: function (position) {
+			return position.subtract(0, Engraver.config.note.head.yOffset);
 		},
 
 		/*

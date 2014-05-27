@@ -14,7 +14,7 @@ function (BaseModel) {
 
 		 defaults: {
 		 	width: 0.9,
-		 	spacing: 10,
+		 	spacing: 10, // FIXME: same as config.lineSpacing
 		 	measuresAllotted: 4
 		 }
 	});

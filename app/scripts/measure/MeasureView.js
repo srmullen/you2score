@@ -106,8 +106,6 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 			var centerLine = position.add(0, this.lineSpacing * 2);
 
 			this.drawBars(position, this.barLength);
-
-			this.clefBase = this.getClefBase(position, this.model.get("clef"));
 			
 			// this.drawMeasure(lines); // can probably be removed.
 
@@ -122,7 +120,6 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 			this.drawBeatGroups(this.beatGroups, centerLine);
 
-			// var notesGroup = this.notesReduce();
 			// this.group.addChild(notesGroup);
 
 			this.group.strokeColor = 'black';
@@ -228,7 +225,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 		},
 
 		/*
-		 * offset is the number of steps from the top line.
+		 * offset is the number of steps from the top line to the pitch.
 		 */
 		getClefBase: function (clef) {
 			return { 

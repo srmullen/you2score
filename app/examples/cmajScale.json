@@ -14,7 +14,7 @@
 							{
 								"notes": [
 									{"pitch": "C#4", "type": 0.25},
-									{"pitch": "Db4", "type": 0.25},
+									{"pitch": "C6", "type": 0.25},
 									{"pitch": "E4", "type": 0.25},
 									{"pitch": "F4", "type": 0.25}
 								]
@@ -29,12 +29,18 @@
 							},
 							{
 								"notes": [
-									{"pitch": "rest", "type": 1, "rest": true}
+									{"pitch": "C#5", "type": 0.25},
+									{"pitch": "Db5", "type": 0.25},
+									{"pitch": "E5", "type": 0.25},
+									{"pitch": "F5", "type": 0.25}
 								]
 							},
 							{
 								"notes": [
-									{"pitch": "rest", "type": 1, "rest": true}
+									{"pitch": "G5", "type": 0.25},
+									{"pitch": "A5", "type": 0.25},
+									{"pitch": "B5", "type": 0.25},
+									{"pitch": "C6", "type": 0.25}
 								]
 							},
 							{	

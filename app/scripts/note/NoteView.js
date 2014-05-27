@@ -79,34 +79,6 @@ function (PaperBaseView, NoteModel, NoteEngraver, MeasureEngraver) {
 			this.group.insertChild(0, rectangle);
 		},
 
-		// TextItem version
-		// drawHead: function (centerLine, xPos, yPos) {
-		// 	this.activateLayer(this.constants.layers.NOTE);
-
-		// 	var type = this.model.get("type"), head, noteheadSymbol;
-
-		// 	if (type >= 1) {
-		// 		noteheadSymbol = PaperBaseView.constants.font.noteheads.whole;
-		// 	} else if (type >= 1/2) {
-		// 		noteheadSymbol = PaperBaseView.constants.font.noteheads.hollow;
-		// 	} else {
-		// 		noteheadSymbol = PaperBaseView.constants.font.noteheads.solid;
-		// 	}
-
-		// 	head = new paper.PointText({
-		// 		content: noteheadSymbol,
-		// 		fontFamily: 'gonville',
-		// 		fontSize: 32,
-		// 		fillColor: 'black'
-		// 	});
-
-		// 	this.head = head;
-		// 	this.noteHandles = head;
-		// 	this.group.addChild(head);
-		// 	this.group.position = centerLine.add([xPos, yPos]);
-		// 	head.selected = true;
-		// },
-
 		/*
 		 * @centerLine - {Point} B line on treble clef, left-most point in the measure.
 		 */
@@ -116,19 +88,18 @@ function (PaperBaseView, NoteModel, NoteEngraver, MeasureEngraver) {
 			var head = this.noteHead;
 			if (stemDirection === "up") {
 				// draw stem up
-				var rightPoint = this.noteHead.bounds.rightCenter;
+				var rightPoint = this.noteHead.bounds.rightCenter.add(0, NoteEngraver.config.note.head.yOffset);
 				if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) { // needs to be extracted. drawFlag also need to
 																			// know stem direction
 					var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
 				} else {
 					// draw stem to center line
-					var stem = new paper.Path.Line(this.noteHead.bounds.rightCenter, new paper.Point(this.noteHead.bounds.rightCenter.x, centerLine.y));
+					var stem = new paper.Path.Line(rightPoint, new paper.Point(this.noteHead.bounds.rightCenter.x, centerLine.y));
 				}
 				
 			} else {
 				// draw stem down
-				// var leftPoint = this.noteHandles.segments[0].point;
-				var leftPoint = this.noteHead.bounds.leftCenter;
+				var leftPoint = this.noteHead.bounds.leftCenter.add(0, NoteEngraver.config.note.head.yOffset);
 				if (Math.abs(leftPoint.y - centerLine.y) < octaveHeight) {
 					// draw octave length stem
 					var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, octaveHeight])); // draw octave length stem

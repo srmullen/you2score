@@ -10,6 +10,7 @@ require.config({
         handlebars: '../bower_components/handlebars/handlebars',
         text: 'vendor/text',
         paper: '../bower_components/paper/dist/paper-full.min',
+        FontLoader: 'vendor/FontLoader',
 
         // Application Specific
         base: 'base',
@@ -54,13 +55,26 @@ require.config({
         },
         paper: {
             exports: "paper"
+        },
+        FontLoader: {
+            exports: "FontLoader"
         }
     }
 });
 
-require(["app", 'jquery', 'handlebars', 'foundation', 'topbar', 'sticky'], function (App, $, Handlebars) {
+require(["app", 'jquery', 'handlebars', 'FontLoader', 'foundation', 'topbar', 'sticky'], function (App, $, Handlebars, FontLoader) {
     'use strict';
 
-    var app = new App();
-
+    var fontLoader = new FontLoader(['gonville'], {
+        fontLoaded: function (fontFamily) {
+            var app = new App();
+        }
+    });
+    fontLoader.loadFonts();
 });
+
+
+
+
+
+

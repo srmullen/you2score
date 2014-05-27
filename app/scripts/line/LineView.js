@@ -25,26 +25,10 @@ function (PaperBaseView, LineModel, MeasureCollectionView, LineEngraver) {
 			this.lineWidth = this.model.get("width") * this.$el.width();
 			// this.group = this.createLine(width, this.model.get("spacing"));
 			// this.createLine(this.lineWidth, this.model.get("spacing"));
-			this.group = LineEngraver.drawLine(this.lineWidth, this.model.get("spacing"));
+			this.group = LineEngraver.drawLine(this.lineWidth);
 
 			this.group.position.y = yPosition;
 		},
-
-		// createLine: function (width, spacing) {
-		// 	var line,
-		// 		lineArray = [];
-		// 	for (var i = 0; i < 5; i++) {
-		// 		line = new paper.Path.Line(new paper.Point(0, i * spacing), new paper.Point(width, i * spacing));
-		// 		lineArray.push(line);
-		// 	}
-
-		// 	var rectangle = new paper.Rectangle(lineArray[0].firstSegment.point, lineArray[4].lastSegment.point);
-		// 	rectangle = new paper.Path.Rectangle(rectangle);
-		// 	rectangle.fillColor = "white"; // create a fill so the center can be clicked 
-		// 	rectangle.opacity = 0.0; // make the rectangle invisible
-		// 	this.group.addChildren(lineArray);
-		// 	this.group.insertChild(0, rectangle);
-		// },
 
 		// This should be called after the render method.
 		drawMeasures: function () {
