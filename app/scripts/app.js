@@ -1,16 +1,17 @@
-/*global define */
 define(["base/HandlebarsBaseView", 
         "base/Context",
         "base/BaseModel",
+
+        "Scored",
 
         "score/ScoreView",
         "score/ScoreModel",
 
         "handlebarViews/PalateView",
-        "text!../examples/cmajScale.json",
-        "text!../examples/eigthsAndQuarters.json",
-        "text!../examples/render/eigthsAndQuarters.json",
-        "text!../examples/eigthPatterns.json",
+        "text!../json/cmajScale.json",
+        "text!../json/eigthsAndQuarters.json",
+        "text!../json/render/eigthsAndQuarters.json",
+        "text!../json/eigthPatterns.json",
 
         "helpers/svgLoader",
 
@@ -18,6 +19,8 @@ define(["base/HandlebarsBaseView",
 function (HandlebarsBaseView, 
           Context, 
           BaseModel,
+
+          Scored,
 
           ScoreView, 
           ScoreModel, 
@@ -40,12 +43,9 @@ function (HandlebarsBaseView,
   				
           // load the svgs
           svgLoader();
-
-          var context = new Context(document.getElementById("score"));
           
           var cMaJson = JSON.parse(cmaj);
           var scoreModel = new ScoreModel(cMaJson.score, {parse: true});
-
 
           // eigthJson = JSON.parse(eigthsAndQuarters);
           // var scoreModel = new ScoreModel(eigthJson.score, {parse: true});
@@ -55,17 +55,18 @@ function (HandlebarsBaseView,
 
 
           // Render Models // FIXME: note currently used
-          var eigthRenderJson = JSON.parse(eigthsAndQuartersRndr);
-          var renderModel = new BaseModel(eigthRenderJson);
-
-          // Initialize a blank score.
-          var position = new paper.Point(50, 150);
-          var blankScore = context.addChildView(ScoreView, scoreModel);
-          blankScore.render();
+          // var eigthRenderJson = JSON.parse(eigthsAndQuartersRndr);
+          // var renderModel = new BaseModel(eigthRenderJson);
 
           // expandableMeasure(context);
 
+          var scored = new Scored({
+            canvas: document.getElementById("score"),
+            data: cMaJson,
+            config: {}
+          });
 
+          scored.render();
   		}
   	});
   	return App;

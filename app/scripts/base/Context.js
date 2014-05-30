@@ -9,7 +9,7 @@ define(["base/Layer", "tools/HighlightTool", "paper"], function (Layers, Highlig
 
 		this.canvas = canvas;
 
-		paper.setup(canvas); // if for some reason paper is undefined, make sure it doesn't need to be rebuilt
+		// paper.setup(canvas); // if for some reason paper is undefined, make sure it doesn't need to be rebuilt
 
 		// create layers
 		var scoreLayer = new paper.Layer();
@@ -60,7 +60,11 @@ define(["base/Layer", "tools/HighlightTool", "paper"], function (Layers, Highlig
 
 		this.addChildView = function (View, model) {
 
-			var view = new View({el: this.canvas, model: model, context: this});
+			var view = new View({
+				el: this.canvas, 
+				model: model,
+				context: this
+			});
 
 			this.childViews.push(view);
 

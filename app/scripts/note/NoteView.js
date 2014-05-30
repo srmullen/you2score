@@ -19,10 +19,9 @@ function (PaperBaseView, NoteModel, NoteEngraver, MeasureEngraver) {
 
 			this.model = this.model || new NoteModel();
 			
-
 			this.pitch = this.model.get('pitch');
 
-			this.headSize = [this.config.note.head.width, this.config.note.head.height];
+			this.headSize = [PaperBaseView.config.note.head.width, PaperBaseView.config.note.head.height];
 			// this.accidental = this.getAccidental(this.model);
 
 			this.length = this.calculateLength(this.model);
@@ -88,7 +87,7 @@ function (PaperBaseView, NoteModel, NoteEngraver, MeasureEngraver) {
 			var head = this.noteHead;
 			if (stemDirection === "up") {
 				// draw stem up
-				var rightPoint = this.noteHead.bounds.rightCenter.add(0, NoteEngraver.config.note.head.yOffset);
+				var rightPoint = this.noteHead.bounds.rightCenter.add(0, PaperBaseView.config.note.head.yOffset);
 				if (Math.abs(rightPoint.y - centerLine.y) < octaveHeight) { // needs to be extracted. drawFlag also need to
 																			// know stem direction
 					var stem = new paper.Path.Line(rightPoint, rightPoint.subtract([0, octaveHeight])); // draw octave length stem
@@ -99,7 +98,7 @@ function (PaperBaseView, NoteModel, NoteEngraver, MeasureEngraver) {
 				
 			} else {
 				// draw stem down
-				var leftPoint = this.noteHead.bounds.leftCenter.add(0, NoteEngraver.config.note.head.yOffset);
+				var leftPoint = this.noteHead.bounds.leftCenter.add(0, PaperBaseView.config.note.head.yOffset);
 				if (Math.abs(leftPoint.y - centerLine.y) < octaveHeight) {
 					// draw octave length stem
 					var stem = new paper.Path.Line(leftPoint, leftPoint.add([0, octaveHeight])); // draw octave length stem

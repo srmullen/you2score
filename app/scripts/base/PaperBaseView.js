@@ -2,7 +2,7 @@
  * Module to handle rendering to a canvas.
  * The 'el' must be a canvas element.
  */
-define(["backbone", "config", "base/constants", "base/Layer", "paper"], function (Backbone, config, constants, Layer) {
+define(["backbone", "base/constants", "base/Layer", "paper"], function (Backbone, constants, Layer) {
 
 	// PaperBaseView should install event handlers on 
 	var PaperBaseView = Backbone.View.extend({
@@ -23,7 +23,7 @@ define(["backbone", "config", "base/constants", "base/Layer", "paper"], function
 		// 	return this;
 		// },
 
-		config: config,
+		// config: config,
 
 		constants: constants,
 
@@ -53,5 +53,17 @@ define(["backbone", "config", "base/constants", "base/Layer", "paper"], function
 	}, {
 		constants: constants
 	});
+
+	// FIXME: temporary hack for bumping Backbone version without having to change all initialize functions.
+	PaperBaseView = (function(View) {
+	    return View.extend({
+	        constructor: function(options) {
+	            this.options = options || {};
+	            View.apply(this, arguments);
+	        }
+	    });
+	})(PaperBaseView);
+
+
 	return PaperBaseView;
 });

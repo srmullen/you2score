@@ -1,6 +1,6 @@
 require.config({
     paths: {
-        jquery: '../bower_components/jquery/jquery',
+        jquery: '../bower_components/jquery/dist/jquery.min',
         bootstrap: 'vendor/bootstrap',
         foundation: '../bower_components/foundation/js/foundation/foundation',
         topbar: '../bower_components/foundation/js/foundation/foundation.topbar',
@@ -16,7 +16,7 @@ require.config({
         base: 'base',
         svg: '../images/svg',
 
-        config: "./config",
+        Config: "./Config",
         
         score: 'score',
         sheet: 'sheet',
@@ -26,7 +26,9 @@ require.config({
         beat: 'beat',
         note: 'note',
         tools: 'tools',
-        engraver: 'engraver'
+        engraver: 'engraver',
+
+        Scored: "Scored"
 
     },
     shim: {

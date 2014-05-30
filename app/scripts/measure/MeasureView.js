@@ -23,7 +23,7 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 
 			this.meter = this.options.meter || {upper: 4, lower: 4};
 
-			this.lineSpacing = this.config.lineSpacing;
+			this.lineSpacing = PaperBaseView.config.lineSpacing;
 
 			this.clefBase = this.getClefBase(this.model.get("clef"));
 
@@ -247,5 +247,6 @@ function (PaperBaseView, MeasureModel, NoteCollectionView, NoteCollection, NoteM
 		// }
 
 	});
+	
 	return MeasureView;
 });

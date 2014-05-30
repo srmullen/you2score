@@ -1,11 +1,35 @@
 {
   "name": "you2score",
   "version": "0.0.0",
+  "description": "Music Notation for Canvas",
+  "license": "MIT",
+  "homepage": "I need one of those",
   "dependencies": {
+  	"backbone": "1.1.x",
     "sass-bootstrap": "~2.3.0",
     "requirejs": "~2.1.4",
     "modernizr": "~2.6.2",
-    "jquery": "~1.9.1"
+    "jquery": "2.1.x",
+    "paper": "0.9.x",
+    "requirejs": "2.1.x",
+    "underscore": "1.6.x"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "ignore": [
+  	"node_modules",
+  	"test",
+  	"package.json",
+  	"you2score.sublime-project",
+  	"you2score.sublime-workspace"
+  ],
+  "keywords": [
+  	"music",
+  	"notation",
+  	"composition",
+  	"canvas",
+  	"svg",
+  	"vector",
+  	"score",
+  	"note"
+  ]
 }

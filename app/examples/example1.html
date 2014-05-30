@@ -1,0 +1,30 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Example 1</title>
+    <!-- <link rel="stylesheet" href="styles/index.css"> -->
+    <script src="../bower_components/modernizr/modernizr.js"></script>
+</head>
+<body>
+
+    <div id="workspace" class="workspace">
+        <div class="sheet">
+            <canvas id="score"></canvas>
+        </div>
+        <div id="palate-container" class="palate-wrapper"></div>
+    </div>
+
+    <!-- build:js scripts/main.js -->
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script type="text/javascript">
+        require(["../scripts/vendor/FontLoader", "../scripts/Scored"], function (FontLoader, Scored) {
+
+        });
+    </script>
+    <!-- endbuild -->
+</body>
+</html>
